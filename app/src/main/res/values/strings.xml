@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Biblio</string>
+    <string name="nav_search_title">Search</string>
+    <string name="nav_books_title">My Books</string>
+    <string name="nav_settings_title">Settings</string>
+    <string name="desc_sample">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in tellus massa. Aenean et sagittis lacus, ut tincidunt mauris. Etiam cursus vitae mi non fringilla. Vestibulum cursus eleifend diam, tincidunt suscipit lorem viverra a. Morbi convallis posuere mauris, a dignissim enim ultricies ut. Fusce euismod est sed magna ultricies tristique. Nunc leo eros, tincidunt sed consectetur eget, bibendum vel quam. Nam mollis augue aliquam nibh maximus commodo. Nam ac turpis augue. Nam tempus erat ipsum, non ornare est consectetur ut. Maecenas rutrum dictum nibh, vitae placerat nisl. Curabitur efficitur nisl at elementum finibus. Praesent ex justo, porttitor vel ante at, consequat rhoncus purus. Donec ultrices, tellus eget commodo suscipit, tortor purus vulputate diam, in convallis diam elit vel nisl. Mauris interdum scelerisque ipsum, dapibus sodales diam. Etiam enim dolor, luctus vitae lacus et, fringilla aliquet mauris.</string>
+</resources>

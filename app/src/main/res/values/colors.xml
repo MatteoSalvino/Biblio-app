@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- app palette -->
+    <color name="primary">#1976D2</color> <!-- Blue 700 -->
+    <color name="secondary">#F57C00</color> <!-- Orange 700 -->
+    <color name="error">#E53935</color> <!-- Red 600 -->
+    <color name="backgroundnav">#1A237E</color>
+    <color name="backgroundapp">#FCFCFC</color>
+    <color name="textcolor">#000000</color>
+
+</resources>

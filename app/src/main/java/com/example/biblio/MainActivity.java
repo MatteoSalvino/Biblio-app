@@ -14,7 +14,11 @@ import android.view.MenuItem;
 import com.example.biblio.fragments.MyBooksFragment;
 import com.example.biblio.fragments.SearchFragment;
 import com.example.biblio.fragments.SettingsFragment;
+import com.example.biblio.models.Book;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

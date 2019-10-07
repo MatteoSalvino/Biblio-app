@@ -95,9 +95,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:backgroundTint="#558B2F"
-                    android:text="Download"
+                    android:text="Add to My Books"
                     android:textAllCaps="false"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/main_remove_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="#C62828"
+                    android:text="Remove from My Books"
+                    android:textAllCaps="false"
+                    android:layout_alignParentRight="true"
+                    android:visibility="invisible"
                     android:layout_marginRight="20dp"/>
             </RelativeLayout>
         </LinearLayout>

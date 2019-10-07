@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +52,11 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
 
         mAdapter = new MyAdapter(myDataset, this);
         mRecycleView.setAdapter(mAdapter);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
+        mRecycleView.addItemDecoration(itemDecoration);
+
 
         mSearchBar.addTextChangeListener(new TextWatcher() {
             @Override

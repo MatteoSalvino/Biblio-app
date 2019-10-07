@@ -6,7 +6,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 import com.example.biblio.R;
-import com.example.biblio.ThemeHelper;
+import com.example.biblio.helpers.ThemeHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

@@ -4,12 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My books Fragment"
-        android:textSize="30sp"
-        android:textColor="@color/textcolor"
-        android:layout_centerInParent="true"/>
+   <ListView
+       android:id="@+id/listView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_marginLeft="5dp"
+       android:layout_marginRight="5dp" />
+
+   <ImageView
+       android:id="@+id/iv_template"
+       android:layout_width="200dp"
+       android:layout_height="200dp"
+       android:src="@drawable/no_image"
+       android:layout_centerVertical="true"
+       android:layout_centerHorizontal="true"
+       android:paddingBottom="10dp"/>
+
+   <TextView
+       android:id="@+id/tv_template"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="You're not added any book yet."
+       android:layout_alignBottom="@id/iv_template"
+       android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

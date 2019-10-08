@@ -5,16 +5,79 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.mancj.materialsearchbar.MaterialSearchBar
-        android:id="@+id/searchBar"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/MaterialSearchBarLight"
-        android:layout_margin="5dp"
-        app:mt_speechMode="false"
-        app:mt_hint="Search any book !"
-        app:mt_maxSuggestionsCount="4"
-        app:mt_placeholderColor="@color/textcolor" />
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialSearchBarLight"
+                android:layout_margin="5dp"
+                app:mt_speechMode="false"
+                app:mt_hint="Search any book !"
+                app:mt_maxSuggestionsCount="4"
+                app:mt_placeholderColor="@color/textcolor"
+                app:mt_searchBarColor="@color/backgroundapp"
+                app:mt_roundedSearchBarEnabled="true"
+                android:layout_marginBottom="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/filters_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Filters"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    app:icon="@drawable/tune"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/backgroundapp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/useless_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Filters"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    app:icon="@drawable/tune"
+                    android:visibility="invisible"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/backgroundapp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sort_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sort by"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="20dp"
+                    app:icon="@drawable/sort_variant"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/backgroundapp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -13,21 +13,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
-import com.example.biblio.models.Book;
 import com.google.android.material.button.MaterialButton;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MyBooksAdapter extends ArrayAdapter<Book> {
+import lrusso96.simplebiblio.core.Ebook;
+
+public class MyBooksAdapter extends ArrayAdapter<Ebook> {
     private Context mContext;
-    private ArrayList<Book> myBooks;
+    private ArrayList<Ebook> myBooks;
 
 
 
-    public MyBooksAdapter(@NonNull Context context, ArrayList<Book> list) {
+    public MyBooksAdapter(@NonNull Context context, ArrayList<Ebook> list) {
         super(context, R.layout.mybook_row, list);
         mContext = context;
         myBooks = list;
@@ -42,11 +45,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         if(listItem == null) {
             listItem = LayoutInflater.from(mContext).inflate(R.layout.mybook_row, parent, false);
 
-            Book current = myBooks.get(position);
+            Ebook current = myBooks.get(position);
+            RequestOptions option = new RequestOptions().centerCrop();
 
             ImageView mBookCover = listItem.findViewById(R.id.mybook_cover);
-            mBookCover.setImageResource(R.drawable.no_image);
-            //mBookCover.setImageURI(Uri.parse(current.getCover_image()));
+            Glide.with(getContext()).load(myBooks.get(position).getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(mBookCover);
 
             TextView mBookTitle = listItem.findViewById(R.id.mybook_title);
             mBookTitle.setText(current.getTitle());
@@ -54,8 +57,8 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
             TextView mBookAuthor = listItem.findViewById(R.id.mybook_author);
             mBookAuthor.setText(current.getAuthor());
 
-            TextView mBookRating = listItem.findViewById(R.id.mybook_rating);
-            mBookRating.setText(String.valueOf(current.getRating()));
+            TextView mBookPages = listItem.findViewById(R.id.mybook_pages);
+            mBookPages.setText("n° pages : " + (current.getPages() == 0 ?  "-" :  String.valueOf(current.getPages())));
 
             MaterialButton mReadBtn = listItem.findViewById(R.id.read_btn);
             mReadBtn.setOnClickListener(new View.OnClickListener() {

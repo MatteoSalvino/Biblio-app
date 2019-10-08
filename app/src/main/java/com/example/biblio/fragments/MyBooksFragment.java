@@ -23,11 +23,12 @@ import androidx.preference.PreferenceManager;
 import com.example.biblio.BuildConfig;
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyBooksAdapter;
-import com.example.biblio.models.Book;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.util.ArrayList;
+
+import lrusso96.simplebiblio.core.Ebook;
 
 public class MyBooksFragment extends Fragment {
     private ListView mListView;
@@ -52,24 +53,25 @@ public class MyBooksFragment extends Fragment {
             mImageTemplate.setVisibility(View.INVISIBLE);
             mTextViewTemplate.setVisibility(View.INVISIBLE);
 
-            final ArrayList<Book> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Book>>() {}.getType());
+            final ArrayList<Ebook> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {}.getType());
             Log.d("SharedPrefs", myBooks.toString());
 
             if(myBooks.isEmpty()) {
                 mImageTemplate.setVisibility(View.VISIBLE);
                 mTextViewTemplate.setVisibility(View.VISIBLE);
+            } else {
+
+                mAdapter = new MyBooksAdapter(getContext(), myBooks);
+                mListView.setAdapter(mAdapter);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        //Toast.makeText(getContext(), ((Book) adapterView.getItemAtPosition(i)).toString(), Toast.LENGTH_LONG).show();
+                        openFile(myBooks.get(i).getTitle() + "_" + myBooks.get(i).getAuthor() + "_" + myBooks.get(i).getPublished().toString() + ".epub");
+                    }
+                });
             }
-
-            mAdapter = new MyBooksAdapter(getContext(), myBooks);
-            mListView.setAdapter(mAdapter);
-
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //Toast.makeText(getContext(), ((Book) adapterView.getItemAtPosition(i)).toString(), Toast.LENGTH_LONG).show();
-                    openFile(myBooks.get(i).getTitle() +"_" + myBooks.get(i).getAuthor() + "_" + myBooks.get(i).getPublication_year() + ".epub");
-                }
-            });
         } else {
             mImageTemplate.setVisibility(View.VISIBLE);
             mTextViewTemplate.setVisibility(View.VISIBLE);

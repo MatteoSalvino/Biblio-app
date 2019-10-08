@@ -1,14 +1,12 @@
 package com.example.biblio.fragments;
 
-import android.content.Intent;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -16,20 +14,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyAdapter;
-import com.example.biblio.models.Book;
+import com.google.gson.Gson;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import com.mancj.materialsearchbar.MaterialSearchBar;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import lrusso96.simplebiblio.core.Ebook;
+import lrusso96.simplebiblio.core.SimpleBiblio;
+import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
+import lrusso96.simplebiblio.exceptions.BiblioException;
 
 public class SearchFragment extends Fragment implements MyAdapter.OnItemListener {
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Book> myDataset;
+    private List<Ebook> myDataset;
+    private SimpleBiblio simpleBiblio;
+    private MyAdapter.OnItemListener adapterListener;
 
     @Nullable
     @Override
@@ -37,12 +41,8 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         final MaterialSearchBar mSearchBar = view.findViewById(R.id.searchBar);
 
-        ArrayList<String> categories = new ArrayList<>();
-        categories.add("Romance");
-        categories.add("Fiction");
         myDataset = new ArrayList<>();
-        myDataset.add(new Book("La divina commedia", "Dante Alighieri", "no url", 1990, categories,  4.3, "description not available"));
-        myDataset.add(new Book("L'iliade", "Omero", "no url", 1880, categories, 4.5, "description not available"));
+        simpleBiblio = new SimpleBiblioBuilder().build();
 
         mRecycleView = view.findViewById(R.id.recycler_view);
         mRecycleView.setHasFixedSize(true);
@@ -50,54 +50,79 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecycleView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new MyAdapter(myDataset, this);
-        mRecycleView.setAdapter(mAdapter);
-
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
         mRecycleView.addItemDecoration(itemDecoration);
 
+        adapterListener = this;
 
-        mSearchBar.addTextChangeListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        RxTextView.textChanges(mSearchBar.getSearchEditText())
+                .debounce(750, TimeUnit.MILLISECONDS)
+                .subscribe(textChanged -> {
+                    Log.d("TextChanges", "Stopped typing.");
+                    String query = mSearchBar.getSearchEditText().getText().toString();
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.d("onTextChanged", "Text changed in "+ String.valueOf(charSequence));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Log.d("Text Changed", editable.toString());
-                //search(editable.toString, website_flag);
-            }
-        });
+                    if (query.length() >= 5)
+                        new SearchTask().execute(query);
+                    else
+                        Log.d("QueryAlert", "Query too short !");
+                });
 
         return view;
     }
 
     @Override
     public void onItemClick(int position) {
-        Log.d("onItemClicked", myDataset.get(position).toString());
+        //Log.d("onItemClicked", myDataset.get(position).toString());
 
         Fragment to_render = new BookFragment();
         Bundle args = new Bundle();
 
-        args.putString("book_title", myDataset.get(position).getTitle());
-        args.putString("book_author", myDataset.get(position).getAuthor());
-        args.putString("book_cover", myDataset.get(position).getCover_image());
-        args.putInt("book_year", myDataset.get(position).getPublication_year());
-        args.putStringArrayList("book_categories", myDataset.get(position).getCategories());
-        args.putDouble("book_rating", myDataset.get(position).getRating());
-        args.putString("book_desc", myDataset.get(position).getDescription());
+        args.putString("current", new Gson().toJson(myDataset.get(position)));
 
         to_render.setArguments(args);
 
         getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
                 .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();
+    }
+
+    public class SearchTask extends AsyncTask<String, Void, List<Ebook>> {
+
+        @Override
+        protected List<Ebook> doInBackground(String... params) {
+            String query = params[0];
+            List<Ebook> results = null;
+
+            try {
+                results = simpleBiblio.searchAll(query);
+            } catch (BiblioException e) {
+                e.printStackTrace();
+            }
+
+            if(results == null)
+                Log.d("SearchStatus", "something goes wrong !");
+
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(List<Ebook> ebooks) {
+            if (ebooks != null) {
+
+                //Filter ebooks with unknown extension
+                List<Ebook> filtered_results = new ArrayList<Ebook>();
+                for (Ebook elem : ebooks){
+                    if(elem.getExtension() != null)
+                        filtered_results.add(elem);
+                }
+
+                myDataset = filtered_results;
+                Log.d("result's size : ", String.valueOf(ebooks.size()));
+                Log.d("filtered_result's size", String.valueOf(myDataset.size()));
+                mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
+                mRecycleView.setAdapter(mAdapter);
+            }
+        }
     }
 }

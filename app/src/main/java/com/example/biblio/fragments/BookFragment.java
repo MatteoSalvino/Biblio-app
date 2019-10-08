@@ -2,6 +2,7 @@ package com.example.biblio.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,9 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.helpers.CheckForSDCardHelper;
 import com.example.biblio.R;
-import com.example.biblio.models.Book;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,82 +36,72 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import lrusso96.simplebiblio.core.Ebook;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class BookFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
     private TextView mBookTitle;
     private TextView mBookAuthor;
     private ImageView mBookCover;
-    private TextView mBookYear;
-    private TextView mBookCategories;
-    private TextView mBookRating;
-    private TextView mBookDescription;
+    private TextView mBookDate;
+    private TextView mBookPages;
+    private TextView mBookSummary;
     private ImageView mBackBtn;
     private MaterialButton mDownloadBtn;
     private MaterialButton mRemoveBtn;
-    private String url;
     private static final int WRITE_REQUEST_CODE = 300;
     private File root_dir;
     private String filename;
-    private ArrayList<Book> myBooks;
-    private Book current;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private RequestOptions option;
+    private Ebook current;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.book_fragment, container, false);
+        option = new RequestOptions().centerCrop();
 
         mBookTitle = view.findViewById(R.id.main_book_title);
         mBookAuthor = view.findViewById(R.id.main_book_author);
         mBookCover = view.findViewById(R.id.main_book_cover);
-        mBookYear = view.findViewById(R.id.main_book_year);
-        mBookCategories = view.findViewById(R.id.main_book_categories);
-        mBookRating = view.findViewById(R.id.main_book_rating);
-        mBookDescription = view.findViewById(R.id.main_book_desc);
+        mBookDate = view.findViewById(R.id.main_book_date);
+        mBookPages = view.findViewById(R.id.main_book_pages);
+        mBookSummary = view.findViewById(R.id.main_book_summary);
         mBackBtn = view.findViewById(R.id.main_back_btn);
         mDownloadBtn = view.findViewById(R.id.main_download_btn);
         mRemoveBtn = view.findViewById(R.id.main_remove_btn);
 
-        //Retrieve book's informations
-        final String book_title = getArguments().getString("book_title");
-        final String book_author = getArguments().getString("book_author");
-        final String book_cover = getArguments().getString("book_cover");
-        final Integer book_year = getArguments().getInt("book_year");
-        final ArrayList<String> book_categories = getArguments().getStringArrayList("book_categories");
-        final Double book_rating = getArguments().getDouble("book_rating");
-        final String book_description = getArguments().getString("book_desc");
+        current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook> () {}.getType());
+        Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getExtension());
+
 
         //Show retrieved informations
+        mBookTitle.setText(current.getTitle());
+        mBookAuthor.setText(current.getAuthor());
 
-        mBookTitle.setText(book_title);
-        mBookAuthor.setText(book_author);
-        mBookCover.setImageResource(R.drawable.no_image);
-        //mBookCover.setImageURI(Uri.parse(book_cover));
-        mBookYear.setText(String.valueOf(book_year));
-
-        String build_str = "";
-        int bc_size = book_categories.size();
-        for(int i = 0; i < bc_size; i++) {
-            build_str.concat(book_categories.get(i));
-
-            if(i < bc_size - 1)
-                build_str.concat(", ");
-            else
-                build_str.concat("");
+        try {
+            Glide.with(getContext()).load(current.getCover().toString()).apply(option).into(mBookCover);
+        } catch(Exception e) {
+            Glide.with(getContext()).load(R.drawable.no_image).apply(option).into(mBookCover);
         }
 
-        mBookCategories.setText(build_str);
-        mBookRating.setText(String.valueOf(book_rating));
-        mBookDescription.setText(book_description);
+        LocalDate book_date = current.getPublished();
+        Integer book_pages = current.getPages();
+        String book_summary = current.getSummary();
 
-        current = new Book(book_title, book_author, book_cover, book_year, book_categories, book_rating, book_description);
+        mBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
+        mBookPages.setText("n° pages : " + ((book_pages == 0) ? "-" : String.valueOf(book_pages)));
+        mBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
+
+
         root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
-        filename = mBookTitle.getText().toString()+"_"+mBookAuthor.getText().toString()+"_"+mBookYear.getText().toString() +".epub";
+        filename = mBookTitle.getText().toString()+"_"+mBookAuthor.getText().toString()+"_"+ mBookDate.getText().toString() + "." + current.getExtension();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
@@ -121,14 +113,19 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
             }
         });
 
+        if(current.getDownload() == null)
+            mDownloadBtn.setEnabled(false);
+
+        Log.d("fileSource", String.valueOf(current.getSource() == null));
+
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(CheckForSDCardHelper.isSDCardPresent()) {
                     if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         Log.d("Permissions", "Permissions available");
-                        url = "http://www.feedbooks.com/book/206.epub";
-                        new DownloadFile().execute(url, filename);
+
+                        new DownloadFile().execute(current.getDownload().toString(), filename);
                     } else {
                         Log.d("Permissions", "Permissions not available");
                         EasyPermissions.requestPermissions(getContext(), getString(R.string.write_file), WRITE_REQUEST_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -147,17 +144,15 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
                 String response = sharedPreferences.getString("mybooks", null);
 
                 if(response != null) {
-                    ArrayList<Book> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Book>>() {}.getType());
+                    ArrayList<Ebook> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {}.getType());
                     if(!myBooks.isEmpty()) {
                         //Remove current book from array myBooks
                         int size = myBooks.size();
 
                         for(int i = 0; i < size; i++){
-                            Book elem = myBooks.get(i);
+                            Ebook elem = myBooks.get(i);
 
-                            if(elem.getTitle().equals(book_title) && elem.getAuthor().equals(book_author) && elem.getCover_image().equals(book_cover)
-                            && elem.getPublication_year() == book_year && elem.getRating().compareTo(book_rating) == 0 && elem.getCategories().equals(book_categories)
-                            && elem.getDescription().equals(book_description)) {
+                            if(elem.getId() == current.getId()){
                                 myBooks.remove(i);
                                 break;
                             }
@@ -175,9 +170,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
         });
 
 
-
         //Check if selected book is yet downloaded
-        //Log.d("findFile", current_filename);
         if(root_dir.exists()) {
             if (CheckForSDCardHelper.findFile(root_dir, filename, false)) {
                 mDownloadBtn.setVisibility(View.INVISIBLE);
@@ -197,9 +190,8 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        url = "http://www.feedbooks.com/book/206.epub";
         Log.d("onPermissionsGranted", "permissions granted");
-        new DownloadFile().execute(url, filename);
+        new DownloadFile().execute(current.getDownload().toString(), filename);
     }
 
     @Override
@@ -305,12 +297,12 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
                 //Array saved in sharedPrefs is empty
                 String response = sharedPreferences.getString("mybooks", null);
                 if(response == null) {
-                    ArrayList<Book> myBooks = new ArrayList<Book>();
+                    ArrayList<Ebook> myBooks = new ArrayList<Ebook>();
                     myBooks.add(current);
                     editor.putString("mybooks", new Gson().toJson(myBooks));
                     editor.commit();
                 } else {
-                   ArrayList<Book>  myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Book>>() {}.getType());
+                   ArrayList<Ebook>  myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {}.getType());
                    myBooks.add(current);
                    editor.putString("mybooks", new Gson().toJson(myBooks));
                    editor.commit();

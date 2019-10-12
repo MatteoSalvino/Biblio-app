@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
 import lrusso96.simplebiblio.core.Ebook;
 
@@ -39,11 +42,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.mBookTitle.setText(mDataset.get(position).getTitle());
-        holder.mBookAuthor.setText(mDataset.get(position).getAuthor());
-        Integer num_pages = mDataset.get(position).getPages();
+        Ebook elem = mDataset.get(position);
+        holder.mBookTitle.setText(elem.getTitle());
+        holder.mBookAuthor.setText(elem.getAuthor());
+        Integer num_pages = elem.getPages();
         holder.mBookPages.setText("n° pages : " + ((num_pages == 0) ? "-" : String.valueOf(num_pages)));
-        Glide.with(mContext).load(mDataset.get(position).getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(holder.mBookCover);
+        if(elem.getCover() != null)
+            Glide.with(mContext).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(holder.mBookCover);
+        else
+            Glide.with(mContext).load(R.drawable.no_image).apply(option).into(holder.mBookCover);
+
+        holder.mBookSource.setText(mDataset.get(position).getSource());
     }
 
     @Override
@@ -57,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView mBookAuthor;
         public ImageView mBookCover;
         public TextView mBookPages;
+        public TextView mBookSource;
         OnItemListener itemListener;
 
 
@@ -66,6 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             mBookAuthor = v.findViewById(R.id.book_author);
             mBookCover = v.findViewById(R.id.book_cover);
             mBookPages = v.findViewById(R.id.book_pages);
+            mBookSource = v.findViewById(R.id.book_source);
             this.itemListener = listener;
 
             v.setOnClickListener(this);

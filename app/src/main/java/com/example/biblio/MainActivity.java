@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import com.example.biblio.fragments.MyBooksFragment;
+import com.example.biblio.fragments.PopularFragment;
+import com.example.biblio.fragments.RecentFragment;
 import com.example.biblio.fragments.SearchFragment;
 import com.example.biblio.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,13 +38,19 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
-                        case R.id.nav_search:
+                        case R.id.nav_search :
                             selectedFragment = new SearchFragment();
                             break;
-                        case R.id.nav_books:
+                        case R.id.nav_popular :
+                            selectedFragment = new PopularFragment();
+                            break;
+                        case R.id.nav_recent :
+                            selectedFragment = new RecentFragment();
+                            break;
+                        case R.id.nav_books :
                             selectedFragment = new MyBooksFragment();
                             break;
-                        case R.id.nav_settings:
+                        case R.id.nav_settings :
                             selectedFragment = new SettingsFragment();
                             break;
                     }

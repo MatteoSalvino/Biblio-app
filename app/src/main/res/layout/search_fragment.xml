@@ -86,6 +86,6 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
+        android:layout_marginRight="5dp" />
 
 </LinearLayout>

@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -34,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
@@ -41,6 +45,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lrusso96.simplebiblio.core.Ebook;
+import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
+import lrusso96.simplebiblio.core.providers.feedbooks.FeedbooksBuilder;
+import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
+import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
+import lrusso96.simplebiblio.exceptions.BiblioException;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class BookFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
@@ -60,6 +69,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
     private SharedPreferences.Editor editor;
     private RequestOptions option;
     private Ebook current;
+    private List<Ebook> search_data;
 
     @Nullable
     @Override
@@ -80,24 +90,21 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook> () {}.getType());
         Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getExtension());
 
+        //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());
 
         //Show retrieved informations
-        mBookTitle.setText(current.getTitle());
-        mBookAuthor.setText(current.getAuthor());
-
-        try {
-            Glide.with(getContext()).load(current.getCover().toString()).apply(option).into(mBookCover);
-        } catch(Exception e) {
-            Glide.with(getContext()).load(R.drawable.no_image).apply(option).into(mBookCover);
-        }
-
         LocalDate book_date = current.getPublished();
         Integer book_pages = current.getPages();
         String book_summary = current.getSummary();
 
+        mBookTitle.setText(current.getTitle());
+        mBookAuthor.setText(current.getAuthor());
+        Glide.with(getContext()).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(mBookCover);
         mBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         mBookPages.setText("n° pages : " + ((book_pages == 0) ? "-" : String.valueOf(book_pages)));
+        mBookSummary.setMovementMethod(new ScrollingMovementMethod());
         mBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
+
 
 
         root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
@@ -113,10 +120,9 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
             }
         });
 
-        if(current.getDownload() == null)
-            mDownloadBtn.setEnabled(false);
 
-        Log.d("fileSource", String.valueOf(current.getSource() == null));
+        Log.d("fileSource", ((current.getSource() == null) ? "null" : current.getSource()));
+        new getDownloadUrl().execute();
 
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,6 +317,32 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
             Toast.makeText(getContext(),
                     s, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
+
+
+        @Override
+        protected URI doInBackground(Void... voids) {
+            URI download_url = null;
+            Log.d("doInBackground", current.getProvider().getName());
+
+            download_url = current.getDownload();
+
+            return download_url;
+        }
+
+        @Override
+        protected void onPostExecute(URI uri) {
+            if(uri == null) {
+                mDownloadBtn.setEnabled(false);
+                Log.d("DownloadTask", "null");
+            } else {
+                current.setDownload(uri);
+                Log.d("DownloadTask", uri.toString());
+            }
+
         }
     }
 }

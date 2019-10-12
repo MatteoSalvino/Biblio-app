@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="120sp"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:weightSum="4">
 
    <ImageView
        android:id="@+id/mybook_cover"
@@ -13,9 +14,10 @@
        android:layout_margin="10dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="2">
 
         <TextView
             android:id="@+id/mybook_title"
@@ -78,8 +80,9 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/read_btn"

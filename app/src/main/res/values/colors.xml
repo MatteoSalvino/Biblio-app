@@ -8,5 +8,7 @@
     <color name="backgroundnav">#1A237E</color>
     <color name="backgroundapp">#EEEEEE</color>
     <color name="textcolor">#000000</color>
+    <color name="disableBtnColor">#D7CCC8</color>
+    <color name="enableBtnColor">#0D47A1</color>
 
 </resources>

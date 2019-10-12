@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_filters_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:gravity="center">
+
+
+        <ImageView
+            android:id="@+id/filters_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_arrow_back_ios_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Filters"
+            android:textSize="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filters_reset_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#E53935"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/item_decorator"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Provider"
+        android:layout_margin="10dp"
+        android:textColor="@color/textcolor"
+        android:textSize="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:weightSum="2">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/libgen_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Library Genesis"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/feedbooks_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Feeboks"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        android:layout_margin="10dp"
+        android:textColor="@color/textcolor"
+        android:textSize="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/low_rating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/enableBtnColor"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="5dp"
+            android:text="0+" />
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/medium_rating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/enableBtnColor"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="5dp"
+            android:text="2.5+" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/medium_high_rating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/enableBtnColor"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="5dp"
+            android:text="4+" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/high_rating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/enableBtnColor"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="5dp"
+            android:text="4.5+" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Language"
+        android:layout_margin="10dp"
+        android:textColor="@color/textcolor"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/italian_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Italian"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"
+            android:layout_marginLeft="10dp"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/english_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="English"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/french_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="French"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/spanish_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="Spanish"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/german_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor"
+            android:text="German"
+            android:layout_weight="1"
+            android:buttonTint="@color/textcolor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/apply_filters_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Results"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</LinearLayout>

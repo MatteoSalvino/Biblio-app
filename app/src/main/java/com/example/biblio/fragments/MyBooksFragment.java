@@ -67,8 +67,8 @@ public class MyBooksFragment extends Fragment {
                 mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        //Toast.makeText(getContext(), ((Book) adapterView.getItemAtPosition(i)).toString(), Toast.LENGTH_LONG).show();
-                        openFile(myBooks.get(i).getTitle() + "_" + myBooks.get(i).getAuthor() + "_" + myBooks.get(i).getPublished().toString() + ".epub");
+                        Ebook current = myBooks.get(i);
+                        openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getExtension());
                     }
                 });
             }
@@ -80,7 +80,8 @@ public class MyBooksFragment extends Fragment {
         return v;
     }
 
-    private void openFile(String filename) {
+    private void openFile(String filename, String extension) {
+        filename = filename + "." + extension;
         File path = new File(Environment.getExternalStorageDirectory() + "/biblioData/" + filename);
         Log.d("openFile", path.toString());
 
@@ -88,7 +89,12 @@ public class MyBooksFragment extends Fragment {
         Uri uri = FileProvider.getUriForFile(getContext(),
                 BuildConfig.APPLICATION_ID + ".provider",
                 path);
-        in.setDataAndType(uri, "application/epub+zip");
+
+        if(extension.equals("epub"))
+            in.setDataAndType(uri, "application/epub+zip");
+        else if(extension.equals("pdf"))
+            in.setDataAndType(uri, "application/pdf");
+
         in.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(in);
     }

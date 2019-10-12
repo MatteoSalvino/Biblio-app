@@ -30,6 +30,10 @@ import com.example.biblio.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
+
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -43,13 +47,7 @@ import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import lrusso96.simplebiblio.core.Ebook;
-import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
-import lrusso96.simplebiblio.core.providers.feedbooks.FeedbooksBuilder;
-import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
-import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
-import lrusso96.simplebiblio.exceptions.BiblioException;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class BookFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
@@ -69,7 +67,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
     private SharedPreferences.Editor editor;
     private RequestOptions option;
     private Ebook current;
-    private List<Ebook> search_data;
+
 
     @Nullable
     @Override
@@ -131,7 +129,10 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
                     if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         Log.d("Permissions", "Permissions available");
 
-                        new DownloadFile().execute(current.getDownload().toString(), filename);
+                        downloadFile(current.getDownload().toString(), Environment.getExternalStorageDirectory()+"/biblioData/" + filename);
+
+                        //new DownloadFile().execute(current.getDownload().toString(), filename);
+
                     } else {
                         Log.d("Permissions", "Permissions not available");
                         EasyPermissions.requestPermissions(getContext(), getString(R.string.write_file), WRITE_REQUEST_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -197,7 +198,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         Log.d("onPermissionsGranted", "permissions granted");
-        new DownloadFile().execute(current.getDownload().toString(), filename);
+        downloadFile(current.getDownload().toString(), Environment.getExternalStorageDirectory() +"/biblioData/" + filename);
     }
 
     @Override
@@ -205,120 +206,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
         Log.d("No Permissions", "Permission has been denied");
     }
 
-    private class DownloadFile extends AsyncTask<String, String, String> {
-        private ProgressDialog progressDialog;
-        private String filename;
-        private String folder;
-        private boolean isDownloaded;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Downloading");
-            progressDialog.setIcon(R.drawable.download);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            this.progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            int count;
-            InputStream input = null;
-            OutputStream output = null;
-            try {
-                URL url = new URL(strings[0]);
-                URLConnection connection = url.openConnection();
-                connection.connect();
-
-
-                int file_size = connection.getContentLength();
-
-                Log.d("doInBackground", "file.length() : "+file_size);
-
-                input = new BufferedInputStream(url.openStream(), 8192);
-                //String timestamp = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
-
-                filename = strings[1];
-                //filename = timestamp + "_" + filename;
-
-                Log.d("doInBackground", "filename : "+filename);
-
-                folder = Environment.getExternalStorageDirectory() + File.separator + "biblioData/";
-                File directory = new File(folder);
-
-                Log.d("doInBackground", "folder : "+folder);
-
-                if(!directory.exists()) {
-                    Log.d("doInBackground", folder + " not exists");
-                    directory.mkdirs();
-                }
-
-                output = new FileOutputStream(folder + filename);
-                byte data[] = new byte[1024];
-                long total = 0;
-
-                while ((count = input.read(data)) != -1){
-                    total += count;
-
-                    publishProgress("" + (int)((total * 100) / file_size));
-                    //Log.d("DialogProgress", "Progress: " + (int) ((total * 100) / file_size));
-
-                    output.write(data, 0, count);
-                }
-
-                output.flush();
-
-                isDownloaded = true;
-                return "Downloaded at : " + folder + filename;
-
-            } catch (Exception e) {
-                Log.e("Error: ", e.getMessage());
-            }finally {
-                try {
-                    input.close();
-                    output.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            isDownloaded = false;
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            progressDialog.setProgress(Integer.parseInt(values[0]));
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            this.progressDialog.dismiss();
-
-            if(isDownloaded) {
-                mDownloadBtn.setVisibility(View.INVISIBLE);
-                mRemoveBtn.setVisibility(View.VISIBLE);
-                //Array saved in sharedPrefs is empty
-                String response = sharedPreferences.getString("mybooks", null);
-                if(response == null) {
-                    ArrayList<Ebook> myBooks = new ArrayList<Ebook>();
-                    myBooks.add(current);
-                    editor.putString("mybooks", new Gson().toJson(myBooks));
-                    editor.commit();
-                } else {
-                   ArrayList<Ebook>  myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {}.getType());
-                   myBooks.add(current);
-                   editor.putString("mybooks", new Gson().toJson(myBooks));
-                   editor.commit();
-                }
-            }
-
-            Toast.makeText(getContext(),
-                    s, Toast.LENGTH_LONG).show();
-        }
-    }
 
     private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
 
@@ -344,5 +232,69 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
             }
 
         }
+    }
+
+    private void downloadFile(String url, String path) {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Downloading");
+        progressDialog.setIcon(R.drawable.download);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        FileDownloader.setup(getContext());
+        FileDownloader.getImpl().create(url)
+                .setPath(path)
+                .setCallbackProgressTimes(300)
+                .setMinIntervalUpdateSpeed(400)
+                .setListener(new FileDownloadListener() {
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        progressDialog.setProgress((int)((soFarBytes * 100) / totalBytes));
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        progressDialog.dismiss();
+
+                        mDownloadBtn.setVisibility(View.INVISIBLE);
+                        mRemoveBtn.setVisibility(View.VISIBLE);
+
+                        //Array saved in sharedPrefs is empty
+                        String response = sharedPreferences.getString("mybooks", null);
+
+                        if(response == null) {
+                            ArrayList<Ebook> myBooks = new ArrayList<Ebook>();
+                            myBooks.add(current);
+                            editor.putString("mybooks", new Gson().toJson(myBooks));
+                            editor.commit();
+                        } else {
+                            ArrayList<Ebook>  myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {}.getType());
+                            myBooks.add(current);
+                            editor.putString("mybooks", new Gson().toJson(myBooks));
+                            editor.commit();
+                        }
+
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+
+                    }
+                }).start();
     }
 }

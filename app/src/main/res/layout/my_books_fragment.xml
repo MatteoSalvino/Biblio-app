@@ -8,8 +8,9 @@
        android:id="@+id/listView"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginLeft="5dp"
-       android:layout_marginRight="5dp" />
+       android:layout_margin="5dp"
+       android:divider="@null"
+       android:dividerHeight="0dp"/>
 
    <ImageView
        android:id="@+id/iv_template"

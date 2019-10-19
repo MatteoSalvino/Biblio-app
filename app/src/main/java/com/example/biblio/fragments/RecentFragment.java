@@ -50,9 +50,9 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecentRecycleView.setLayoutManager(mLayoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
-        mRecentRecycleView.addItemDecoration(itemDecoration);
+        //DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
+        //mRecentRecycleView.addItemDecoration(itemDecoration);
 
         adapterListener = this;
 
@@ -83,6 +83,7 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
             super.onPreExecute();
             progressDialog = ProgressDialog.show(getActivity(), "Loading",
                     "Loading. Please wait...", true);
+            progressDialog.setContentView(R.layout.progress_dialog_view);
         }
 
         @Override

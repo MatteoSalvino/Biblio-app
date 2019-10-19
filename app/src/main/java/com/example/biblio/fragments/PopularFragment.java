@@ -53,9 +53,9 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
         mLayoutManager = new LinearLayoutManager(getContext());
         mPopularRecycleView.setLayoutManager(mLayoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
-        mPopularRecycleView.addItemDecoration(itemDecoration);
+        //DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
+        //mPopularRecycleView.addItemDecoration(itemDecoration);
 
         adapterListener = this;
 
@@ -86,6 +86,7 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
             super.onPreExecute();
             progressDialog = ProgressDialog.show(getActivity(), "Loading",
                     "Loading. Please wait...", true);
+            progressDialog.setContentView(R.layout.progress_dialog_view);
         }
 
         @Override

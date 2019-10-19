@@ -2,6 +2,8 @@ package com.example.biblio.fragments;
 
 
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
@@ -20,7 +22,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     boolean themeOption = (boolean) newValue;
-                    //Toast.makeText(getContext(), "night mode " +themeOption, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "night mode : " +themeOption, Toast.LENGTH_LONG).show();
 
                     ThemeHelper.applyTheme(themeOption);
                     getActivity().recreate();

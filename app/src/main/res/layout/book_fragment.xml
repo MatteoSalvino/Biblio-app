@@ -37,7 +37,7 @@
                 android:ellipsize="end"
                 android:text="Title"
                 android:layout_marginTop="10dp"
-                android:textColor="#000"/>
+                android:textColor="@color/mainBookTextColor"/>
 
             <TextView
                 android:id="@+id/main_book_author"
@@ -47,7 +47,7 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:text="Author"
-                android:textColor="#000"
+                android:textColor="@color/mainBookTextColor"
                 android:layout_marginTop="5dp"/>
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="2008"
-                android:textColor="#000"
+                android:textColor="@color/mainBookTextColor"
                 android:layout_marginTop="5dp"/>
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="Pages : "
-                android:textColor="#000"
+                android:textColor="@color/mainBookTextColor"
                 android:layout_marginTop="5dp"/>
 
             <!---
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/desc_sample"
-        android:textColor="#000"
+        android:textColor="@color/mainBookTextColor"
         android:textSize="15sp"
         android:layout_margin="10dp"
         android:maxLines="14"

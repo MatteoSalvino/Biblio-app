@@ -2,9 +2,7 @@ package com.example.biblio;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import androidx.preference.PreferenceManager;
-
 import com.example.biblio.helpers.ThemeHelper;
 
 public class DarkThemeApplication extends Application {
@@ -15,6 +13,9 @@ public class DarkThemeApplication extends Application {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
         boolean themePref = sharedPreferences.getBoolean("theme", false);
+
         ThemeHelper.applyTheme(themePref);
+
+
     }
 }

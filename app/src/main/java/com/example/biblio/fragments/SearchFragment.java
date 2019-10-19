@@ -64,9 +64,9 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecycleView.setLayoutManager(mLayoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
-        mRecycleView.addItemDecoration(itemDecoration);
+        //DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(ContextCompat.getDrawable(getContext(),R.drawable.item_decorator));
+        //mRecycleView.addItemDecoration(itemDecoration);
 
         adapterListener = this;
 

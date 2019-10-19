@@ -4,12 +4,16 @@
     <!-- app palette -->
     <color name="primary">#212121</color> <!-- Blue 300 -->
     <color name="secondary">#FFCC80</color> <!-- Orange 200 -->
+    <color name="colorPrimaryDark">#000051</color>
     <color name="error">#Ef9A9A</color> <!-- Red 200 -->
     <color name="backgroundnav">#212121</color>
     <color name="backgroundapp">#000000</color>
-    <color name="textcolor">#FFFFFF</color>
+    <color name="textcolor">#000000</color>
+    <color name="searchBarTextColor">#FFFFFF</color>
+    <color name="preferencesTextColor">#FFFFFF</color>
     <color name="disableBtnColor">#D7CCC8</color>
     <color name="enableBtnColor">#0D47A1</color>
+    <color name="mainBookTextColor">#FFFFFF</color>
 
 </resources>
 

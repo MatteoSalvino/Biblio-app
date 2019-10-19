@@ -131,12 +131,12 @@ public class FiltersFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Add component dynamically
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                TextView tv = new TextView(getContext());
-                tv.setLayoutParams(lparams);
-                tv.setText("Feedbook selected");
+                //LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                //TextView tv = new TextView(getContext());
+                //tv.setLayoutParams(lparams);
+                //tv.setText("Feedbook selected");
 
-                mLinearLayout.addView(tv);
+                //mLinearLayout.addView(tv);
 
                 mFeedbooksCb.setChecked(true);
                 mLibgenesisCb.setChecked(false);

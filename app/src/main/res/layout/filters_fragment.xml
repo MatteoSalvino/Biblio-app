@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Filters"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/mainBookTextColor"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filters_reset_btn"
@@ -46,14 +47,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/item_decorator"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Provider"
         android:layout_margin="10dp"
-        android:textColor="@color/textcolor"
+        android:textColor="@color/mainBookTextColor"
         android:textSize="15dp"/>
 
     <LinearLayout
@@ -69,19 +70,19 @@
             android:id="@+id/libgen_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="Library Genesis"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/feedbooks_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="Feeboks"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
     </LinearLayout>
 
     <TextView
@@ -89,7 +90,7 @@
         android:layout_height="wrap_content"
         android:text="Rating"
         android:layout_margin="10dp"
-        android:textColor="@color/textcolor"
+        android:textColor="@color/mainBookTextColor"
         android:textSize="15dp"/>
 
     <LinearLayout
@@ -156,7 +157,7 @@
         android:layout_height="wrap_content"
         android:text="Language"
         android:layout_margin="10dp"
-        android:textColor="@color/textcolor"
+        android:textColor="@color/mainBookTextColor"
         android:textSize="15dp" />
 
     <LinearLayout
@@ -168,48 +169,48 @@
             android:id="@+id/italian_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="Italian"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"
+            android:buttonTint="@color/mainBookTextColor"
             android:layout_marginLeft="10dp"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/english_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="English"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/french_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="French"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
 
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/spanish_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="Spanish"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/german_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/mainBookTextColor"
             android:text="German"
             android:layout_weight="1"
-            android:buttonTint="@color/textcolor"/>
+            android:buttonTint="@color/mainBookTextColor"/>
     </LinearLayout>
 
     <LinearLayout
@@ -223,6 +224,7 @@
             android:id="@+id/apply_filters_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/backgroundnav"
             android:text="Show Results"
             android:textAllCaps="false"/>
     </LinearLayout>

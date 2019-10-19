@@ -5,14 +5,17 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
-        app:cardUseCompatPadding="true">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,10 +31,14 @@
                 app:mt_speechMode="false"
                 app:mt_hint="Search any book !"
                 app:mt_maxSuggestionsCount="4"
-                app:mt_placeholderColor="@color/textcolor"
+                app:mt_hintColor="@color/searchBarTextColor"
+                app:mt_textColor="@color/searchBarTextColor"
                 app:mt_searchBarColor="@color/backgroundapp"
                 app:mt_roundedSearchBarEnabled="true"
-                android:layout_marginBottom="10dp" />
+                app:mt_backIconTint="@color/searchBarTextColor"
+                app:mt_searchIconTint="@color/searchBarTextColor"
+                app:mt_clearIconTint="@color/searchBarTextColor"
+                android:paddingTop="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,11 +52,12 @@
                     android:layout_height="wrap_content"
                     android:text="Filters"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/backgroundnav"
                     app:icon="@drawable/tune"
+                    app:iconTint="@color/backgroundnav"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/backgroundapp"/>
+                    android:backgroundTint="#FFFFFF"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/useless_btn"
@@ -61,7 +69,7 @@
                     app:icon="@drawable/tune"
                     android:visibility="invisible"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/backgroundapp"/>
+                    android:backgroundTint="#FFFFFF"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sort_btn"
@@ -69,14 +77,15 @@
                     android:layout_height="wrap_content"
                     android:text="Sort by"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/backgroundnav"
                     android:layout_marginRight="20dp"
                     app:icon="@drawable/sort_variant"
+                    app:iconTint="@color/backgroundnav"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/backgroundapp" />
+                    android:backgroundTint="#FFFFFF" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 

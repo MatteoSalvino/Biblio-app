@@ -43,15 +43,23 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private MaterialSearchBar mSearchBar;
+    private Bundle cache;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if(cache == null) {
+            Log.d("SearchFragment", "cache is null");
+            myDataset = new ArrayList<>();
+        } else {
+            myDataset = new Gson().fromJson(cache.getString("search_data"), new TypeToken<ArrayList<Ebook>>() {}.getType());
+            Log.d("SearchFragment", "data retrieved");
+        }
+
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         mSearchBar = view.findViewById(R.id.searchBar);
 
-
-        myDataset = new ArrayList<>();
         simpleBiblio = new SimpleBiblioBuilder().build();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
@@ -99,6 +107,11 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
             }
         });
 
+        if(myDataset.size() > 0) {
+            Log.d("SearchFragment", "myDataset is not empty");
+            mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
+            mRecycleView.setAdapter(mAdapter);
+        }
         return view;
     }
 
@@ -154,4 +167,13 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(cache == null)
+            cache = new Bundle();
+        cache.putString("search_data", new Gson().toJson(myDataset, new TypeToken<ArrayList<Ebook>>() {}.getType()));
+        Log.d("SearchFragment", "cache populated");
+    }
 }
+

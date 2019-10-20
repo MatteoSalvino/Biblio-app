@@ -40,7 +40,7 @@
             android:text="Reset"
             android:textAllCaps="false"
             android:layout_marginRight="20dp"
-            android:backgroundTint="#E53935"/>
+            android:backgroundTint="@color/btnRemoveColor"/>
     </LinearLayout>
 
     <ImageView
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="Feeboks"
+            android:text="Feebooks"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
     </LinearLayout>
@@ -105,11 +105,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/enableBtnColor"
+            android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="0+" />
+            android:text="0+"
+            android:textColor="@color/mainBookTextColor"/>
 
 
 
@@ -119,11 +120,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/enableBtnColor"
+            android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="2.5+" />
+            android:text="2.5+"
+            android:textColor="@color/mainBookTextColor"/>
 
 
         <com.google.android.material.button.MaterialButton
@@ -132,11 +134,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/enableBtnColor"
+            android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="4+" />
+            android:text="4+"
+            android:textColor="@color/mainBookTextColor"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/high_rating_btn"
@@ -145,11 +148,12 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/enableBtnColor"
+            android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="4.5+" />
+            android:text="4.5+"
+            android:textColor="@color/mainBookTextColor"/>
     </LinearLayout>
 
     <TextView
@@ -224,9 +228,10 @@
             android:id="@+id/apply_filters_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/backgroundnav"
+            android:backgroundTint="@color/btnAddColor"
             android:text="Show Results"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/mainBookTextColor"/>
     </LinearLayout>
 
 </LinearLayout>

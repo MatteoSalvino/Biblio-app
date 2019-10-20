@@ -97,7 +97,12 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
         mBookTitle.setText(current.getTitle());
         mBookAuthor.setText(current.getAuthor());
-        Glide.with(getContext()).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(mBookCover);
+
+        if(current.getCover() == null)
+            Glide.with(getContext()).load(R.drawable.no_image).into(mBookCover);
+        else
+            Glide.with(getContext()).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(mBookCover);
+
         mBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         mBookPages.setText("n° pages : " + ((book_pages == 0) ? "-" : String.valueOf(book_pages)));
         mBookSummary.setMovementMethod(new ScrollingMovementMethod());
@@ -225,6 +230,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
         protected void onPostExecute(URI uri) {
             if(uri == null) {
                 mDownloadBtn.setEnabled(false);
+                mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
                 Log.d("DownloadTask", "null");
             } else {
                 current.setDownload(uri);

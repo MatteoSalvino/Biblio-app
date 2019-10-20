@@ -3,6 +3,7 @@ package com.example.biblio.fragments;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +101,8 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
             } catch (BiblioException e) {
                 e.printStackTrace();
             }
+
+            Log.d("RecentFragment", "feedboks_list's size : " + feedbooks_list.size() + ", libgen_list's size : " + libgen_list.size());
 
             feedbooks_list.addAll(libgen_list);
 

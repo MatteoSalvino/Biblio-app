@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="120sp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_height="120sp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="@color/white">
+        app:cardBackgroundColor="@color/cardBackgroundColor"
+        android:elevation="8dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
@@ -105,8 +104,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:text="Read Now"
+                    android:textColor="@color/mainBookTextColor"
                     android:textAllCaps="false"
-                    android:backgroundTint="#558B2F"/>
+                    android:backgroundTint="@color/btnAddColor"/>
 
             </RelativeLayout>
         </LinearLayout>

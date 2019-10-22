@@ -51,6 +51,7 @@ import lrusso96.simplebiblio.core.Ebook;
 public class BookFragment extends Fragment {
     private MaterialButton mDownloadBtn;
     private MaterialButton mRemoveBtn;
+    //fixme: variable not used
     private static final int WRITE_REQUEST_CODE = 300;
     private File root_dir;
     private String filename;

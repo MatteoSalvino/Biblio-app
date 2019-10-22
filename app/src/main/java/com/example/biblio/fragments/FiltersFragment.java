@@ -148,7 +148,7 @@ public class FiltersFragment extends Fragment {
 
         List<Ebook> filtered_results = new ArrayList<>();
 
-        //Rating not managed yet
+        //todo: rating not managed yet
         for (Ebook elem : search_results) {
             if (elem.getProvider().getName().equals(provider) && languages.contains(elem.getLanguage()))
                 filtered_results.add(elem);

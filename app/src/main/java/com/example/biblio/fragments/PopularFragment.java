@@ -23,11 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lrusso96.simplebiblio.core.Ebook;
+import lrusso96.simplebiblio.core.SimpleBiblio;
+import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
 import lrusso96.simplebiblio.core.providers.feedbooks.FeedbooksBuilder;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
-import lrusso96.simplebiblio.exceptions.BiblioException;
 
 public class PopularFragment extends Fragment implements MyAdapter.OnItemListener {
     private RecyclerView mPopularRecycleView;
@@ -101,23 +102,16 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
 
         @Override
         protected List<Ebook> doInBackground(Void... params) {
-            List<Ebook> feedbooks_list = new ArrayList<>();
-            List<Ebook> libgen_list = new ArrayList<>();
-
             Feedbooks feedbooks = new FeedbooksBuilder().build();
             LibraryGenesis libraryGenesis = new LibraryGenesisBuilder().build();
+            SimpleBiblio biblio = new SimpleBiblioBuilder()
+                    .addProvider(feedbooks)
+                    .addProvider(libraryGenesis)
+                    .build();
 
-            try {
-                feedbooks_list = feedbooks.getPopular();
-                libgen_list = libraryGenesis.getPopular();
-            } catch (BiblioException e) {
-                e.printStackTrace();
-            }
-            Log.d("PopularFragment", "feedboks_list's size : " + feedbooks_list.size() + ", libgen_list's size : " + libgen_list.size());
-
-            feedbooks_list.addAll(libgen_list);
-
-            return feedbooks_list;
+            List<Ebook> ret = biblio.getAllPopular();
+            Log.d("PopularFragment", String.format("list's size : %d", ret.size()));
+            return ret;
         }
 
         @Override

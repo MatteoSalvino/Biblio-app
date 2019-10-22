@@ -152,15 +152,18 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
             if (ebooks != null) {
 
                 //Filter ebooks with unknown extension
+                /*
                 List<Ebook> filtered_results = new ArrayList<Ebook>();
                 for (Ebook elem : ebooks){
-                    if(elem.getExtension() != null)
+                    if(elem.getDownload().get(0).getExtension() != null)
                         filtered_results.add(elem);
                 }
 
                 myDataset = filtered_results;
+
+                 */
+                myDataset = ebooks;
                 Log.d("result's size : ", String.valueOf(ebooks.size()));
-                Log.d("filtered_result's size", String.valueOf(myDataset.size()));
                 mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
                 mRecycleView.setAdapter(mAdapter);
             }

@@ -118,7 +118,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/baseline_keyboard_arrow_right_24"
-                    android:iconTint="@color/textcolor"
+                    android:tint="@color/textcolor"
                     android:padding="20dp"/>
 
             </RelativeLayout>

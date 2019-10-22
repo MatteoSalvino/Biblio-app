@@ -68,7 +68,7 @@ public class MyBooksFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Ebook current = myBooks.get(i);
-                        openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getExtension());
+                        openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getDownload().get(0).getExtension());
                     }
                 });
             }

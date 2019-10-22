@@ -14,14 +14,18 @@ public class CheckForSDCardHelper {
     public static boolean findFile(File dir, String filename, boolean removeOption) {
         File[] children = dir.listFiles();
 
-        for(File child : children) {
-            //Log.d("findFile", child.getName());
-            if(filename.equals(child.getName())){
-                if(removeOption)
-                    child.delete();
-                return true;
+        if(children != null) {
+
+            for (File child : children) {
+                //Log.d("findFile", child.getName());
+                if (filename.equals(child.getName())) {
+                    if (removeOption)
+                        child.delete();
+                    return true;
+                }
             }
         }
+
         return false;
     }
 }

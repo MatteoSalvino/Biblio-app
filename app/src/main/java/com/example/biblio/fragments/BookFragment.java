@@ -1,6 +1,7 @@
 package com.example.biblio.fragments;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +33,16 @@ import com.example.biblio.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.CompositeMultiplePermissionsListener;
+import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
@@ -47,10 +60,12 @@ import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class BookFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
+public class BookFragment extends Fragment {
     private TextView mBookTitle;
     private TextView mBookAuthor;
     private ImageView mBookCover;
@@ -67,6 +82,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
     private SharedPreferences.Editor editor;
     private RequestOptions option;
     private Ebook current;
+    private List<Download> downloadList;
 
 
     @Nullable
@@ -85,8 +101,9 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
         mDownloadBtn = view.findViewById(R.id.main_download_btn);
         mRemoveBtn = view.findViewById(R.id.main_remove_btn);
 
+
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook> () {}.getType());
-        Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getExtension());
+        //Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getDownload().get(0).getExtension());
 
         //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());
 
@@ -111,7 +128,15 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
 
         root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
-        filename = mBookTitle.getText().toString()+"_"+mBookAuthor.getText().toString()+"_"+ mBookDate.getText().toString() + "." + current.getExtension();
+
+        downloadList = current.getDownload();
+
+
+        if(!current.getDownload().isEmpty())
+            filename = mBookTitle.getText().toString()+"_"+mBookAuthor.getText().toString()+"_"+ mBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
+        else
+            mDownloadBtn.setEnabled(false);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
@@ -131,17 +156,36 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
             @Override
             public void onClick(View view) {
                 if(CheckForSDCardHelper.isSDCardPresent()) {
-                    if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        Log.d("Permissions", "Permissions available");
 
-                        downloadFile(current.getDownload().toString(), Environment.getExternalStorageDirectory()+"/biblioData/" + filename);
+                    MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport report) {
+                            if(report.areAllPermissionsGranted())
+                                downloadFile(downloadList.get(0).getUri().toString(), Environment.getExternalStorageDirectory() + "/biblioData/" + filename);
+                            else
+                                Log.d("Permissions", "Permissions not available.");
+                        }
 
-                        //new DownloadFile().execute(current.getDownload().toString(), filename);
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
 
-                    } else {
-                        Log.d("Permissions", "Permissions not available");
-                        EasyPermissions.requestPermissions(getContext(), getString(R.string.write_file), WRITE_REQUEST_CODE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
-                    }
+                        }
+                    };
+
+                    MultiplePermissionsListener dialogMultiplePermissionsListener =
+                            DialogOnAnyDeniedMultiplePermissionsListener.Builder
+                                    .withContext(getContext())
+                                    .withTitle("Read/Write external local storage permission")
+                                    .withMessage("Both read and write permission are needed to store and retrieve downloaded files.")
+                                    .withButtonText(android.R.string.ok)
+                                    .withIcon(getContext().getDrawable(R.drawable.baseline_error_outline_24))
+                                    .build();
+
+                    MultiplePermissionsListener compositePermissionsListener = new CompositeMultiplePermissionsListener(dialogMultiplePermissionsListener, multiplePermissionListener);
+
+                    Dexter.withActivity(getActivity())
+                            .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            .withListener(compositePermissionsListener).check();
                 } else {
                     Log.d("SD Card", "SD Card not available");
                     Toast.makeText(getContext(), "SD Card not found", Toast.LENGTH_LONG).show();
@@ -183,7 +227,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
 
         //Check if selected book is yet downloaded
-        if(root_dir.exists()) {
+        if(root_dir.exists() && filename != null) {
             if (CheckForSDCardHelper.findFile(root_dir, filename, false)) {
                 mDownloadBtn.setVisibility(View.INVISIBLE);
                 mRemoveBtn.setVisibility(View.VISIBLE);
@@ -192,25 +236,6 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
         return view;
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, getContext());
-    }
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Log.d("onPermissionsGranted", "permissions granted");
-        downloadFile(current.getDownload().toString(), Environment.getExternalStorageDirectory() +"/biblioData/" + filename);
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Log.d("No Permissions", "Permission has been denied");
-    }
-
 
 
     private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
@@ -221,7 +246,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
             URI download_url = null;
             Log.d("doInBackground", current.getProvider().getName());
 
-            download_url = current.getDownload();
+            download_url = (downloadList.isEmpty()) ? null : downloadList.get(0).getUri();
 
             return download_url;
         }
@@ -233,7 +258,6 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
                 mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
                 Log.d("DownloadTask", "null");
             } else {
-                current.setDownload(uri);
                 Log.d("DownloadTask", uri.toString());
             }
 
@@ -256,6 +280,7 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
                 .setListener(new FileDownloadListener() {
                     @Override
                     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        Log.d("downloadFile", "pending state");
                     }
 
                     @Override
@@ -289,16 +314,19 @@ public class BookFragment extends Fragment implements EasyPermissions.Permission
 
                     @Override
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        Log.d("downloadFile", "pause state");
 
                     }
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
-
+                        Log.d("downloadFile", "error state");
+                        e.printStackTrace();
                     }
 
                     @Override
                     protected void warn(BaseDownloadTask task) {
+                        Log.d("downloadFile", "warning state");
 
                     }
                 }).start();

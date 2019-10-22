@@ -5,6 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,8 +31,25 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        if (savedInstanceState == null)
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean isFirstStart = sharedPrefs.getBoolean("firstStart", true);
+
+        if (isFirstStart) {
+            //Launch introduction activity
+            Intent i = new Intent(MainActivity.this, Introduction.class);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(i);
+                }
+            });
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+        } else {
+            if (savedInstanceState == null)
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

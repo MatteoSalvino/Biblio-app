@@ -16,6 +16,9 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppThemeDark">
+
+        <activity android:name=".Introduction" android:screenOrientation="portrait" />
+
         <activity android:name=".MainActivity" android:screenOrientation="portrait" android:noHistory="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

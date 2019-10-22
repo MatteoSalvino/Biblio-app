@@ -21,10 +21,10 @@ import lrusso96.simplebiblio.core.Ebook;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private List<Ebook> mDataset;
-    private OnItemListener itemListener;
-    private RequestOptions option;
-    private Context mContext;
+    private final List<Ebook> mDataset;
+    private final OnItemListener itemListener;
+    private final RequestOptions option;
+    private final Context mContext;
 
     public MyAdapter(List<Ebook> myDataset, OnItemListener listener, Context context) {
         this.mDataset = myDataset;
@@ -68,12 +68,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView mBookTitle;
-        TextView mBookAuthor;
-        ImageView mBookCover;
-        TextView mBookPages;
-        TextView mBookSource;
-        OnItemListener itemListener;
+        final TextView mBookTitle;
+        final TextView mBookAuthor;
+        final ImageView mBookCover;
+        final TextView mBookPages;
+        final TextView mBookSource;
+        final OnItemListener itemListener;
 
 
         MyViewHolder(View v, OnItemListener listener) {

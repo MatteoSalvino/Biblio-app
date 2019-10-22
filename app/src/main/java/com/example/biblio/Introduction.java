@@ -47,10 +47,6 @@ public class Introduction extends AppIntro {
         super.onSkipPressed(currentFragment);
     }
 
-    @Override
-    public void onNextPressed() {
-        super.onNextPressed();
-    }
 
     @Override
     public void onDonePressed() {
@@ -60,10 +56,5 @@ public class Introduction extends AppIntro {
         editor.putBoolean("firstStart", false);
         editor.apply();
         finish();
-    }
-
-    @Override
-    public void onSlideChanged() {
-        super.onSlideChanged();
     }
 }

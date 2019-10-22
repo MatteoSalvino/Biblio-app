@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class MyBooksAdapter extends ArrayAdapter<Ebook> {
-    private Context mContext;
-    private ArrayList<Ebook> myBooks;
+    private final Context mContext;
+    private final ArrayList<Ebook> myBooks;
 
 
     public MyBooksAdapter(@NonNull Context context, ArrayList<Ebook> list) {

@@ -7,4 +7,26 @@
     <string name="write_file">This app needs access to your file storage so that it can write files.</string>
     <string name="empty_my_books_msg">You have not added any book yet.</string>
     <string name="done_msg">Done</string>
+    <string name="author_field">Author</string>
+    <string name="title_field">Title</string>
+    <string name="read_now_msg">Read Now</string>
+    <string name="reset_msg">Reset</string>
+    <string name="filters_option">Filters</string>
+    <string name="provider_field">Provider</string>
+    <string name="library_genesis_tv">Library Genesis</string>
+    <string name="feebooks_tv">Feebooks</string>
+    <string name="rating_field">Rating</string>
+    <string name="minimum_rating">0+</string>
+    <string name="low_rating">2.5+</string>
+    <string name="medium_rating">4+</string>
+    <string name="high_rating">4.5+</string>
+    <string name="language_field">Language</string>
+    <string name="italian_lang">Italian</string>
+    <string name="english_lang">English</string>
+    <string name="french_lang">French</string>
+    <string name="spanish_lang">Spanish</string>
+    <string name="german_lang">German</string>
+    <string name="show_results_msg">Show Results</string>
+    <string name="loading_msg">Loading</string>
+    <string name="loading_please_wait_msg">Loading. Please wait...</string>
 </resources>

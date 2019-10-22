@@ -12,7 +12,7 @@
         app:cardBackgroundColor="@color/cardBackgroundColor"
         android:elevation="8dp">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="120sp"
@@ -36,10 +36,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="Title"
+                    android:text="@string/title_field"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/textcolor"/>
 
@@ -48,9 +48,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:text="Author"
+                    android:text="@string/author_field"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/textcolor"/>
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/textcolor"/>
 
                 <!--
@@ -100,10 +100,10 @@
                     android:id="@+id/read_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="Read Now"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/read_now_msg"
                     android:textColor="@color/mainBookTextColor"
                     android:textAllCaps="false"
                     android:backgroundTint="@color/btnAddColor"/>

@@ -143,7 +143,7 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         @Override
         protected List<Ebook> doInBackground(String... params) {
             String query = params[0];
-            List<Ebook> results = null;
+            List<Ebook> results;
 
             results = simpleBiblio.searchAll(query);
 

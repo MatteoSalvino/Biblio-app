@@ -19,7 +19,7 @@
             android:id="@+id/filters_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:src="@drawable/baseline_arrow_back_ios_24" />
 
@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Filters"
-            android:textSize="20dp"
+            android:text="@string/filters_option"
+            android:textSize="20sp"
             android:textColor="@color/mainBookTextColor"/>
 
         <com.google.android.material.button.MaterialButton
@@ -37,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#FFFFFF"
-            android:text="Reset"
+            android:text="@string/reset_msg"
             android:textAllCaps="false"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/btnRemoveColor"/>
     </LinearLayout>
 
@@ -52,10 +52,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Provider"
+        android:text="@string/provider_field"
         android:layout_margin="10dp"
         android:textColor="@color/mainBookTextColor"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="Library Genesis"
+            android:text="@string/library_genesis_tv"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
 
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="Feebooks"
+            android:text="@string/feebooks_tv"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
     </LinearLayout>
@@ -88,10 +88,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating"
+        android:text="@string/rating_field"
         android:layout_margin="10dp"
         android:textColor="@color/mainBookTextColor"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,13 +103,13 @@
             android:id="@+id/low_rating_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="0+"
+            android:text="@string/minimum_rating"
             android:textColor="@color/mainBookTextColor"/>
 
 
@@ -118,13 +118,13 @@
             android:id="@+id/medium_rating_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="2.5+"
+            android:text="@string/low_rating"
             android:textColor="@color/mainBookTextColor"/>
 
 
@@ -132,13 +132,13 @@
             android:id="@+id/medium_high_rating_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/btnAddColor"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="4+"
+            android:text="@string/medium_rating"
             android:textColor="@color/mainBookTextColor"/>
 
         <com.google.android.material.button.MaterialButton
@@ -152,17 +152,17 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="5dp"
-            android:text="4.5+"
+            android:text="@string/high_rating"
             android:textColor="@color/mainBookTextColor"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Language"
+        android:text="@string/language_field"
         android:layout_margin="10dp"
         android:textColor="@color/mainBookTextColor"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -174,17 +174,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="Italian"
+            android:text="@string/italian_lang"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginStart="10dp"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/english_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="English"
+            android:text="@string/english_lang"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
 
@@ -193,7 +193,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="French"
+            android:text="@string/french_lang"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
 
@@ -203,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="Spanish"
+            android:text="@string/spanish_lang"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
 
@@ -212,7 +212,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainBookTextColor"
-            android:text="German"
+            android:text="@string/german_lang"
             android:layout_weight="1"
             android:buttonTint="@color/mainBookTextColor"/>
     </LinearLayout>
@@ -229,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/btnAddColor"
-            android:text="Show Results"
+            android:text="@string/show_results_msg"
             android:textAllCaps="false"
             android:textColor="@color/mainBookTextColor"/>
     </LinearLayout>

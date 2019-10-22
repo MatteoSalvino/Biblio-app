@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,8 +31,6 @@ import lrusso96.simplebiblio.exceptions.BiblioException;
 
 public class RecentFragment extends Fragment implements MyAdapter.OnItemListener {
     private RecyclerView mRecentRecycleView;
-    private LinearLayoutManager mLayoutManager;
-    private MyAdapter mAdapter;
     private MyAdapter.OnItemListener adapterListener;
     private ArrayList<Ebook> recentList;
     private SwipeRefreshLayout mSwipeContainer;
@@ -52,7 +48,7 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
         mRecentRecycleView.setHasFixedSize(true);
 
         mSwipeContainer = v.findViewById(R.id.swipeRecentContainer);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecentRecycleView.setLayoutManager(mLayoutManager);
 
         showDialog = true;
@@ -65,13 +61,10 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
 
         new loadRecent().execute();
 
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                showDialog = false;
-                new loadRecent().execute();
-                mSwipeContainer.setRefreshing(false);
-            }
+        mSwipeContainer.setOnRefreshListener(() -> {
+            showDialog = false;
+            new loadRecent().execute();
+            mSwipeContainer.setRefreshing(false);
         });
 
         mSwipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
@@ -131,13 +124,13 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
 
         @Override
         protected void onPostExecute(List<Ebook> ebooks) {
-            if(showDialog)
+            if (showDialog)
                 progressDialog.dismiss();
 
             ArrayList<Ebook> res = new ArrayList<>(ebooks.size());
             res.addAll(ebooks);
             recentList = res;
-            mAdapter = new MyAdapter(recentList,  adapterListener, getContext());
+            MyAdapter mAdapter = new MyAdapter(recentList, adapterListener, getContext());
             mRecentRecycleView.setAdapter(mAdapter);
         }
     }

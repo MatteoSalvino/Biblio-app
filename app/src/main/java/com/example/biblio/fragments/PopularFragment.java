@@ -7,23 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyAdapter;
-import com.example.biblio.adapters.MyBooksAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -38,8 +31,6 @@ import lrusso96.simplebiblio.exceptions.BiblioException;
 
 public class PopularFragment extends Fragment implements MyAdapter.OnItemListener {
     private RecyclerView mPopularRecycleView;
-    private LinearLayoutManager mLayoutManager;
-    private MyAdapter mAdapter;
     private MyAdapter.OnItemListener adapterListener;
     private ArrayList<Ebook> popularList;
     private SwipeRefreshLayout mSwipeContainer;
@@ -56,7 +47,7 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
         mPopularRecycleView.setHasFixedSize(true);
 
         mSwipeContainer = v.findViewById(R.id.swipePopularContainer);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mPopularRecycleView.setLayoutManager(mLayoutManager);
 
 
@@ -69,19 +60,16 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
 
         new loadPopular().execute();
 
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                showDialog = false;
-                new loadPopular().execute();
-                mSwipeContainer.setRefreshing(false);
-            }
+        mSwipeContainer.setOnRefreshListener(() -> {
+            showDialog = false;
+            new loadPopular().execute();
+            mSwipeContainer.setRefreshing(false);
         });
 
         mSwipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
 
 
-        return  v;
+        return v;
     }
 
     @Override
@@ -134,13 +122,13 @@ public class PopularFragment extends Fragment implements MyAdapter.OnItemListene
 
         @Override
         protected void onPostExecute(List<Ebook> ebooks) {
-            if(showDialog)
+            if (showDialog)
                 progressDialog.dismiss();
 
             ArrayList<Ebook> res = new ArrayList<>(ebooks.size());
             res.addAll(ebooks);
             popularList = res;
-            mAdapter = new MyAdapter(popularList,  adapterListener, getContext());
+            MyAdapter mAdapter = new MyAdapter(popularList, adapterListener, getContext());
             mPopularRecycleView.setAdapter(mAdapter);
         }
     }

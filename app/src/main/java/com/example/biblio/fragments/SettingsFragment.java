@@ -2,13 +2,14 @@ package com.example.biblio.fragments;
 
 
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
+
 import com.example.biblio.R;
 import com.example.biblio.helpers.ThemeHelper;
+
+import java.util.Objects;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -17,17 +18,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.preferences, rootKey);
         SwitchPreference switchPreference = findPreference("theme");
 
-        if(switchPreference != null){
-            switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    boolean themeOption = (boolean) newValue;
-                    //Toast.makeText(getContext(), "night mode : " +themeOption, Toast.LENGTH_LONG).show();
+        if (switchPreference != null) {
+            switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                boolean themeOption = (boolean) newValue;
+                //Toast.makeText(getContext(), "night mode : " +themeOption, Toast.LENGTH_LONG).show();
 
-                    ThemeHelper.applyTheme(themeOption);
-                    getActivity().recreate();
-                    return true;
-                }
+                ThemeHelper.applyTheme(themeOption);
+                Objects.requireNonNull(getActivity()).recreate();
+                return true;
             });
         }
     }

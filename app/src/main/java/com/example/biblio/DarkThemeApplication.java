@@ -15,7 +15,5 @@ public class DarkThemeApplication extends Application {
         boolean themePref = sharedPreferences.getBoolean("theme", false);
 
         ThemeHelper.applyTheme(themePref);
-
-
     }
 }

@@ -8,14 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyAdapter;
 import com.google.android.material.button.MaterialButton;
@@ -23,25 +23,22 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
 import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
-import lrusso96.simplebiblio.exceptions.BiblioException;
 
 public class SearchFragment extends Fragment implements MyAdapter.OnItemListener {
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private List<Ebook> myDataset;
     private SimpleBiblio simpleBiblio;
     private MyAdapter.OnItemListener adapterListener;
-    private MaterialButton mFiltersBtn;
-    private MaterialButton mSortBtn;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private MaterialSearchBar mSearchBar;
     private Bundle cache;
 
@@ -49,11 +46,12 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if(cache == null) {
+        if (cache == null) {
             Log.d("SearchFragment", "cache is null");
             myDataset = new ArrayList<>();
         } else {
-            myDataset = new Gson().fromJson(cache.getString("search_data"), new TypeToken<ArrayList<Ebook>>() {}.getType());
+            myDataset = new Gson().fromJson(cache.getString("search_data"), new TypeToken<ArrayList<Ebook>>() {
+            }.getType());
             Log.d("SearchFragment", "data retrieved");
         }
 
@@ -61,15 +59,15 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
         mSearchBar = view.findViewById(R.id.searchBar);
 
         simpleBiblio = new SimpleBiblioBuilder().build();
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        mFiltersBtn = view.findViewById(R.id.filters_btn);
-        mSortBtn = view.findViewById(R.id.sort_btn);
+        MaterialButton mFiltersBtn = view.findViewById(R.id.filters_btn);
+        MaterialButton mSortBtn = view.findViewById(R.id.sort_btn);
         mRecycleView = view.findViewById(R.id.recycler_view);
         mRecycleView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecycleView.setLayoutManager(mLayoutManager);
 
         //DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -85,29 +83,27 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
                     Log.d("TextChanges", "Stopped typing.");
                     String query = mSearchBar.getSearchEditText().getText().toString();
 
-                    if(query.length() >= 5)
+                    if (query.length() >= 5)
                         new SearchTask().execute(query);
                     else
                         Log.d("QueryAlert", "Query too short !");
                 });
 
 
-        mFiltersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle args = new Bundle();
-                Fragment to_render = new FiltersFragment();
+        mFiltersBtn.setOnClickListener(view1 -> {
+            Bundle args = new Bundle();
+            Fragment to_render = new FiltersFragment();
 
-                args.putString("search_data", new Gson().toJson(myDataset, new TypeToken<ArrayList<Ebook>>() {}.getType()));
-                to_render.setArguments(args);
+            args.putString("search_data", new Gson().toJson(myDataset, new TypeToken<ArrayList<Ebook>>() {
+            }.getType()));
+            to_render.setArguments(args);
 
-                getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                        .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                        .addToBackStack(null).commit();
-            }
+            getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                    .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+                    .addToBackStack(null).commit();
         });
 
-        if(myDataset.size() > 0) {
+        if (myDataset.size() > 0) {
             Log.d("SearchFragment", "myDataset is not empty");
             mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
             mRecycleView.setAdapter(mAdapter);
@@ -132,6 +128,16 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
                 .addToBackStack(null).commit();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (cache == null)
+            cache = new Bundle();
+        cache.putString("search_data", new Gson().toJson(myDataset, new TypeToken<ArrayList<Ebook>>() {
+        }.getType()));
+        Log.d("SearchFragment", "cache populated");
+    }
+
     public class SearchTask extends AsyncTask<String, Void, List<Ebook>> {
 
         @Override
@@ -141,7 +147,7 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
 
             results = simpleBiblio.searchAll(query);
 
-            if(results == null)
+            if (results == null)
                 Log.d("SearchStatus", "something goes wrong !");
 
             return results;
@@ -168,15 +174,6 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
                 mRecycleView.setAdapter(mAdapter);
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if(cache == null)
-            cache = new Bundle();
-        cache.putString("search_data", new Gson().toJson(myDataset, new TypeToken<ArrayList<Ebook>>() {}.getType()));
-        Log.d("SearchFragment", "cache populated");
     }
 }
 

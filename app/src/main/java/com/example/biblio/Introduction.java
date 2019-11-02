@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
+import com.github.paolorotolo.appintro.model.SliderPage;
 
 public class Introduction extends AppIntro {
 
@@ -20,11 +21,9 @@ public class Introduction extends AppIntro {
 
         Button mDoneBtn = findViewById(R.id.done);
 
-        //todo: check this deprecated method!
-        addSlide(AppIntroFragment.newInstance("Search facility", "Search any books simply typing a short query in the search bar.", R.drawable.search, getResources().getColor(R.color.backgroundapp)));
-        addSlide(AppIntroFragment.newInstance("Store books", "Store your favorite books in your device's local storage.", R.drawable.cloud_download, getResources().getColor(R.color.secondary)));
-        addSlide(AppIntroFragment.newInstance("Refresh facility", "Swipe down in order to refresh data in Popular and Recent sections.", R.drawable.swipe_down, getResources().getColor(R.color.primary)));
-
+        createSlideFragment("Search facility", "Search any books simply typing a short query in the search bar.", R.drawable.search, getResources().getColor(R.color.backgroundapp));
+        createSlideFragment("Store books", "Store your favorite books in your device's local storage.", R.drawable.cloud_download, getResources().getColor(R.color.secondary));
+        createSlideFragment("Refresh facility", "Swipe down in order to refresh data in Popular and Recent sections.", R.drawable.swipe_down, getResources().getColor(R.color.primary));
 
         setNavBarColor(R.color.colorPrimaryDark);
 
@@ -35,22 +34,27 @@ public class Introduction extends AppIntro {
         mDoneBtn.setText(getResources().getText(R.string.done_msg));
         mDoneBtn.setAllCaps(false);
 
-        //todo: check this deprecated method!
-        showDoneButton(true);
-
+        setProgressButtonEnabled(true);
         setFadeAnimation();
     }
 
+    private void createSlideFragment(String title, String description, int image, int background) {
+        SliderPage sliderPage = new SliderPage();
+        sliderPage.setTitle(title);
+        sliderPage.setDescription(description);
+        sliderPage.setImageDrawable(image);
+        sliderPage.setBgColor(background);
+        addSlide(AppIntroFragment.newInstance(sliderPage));
+    }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
     }
 
-
     @Override
-    public void onDonePressed() {
-        super.onDonePressed();
+    public void onDonePressed(Fragment currentFragment) {
+        super.onDonePressed(currentFragment);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putBoolean("firstStart", false);

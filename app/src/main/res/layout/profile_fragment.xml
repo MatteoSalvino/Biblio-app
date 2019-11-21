@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your profile"
+        android:textSize="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/mainBookTextColor"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Perform the login in order to customize your experience."
+        android:textSize="15dp"
+        android:textColor="@color/mainBookTextColor"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/email_login_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/mainBookTextColor"
+        android:text="Proceed with Email"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/error"
+        app:icon="@drawable/email"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/google_login_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/mainBookTextColor"
+        android:text="Proceed with Google"
+        android:textAllCaps="false"
+        app:icon="@drawable/google"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signup_suggestion_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/backgroundapp"
+        android:layout_gravity="left"
+        android:text="Didn't have an account yet ? Signup now"
+        android:textColor="@color/mainBookTextColor"
+        android:textAllCaps="false"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/item_decorator"
+        android:tint="@color/mainBookTextColor"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textAllCaps="false"
+        app:icon="@drawable/settings_outline"
+        app:iconTint="@color/mainBookTextColor"
+        android:backgroundTint="@color/backgroundapp"
+        android:textColor="@color/mainBookTextColor"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"/>
+
+
+</LinearLayout>

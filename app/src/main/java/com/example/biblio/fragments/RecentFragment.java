@@ -14,14 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyAdapter;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
@@ -80,6 +77,7 @@ public class RecentFragment extends Fragment implements MyAdapter.OnItemListener
         Bundle args = new Bundle();
 
         args.putString("current", new Gson().toJson(recentList.get(position)));
+        //Log.d("RecentFragment", new Gson().toJson(recentList.get(position)));
         to_render.setArguments(args);
 
         getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)

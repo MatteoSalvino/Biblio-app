@@ -26,6 +26,7 @@ import com.example.biblio.R;
 import com.example.biblio.helpers.CheckForSDCardHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -78,8 +79,7 @@ public class BookFragment extends Fragment {
         mRemoveBtn = view.findViewById(R.id.main_remove_btn);
 
 
-        current = new Gson().fromJson(Objects.requireNonNull(getArguments()).getString("current"), new TypeToken<Ebook>() {
-        }.getType());
+        current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {}.getType());
         //Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getDownload().get(0).getExtension());
 
         //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());

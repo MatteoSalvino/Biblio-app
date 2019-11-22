@@ -63,7 +63,7 @@ public class MyBooksFragment extends Fragment {
 
                 mListView.setOnItemClickListener((adapterView, view, i, l) -> {
                     Ebook current = myBooks.get(i);
-                    openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getDownload().get(0).getExtension());
+                    openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getDownloads().get(0).getExtension());
                 });
             }
         } else {

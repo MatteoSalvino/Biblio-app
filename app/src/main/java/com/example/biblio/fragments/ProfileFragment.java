@@ -15,16 +15,14 @@ import com.example.biblio.EmailActivity;
 import com.google.android.material.button.MaterialButton;
 
 public class ProfileFragment extends Fragment {
-    private MaterialButton mEmailLoginBtn;
-    private MaterialButton mSignupSuggestionBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        mEmailLoginBtn = v.findViewById(R.id.email_login_btn);
-        mSignupSuggestionBtn = v.findViewById(R.id.signup_suggestion_btn);
+        MaterialButton mEmailLoginBtn = v.findViewById(R.id.email_login_btn);
+        MaterialButton mSignupSuggestionBtn = v.findViewById(R.id.signup_suggestion_btn);
 
         mEmailLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -26,7 +26,6 @@ import com.example.biblio.R;
 import com.example.biblio.helpers.CheckForSDCardHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -50,10 +49,10 @@ import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class BookFragment extends Fragment {
-    private MaterialButton mDownloadBtn;
-    private MaterialButton mRemoveBtn;
     //fixme: variable not used
     private static final int WRITE_REQUEST_CODE = 300;
+    private MaterialButton mDownloadBtn;
+    private MaterialButton mRemoveBtn;
     private File root_dir;
     private String filename;
     private SharedPreferences sharedPreferences;
@@ -79,7 +78,8 @@ public class BookFragment extends Fragment {
         mRemoveBtn = view.findViewById(R.id.main_remove_btn);
 
 
-        current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {}.getType());
+        current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
+        }.getType());
         //Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getDownload().get(0).getExtension());
 
         //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());
@@ -105,10 +105,10 @@ public class BookFragment extends Fragment {
 
         root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
 
-        downloadList = current.getDownload();
+        downloadList = current.getDownloads();
 
 
-        if (!current.getDownload().isEmpty())
+        if (!current.getDownloads().isEmpty())
             filename = mBookTitle.getText().toString() + "_" + mBookAuthor.getText().toString() + "_" + mBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
         else
             mDownloadBtn.setEnabled(false);
@@ -203,33 +203,6 @@ public class BookFragment extends Fragment {
         return view;
     }
 
-
-    private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
-
-
-        @Override
-        protected URI doInBackground(Void... voids) {
-            URI download_url;
-            Log.d("doInBackground", current.getProvider().getName());
-
-            download_url = (downloadList.isEmpty()) ? null : downloadList.get(0).getUri();
-
-            return download_url;
-        }
-
-        @Override
-        protected void onPostExecute(URI uri) {
-            if (uri == null) {
-                mDownloadBtn.setEnabled(false);
-                mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-                Log.d("DownloadTask", "null");
-            } else {
-                Log.d("DownloadTask", uri.toString());
-            }
-
-        }
-    }
-
     private void downloadFile(String url, String path) {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Downloading");
@@ -297,5 +270,31 @@ public class BookFragment extends Fragment {
 
                     }
                 }).start();
+    }
+
+    private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
+
+
+        @Override
+        protected URI doInBackground(Void... voids) {
+            URI download_url;
+            Log.d("doInBackground", current.getProviderName());
+
+            download_url = (downloadList.isEmpty()) ? null : downloadList.get(0).getUri();
+
+            return download_url;
+        }
+
+        @Override
+        protected void onPostExecute(URI uri) {
+            if (uri == null) {
+                mDownloadBtn.setEnabled(false);
+                mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
+                Log.d("DownloadTask", "null");
+            } else {
+                Log.d("DownloadTask", uri.toString());
+            }
+
+        }
     }
 }

@@ -36,4 +36,10 @@
     <string name="sort_by_field">Sort by</string>
     <string name="nav_popular_title">Popular</string>
     <string name="nav_recent_title">Recent</string>
+    <string name="your_profile_tv">Your profile</string>
+    <string name="perform_the_login_msg">Perform the login in order to customize your experience.</string>
+    <string name="proceed_with_email_msg">Proceed with Email</string>
+    <string name="proceed_with_google_msg">Proceed with Google</string>
+    <string name="no_account_yet_msg">Didn\'t have an account yet ? Signup now</string>
+    <string name="settings_msg">Settings</string>
 </resources>

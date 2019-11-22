@@ -150,7 +150,7 @@ public class FiltersFragment extends Fragment {
 
         //todo: rating not managed yet
         for (Ebook elem : search_results) {
-            if (elem.getProvider().getName().equals(provider) && languages.contains(elem.getLanguage()))
+            if (elem.getProviderName().equals(provider) && languages.contains(elem.getLanguage()))
                 filtered_results.add(elem);
         }
         return filtered_results;

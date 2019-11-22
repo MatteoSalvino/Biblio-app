@@ -23,18 +23,15 @@ public class LoggedProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.logged_profile_fragment, container, false);
 
         mLogoffBtn = v.findViewById(R.id.logoff_btn);
-        mLogoffBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+        mLogoffBtn.setOnClickListener(view -> {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("credentials", null);
-                editor.putBoolean("validator", false);
-                editor.apply();
+            editor.putString("credentials", null);
+            editor.putBoolean("validator", false);
+            editor.apply();
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment(), "ProfileFragment").commit();
-            }
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment(), "ProfileFragment").commit();
         });
 
         return v;

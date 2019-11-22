@@ -21,7 +21,6 @@ import com.example.biblio.fragments.PopularFragment;
 import com.example.biblio.fragments.ProfileFragment;
 import com.example.biblio.fragments.RecentFragment;
 import com.example.biblio.fragments.SearchFragment;
-import com.example.biblio.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -32,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
-    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Thread threadA = new Thread() {
             public void run() {
                 ThreadB threadB = new ThreadB(getApplicationContext());
-                JSONObject jsonResponse = null;
+                JSONObject jsonResponse;
 
                 try {
                     jsonResponse = threadB.execute().get(10, TimeUnit.SECONDS);
@@ -139,11 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.apply();
                     } else
                         Log.d("checkCredentials", "Credentials not valid");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
                     e.printStackTrace();
                 }
             }
@@ -161,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(Void... params) {
             final RequestFuture<JSONObject> futureRequest = RequestFuture.newFuture();
-            mQueue = VolleyRequestQueue.getInstance(mContext.getApplicationContext())
+            RequestQueue mQueue = VolleyRequestQueue.getInstance(mContext.getApplicationContext())
                     .getRequestQueue();
             String url = "http://10.0.3.2:3000/auth/login";
 
@@ -181,11 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     return futureRequest.get(10, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
                     e.printStackTrace();
                 }
             }

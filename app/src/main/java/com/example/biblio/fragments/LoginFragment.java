@@ -79,10 +79,8 @@ public class LoginFragment extends Fragment {
     private boolean isValid(String param, String type) {
         if (type.equals("email"))
             return EmailValidator.getInstance().isValid(param);
-        else if (type.equals("password"))
-            return true;
+        else return type.equals("password");
 
-        return false;
     }
 
     public void login(String email, String password) {

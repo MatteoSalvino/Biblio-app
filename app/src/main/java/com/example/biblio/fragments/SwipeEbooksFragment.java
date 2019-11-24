@@ -28,12 +28,11 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     private RecyclerView mPopularRecycleView;
     private EbooksAdapter.OnItemListener adapterListener;
     private ArrayList<Ebook> popularList;
-    private Class<? extends SwipeEbooksViewModel> clazz;
+    private Class<? extends SwipeEbooksViewModel> swipeModelClass;
 
 
     public SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
-        this.clazz = clazz;
-
+        this.swipeModelClass = clazz;
     }
 
     @Nullable
@@ -51,9 +50,9 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
         mPopularRecycleView.setLayoutManager(mLayoutManager);
 
         adapterListener = this;
-        SwipeEbooksViewModel model2 = ViewModelProviders.of(getActivity()).get(clazz);
+        SwipeEbooksViewModel model = ViewModelProviders.of(getActivity()).get(swipeModelClass);
 
-        mSwipeContainer.setOnRefreshListener(model2::refreshData);
+        mSwipeContainer.setOnRefreshListener(model::refreshData);
         mSwipeContainer.setRefreshing(true);
         final Observer<List<Ebook>> popularObserver = ebooks -> {
             mSwipeContainer.setRefreshing(true);
@@ -62,7 +61,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
             mPopularRecycleView.setAdapter(mAdapter);
             mSwipeContainer.setRefreshing(false);
         };
-        model2.getEbooks().observe(this, popularObserver);
+        model.getEbooks().observe(this, popularObserver);
         return view;
     }
 

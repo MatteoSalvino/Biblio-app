@@ -21,18 +21,19 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
 
 public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnItemListener {
-    private RecyclerView mPopularRecycleView;
-    private EbooksAdapter.OnItemListener adapterListener;
-    private ArrayList<Ebook> popularList;
-    private Class<? extends SwipeEbooksViewModel> swipeModelClass;
+    private RecyclerView mRecyclerView;
+    private EbooksAdapter.OnItemListener mEbooksListener;
+    private ArrayList<Ebook> mEbooks;
+    private Class<? extends SwipeEbooksViewModel> mSwipeModel;
 
 
-    public SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
-        this.swipeModelClass = clazz;
+    SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
+        mSwipeModel= clazz;
     }
 
     @Nullable
@@ -40,25 +41,25 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.swipe_ebooks_rv_fragment, container, false);
 
-        mPopularRecycleView = view.findViewById(R.id.ebooks_rv);
-        mPopularRecycleView.setHasFixedSize(true);
+        mRecyclerView = view.findViewById(R.id.ebooks_rv);
+        mRecyclerView.setHasFixedSize(true);
 
         SwipeRefreshLayout mSwipeContainer = view.findViewById(R.id.swipeContainer);
         mSwipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mPopularRecycleView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapterListener = this;
-        SwipeEbooksViewModel model = ViewModelProviders.of(getActivity()).get(swipeModelClass);
+        mEbooksListener = this;
+        SwipeEbooksViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(mSwipeModel);
 
         mSwipeContainer.setOnRefreshListener(model::refreshData);
         mSwipeContainer.setRefreshing(true);
         final Observer<List<Ebook>> popularObserver = ebooks -> {
             mSwipeContainer.setRefreshing(true);
-            popularList = (ArrayList<Ebook>) ebooks;
-            EbooksAdapter mAdapter = new EbooksAdapter(popularList, adapterListener, getContext());
-            mPopularRecycleView.setAdapter(mAdapter);
+            mEbooks= (ArrayList<Ebook>) ebooks;
+            EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, mEbooksListener, getContext());
+            mRecyclerView.setAdapter(mAdapter);
             mSwipeContainer.setRefreshing(false);
         };
         model.getEbooks().observe(this, popularObserver);
@@ -70,7 +71,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
         Fragment to_render = new BookFragment();
         Bundle args = new Bundle();
 
-        args.putString("current", new Gson().toJson(popularList.get(position)));
+        args.putString("current", new Gson().toJson(mEbooks.get(position)));
         to_render.setArguments(args);
 
         getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)

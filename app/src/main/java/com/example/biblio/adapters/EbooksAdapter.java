@@ -20,13 +20,13 @@ import java.util.List;
 import lrusso96.simplebiblio.core.Ebook;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksViewHolder> {
     private final List<Ebook> mDataset;
     private final OnItemListener itemListener;
     private final RequestOptions option;
     private final Context mContext;
 
-    public MyAdapter(List<Ebook> myDataset, OnItemListener listener, Context context) {
+    public EbooksAdapter(List<Ebook> myDataset, OnItemListener listener, Context context) {
         this.mDataset = myDataset;
         this.itemListener = listener;
         this.mContext = context;
@@ -35,15 +35,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @NotNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EbooksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_row, parent, false);
 
-        return new MyViewHolder(v, itemListener);
+        return new EbooksViewHolder(v, itemListener);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(EbooksViewHolder holder, int position) {
         Ebook elem = mDataset.get(position);
         holder.mBookTitle.setText(elem.getTitle());
         holder.mBookAuthor.setText(elem.getAuthor());
@@ -67,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         void onItemClick(int position);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class EbooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView mBookTitle;
         final TextView mBookAuthor;
         final ImageView mBookCover;
@@ -76,7 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         final OnItemListener itemListener;
 
 
-        MyViewHolder(View v, OnItemListener listener) {
+        EbooksViewHolder(View v, OnItemListener listener) {
             super(v);
             mBookTitle = v.findViewById(R.id.book_title);
             mBookAuthor = v.findViewById(R.id.book_author);

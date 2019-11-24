@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblio.R;
-import com.example.biblio.adapters.MyAdapter;
+import com.example.biblio.adapters.EbooksAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,12 +33,12 @@ import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 
-public class SearchFragment extends Fragment implements MyAdapter.OnItemListener {
+public class SearchFragment extends Fragment implements EbooksAdapter.OnItemListener {
     private RecyclerView mRecycleView;
     private RecyclerView.Adapter mAdapter;
     private List<Ebook> myDataset;
     private SimpleBiblio simpleBiblio;
-    private MyAdapter.OnItemListener adapterListener;
+    private EbooksAdapter.OnItemListener adapterListener;
     private MaterialSearchBar mSearchBar;
     private Bundle cache;
 
@@ -107,7 +107,7 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
 
         if (myDataset.size() > 0) {
             Log.d("SearchFragment", "myDataset is not empty");
-            mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
+            mAdapter = new EbooksAdapter(myDataset, adapterListener, getContext());
             mRecycleView.setAdapter(mAdapter);
         }
         return view;
@@ -172,7 +172,7 @@ public class SearchFragment extends Fragment implements MyAdapter.OnItemListener
                  */
                 myDataset = ebooks;
                 Log.d("result's size : ", String.valueOf(ebooks.size()));
-                mAdapter = new MyAdapter(myDataset, adapterListener, getContext());
+                mAdapter = new EbooksAdapter(myDataset, adapterListener, getContext());
                 mRecycleView.setAdapter(mAdapter);
             }
         }

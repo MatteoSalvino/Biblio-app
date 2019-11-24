@@ -12,21 +12,16 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     private int tab_counter;
 
     public PageAdapter(FragmentManager fm, int tab_counter) {
-        super(fm);
+        super(fm,  BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.tab_counter = tab_counter;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch(position) {
-            case 0 :
-                return new LoginFragment();
-            case 1 :
-                return new SignupFragment();
-            default:
-                return null;
-        }
+        if (position == 0)
+            return new LoginFragment();
+        return new SignupFragment();
     }
 
     @Override

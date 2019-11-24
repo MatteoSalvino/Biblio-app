@@ -105,6 +105,7 @@ public class BookFragment extends Fragment {
 
         root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
 
+        //TODO: this is an async call
         downloadList = current.getDownloads();
 
 

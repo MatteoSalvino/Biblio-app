@@ -42,4 +42,7 @@
     <string name="proceed_with_google_msg">Proceed with Google</string>
     <string name="no_account_yet_msg">Didn\'t have an account yet ? Signup now</string>
     <string name="settings_msg">Settings</string>
+    <string name="introduction_search">Search any books simply typing a short query in the search bar.</string>
+    <string name="introduction_download">Store your favorite books in your device\'s local storage.</string>
+    <string name="introduction_refresh">Swipe down in order to refresh data in Popular and Recent sections.</string>
 </resources>

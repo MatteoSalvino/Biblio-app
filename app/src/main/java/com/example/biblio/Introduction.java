@@ -1,6 +1,7 @@
 package com.example.biblio;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -19,23 +20,25 @@ public class Introduction extends AppIntro {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button mDoneBtn = findViewById(R.id.done);
-
-        createSlideFragment("Search facility", "Search any books simply typing a short query in the search bar.", R.drawable.search, getResources().getColor(R.color.backgroundapp));
-        createSlideFragment("Store books", "Store your favorite books in your device's local storage.", R.drawable.cloud_download, getResources().getColor(R.color.secondary));
-        createSlideFragment("Refresh facility", "Swipe down in order to refresh data in Popular and Recent sections.", R.drawable.swipe_down, getResources().getColor(R.color.primary));
-
+        createSlides();
         setNavBarColor(R.color.colorPrimaryDark);
-
         setSeparatorColor(getResources().getColor(R.color.white));
         showSkipButton(false);
 
+        Button mDoneBtn = findViewById(R.id.done);
         mDoneBtn.setBackgroundColor(Color.TRANSPARENT);
         mDoneBtn.setText(getResources().getText(R.string.done_msg));
         mDoneBtn.setAllCaps(false);
 
         setProgressButtonEnabled(true);
         setFadeAnimation();
+    }
+
+    private void createSlides(){
+        Resources resources = getResources();
+        createSlideFragment("Search facility", resources.getString(R.string.introduction_search), R.drawable.search, resources.getColor(R.color.backgroundapp));
+        createSlideFragment("Store books", resources.getString(R.string.introduction_download), R.drawable.cloud_download, resources.getColor(R.color.secondary));
+        createSlideFragment("Refresh facility", resources.getString(R.string.introduction_refresh), R.drawable.swipe_down, resources.getColor(R.color.primary));
     }
 
     private void createSlideFragment(String title, String description, int image, int background) {

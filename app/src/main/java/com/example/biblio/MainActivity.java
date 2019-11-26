@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //todo: design a suitable menu to put more than 5 items!
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;

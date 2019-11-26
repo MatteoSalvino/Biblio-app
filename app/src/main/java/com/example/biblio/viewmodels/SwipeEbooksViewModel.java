@@ -14,6 +14,8 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
 
     private MutableLiveData<List<Ebook>> ebooks;
 
+    //todo: add a shared view model to handle filters
+
     public LiveData<List<Ebook>> getEbooks() {
         if (ebooks == null) {
             ebooks = new MutableLiveData<>();

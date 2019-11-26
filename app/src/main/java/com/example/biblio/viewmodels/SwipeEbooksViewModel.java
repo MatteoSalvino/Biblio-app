@@ -25,7 +25,9 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
     public void refreshData() {
         new Thread(() -> {
             SimpleBiblio sb = new SimpleBiblioBuilder().build();
-            ebooks.postValue(doRefresh(sb));
+            List<Ebook> ret = doRefresh(sb);
+            if(ret.size() > 0)
+                ebooks.postValue(ret);
         }).start();
     }
 

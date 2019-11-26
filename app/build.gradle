@@ -24,30 +24,34 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     def lifecycle_version = "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
-    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'pub.devrel:easypermissions:0.2.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.github.lrusso96:simple-biblio:0.4.2'
+
+    implementation 'commons-validator:commons-validator:1.5.1'
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.github.lrusso96:simple-biblio:0.4.4'
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
     implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    implementation 'com.karumi:dexter:6.0.0'
     implementation 'com.liulishuo.filedownloader:library:1.7.7'
     implementation 'com.wang.avi:library:2.1.3'
-    implementation 'com.github.AppIntro:AppIntro:5.1.0'
-    implementation 'com.karumi:dexter:6.0.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
-    implementation 'commons-validator:commons-validator:1.5.1'
-    implementation 'com.android.volley:volley:1.1.1'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'org.threeten:threetenbp:1.4.0'
+
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.12'
 }

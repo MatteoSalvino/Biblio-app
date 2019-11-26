@@ -38,9 +38,10 @@ import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 
+import org.threeten.bp.LocalDate;
+
 import java.io.File;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -278,6 +279,7 @@ public class BookFragment extends Fragment {
 
         @Override
         protected URI doInBackground(Void... voids) {
+            downloadList = current.getDownloads();
             URI download_url;
             Log.d("doInBackground", current.getProviderName());
 

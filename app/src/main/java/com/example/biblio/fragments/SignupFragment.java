@@ -13,12 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biblio.R;
@@ -40,7 +38,6 @@ public class SignupFragment extends Fragment {
     private TextInputLayout mPasswordLayout;
     private TextInputLayout mPasswordConfirmationLayout;
     private MaterialCheckBox mTermsCheckBox;
-    private MaterialButton mSignupBtn;
     private ProgressDialog progressDialog;
 
     @Nullable
@@ -53,23 +50,20 @@ public class SignupFragment extends Fragment {
         mPasswordLayout = v.findViewById(R.id.signup_password_field);
         mPasswordConfirmationLayout = v.findViewById(R.id.signup_password_confirmation_field);
         mTermsCheckBox = v.findViewById(R.id.signup_terms_cb);
-        mSignupBtn = v.findViewById(R.id.signup_btn);
+        MaterialButton mSignupBtn = v.findViewById(R.id.signup_btn);
 
-        mSignupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = mNameLayout.getEditText().getText().toString();
-                String email = mEmailLayout.getEditText().getText().toString();
-                String password = mPasswordLayout.getEditText().getText().toString();
-                String password_confirmation = mPasswordConfirmationLayout.getEditText().getText().toString();
+        mSignupBtn.setOnClickListener(view -> {
+            String name = mNameLayout.getEditText().getText().toString();
+            String email = mEmailLayout.getEditText().getText().toString();
+            String password = mPasswordLayout.getEditText().getText().toString();
+            String password_confirmation = mPasswordConfirmationLayout.getEditText().getText().toString();
 
-                if(isValidForm(name, email, password, password_confirmation)){
-                    progressDialog = ProgressDialog.show(getActivity(), "", "", true);
-                    progressDialog.setContentView(R.layout.login_dialog_view);
-                    signup(name, email, password, password_confirmation);
-                } else {
-                    Log.d("FormValidation", "The signup form is not valid.");
-                }
+            if (isValidForm(name, email, password, password_confirmation)) {
+                progressDialog = ProgressDialog.show(getActivity(), "", "", true);
+                progressDialog.setContentView(R.layout.login_dialog_view);
+                signup(name, email, password, password_confirmation);
+            } else {
+                Log.d("FormValidation", "The signup form is not valid.");
             }
         });
 
@@ -86,43 +80,36 @@ public class SignupFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String URL = "http://10.0.3.2:3000/signup";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                progressDialog.dismiss();
-                Log.d("onResponse", response);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
+            progressDialog.dismiss();
+            Log.d("onResponse", response);
 
-                JsonParser parser = new JsonParser();
-                JsonObject jsonObject = (JsonObject) parser.parse(response);
-                String auth_token = jsonObject.get("auth_token").getAsString();
+            JsonObject jsonObject = (JsonObject) JsonParser.parseString(response);
+            String auth_token = jsonObject.get("auth_token").getAsString();
 
-                try {
-                    String credentials = new JSONObject()
-                            .put("email", email)
-                            .put("password", password)
-                            .put("auth_token", auth_token).toString();
+            try {
+                String credentials = new JSONObject()
+                        .put("email", email)
+                        .put("password", password)
+                        .put("auth_token", auth_token).toString();
 
-                    Log.d("credentials", credentials);
+                Log.d("credentials", credentials);
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    editor.putString("credentials", credentials);
-                    editor.apply();
+                editor.putString("credentials", credentials);
+                editor.apply();
 
-                    getActivity().setResult(200);
-                    getActivity().finish();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                getActivity().setResult(200);
+                getActivity().finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Log.d("onErrorResponse", "Something goes wrong !");
-                error.printStackTrace();
-            }
+        }, error -> {
+            progressDialog.dismiss();
+            Log.d("onErrorResponse", "Something goes wrong !");
+            error.printStackTrace();
         }) {
             @Override
             public String getBodyContentType() {
@@ -130,8 +117,8 @@ public class SignupFragment extends Fragment {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> postParams = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> postParams = new HashMap<>();
                 postParams.put("name", name);
                 postParams.put("email", email);
                 postParams.put("password", password);

@@ -1,21 +1,16 @@
 package com.example.biblio;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.biblio.R;
 import com.example.biblio.adapters.PageAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class EmailActivity extends AppCompatActivity {
-    private ImageView mBackBtn;
-    private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
     @Override
@@ -26,20 +21,15 @@ public class EmailActivity extends AppCompatActivity {
 
         int page_start = getIntent().getIntExtra("page start", 0);
 
-        mBackBtn = findViewById(R.id.email_back_btn);
-        mTabLayout = findViewById(R.id.tabLayout);
+        ImageView mBackBtn = findViewById(R.id.email_back_btn);
+        TabLayout mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
 
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        mBackBtn.setOnClickListener(view -> onBackPressed());
 
         mTabLayout.addTab(mTabLayout.newTab().setText("Login"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Signup"));
-        mTabLayout.setTabGravity(mTabLayout.GRAVITY_FILL);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         mViewPager.setAdapter(pageAdapter);

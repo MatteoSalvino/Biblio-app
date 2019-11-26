@@ -7,46 +7,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biblio.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.json.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class LoginFragment extends Fragment {
     private TextInputLayout mEmailLayout;
     private TextInputLayout mPasswordLayout;
-    private MaterialButton mLoginBtn;
     private ProgressDialog progressDialog;
 
     @Nullable
@@ -56,7 +45,7 @@ public class LoginFragment extends Fragment {
 
         mEmailLayout = v.findViewById(R.id.email_field);
         mPasswordLayout = v.findViewById(R.id.password_field);
-        mLoginBtn = v.findViewById(R.id.login_btn);
+        MaterialButton mLoginBtn = v.findViewById(R.id.login_btn);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +58,7 @@ public class LoginFragment extends Fragment {
                     progressDialog.setContentView(R.layout.login_dialog_view);
                     login(email, password);
                 } else
-                   Log.d("onClick", "Wrong credentials");
+                    Log.d("onClick", "Wrong credentials");
             }
         });
 
@@ -83,40 +72,37 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void login(String email, String password) {
+    private void login(String email, String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String URL = "http://10.0.3.2:3000/auth/login";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                progressDialog.dismiss();
-                Log.d("onResponse", response);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
+            progressDialog.dismiss();
+            Log.d("onResponse", response);
 
-                JsonParser parser = new JsonParser();
-                JsonObject jsonObject = (JsonObject) parser.parse(response);
-                String auth_token = jsonObject.get("auth_token").getAsString();
+            JsonParser parser = new JsonParser();
+            JsonObject jsonObject = (JsonObject) parser.parse(response);
+            String auth_token = jsonObject.get("auth_token").getAsString();
 
-                try {
-                    String credentials = new JSONObject()
-                            .put("email", email)
-                            .put("password", password)
-                            .put("auth_token", auth_token).toString();
+            try {
+                String credentials = new JSONObject()
+                        .put("email", email)
+                        .put("password", password)
+                        .put("auth_token", auth_token).toString();
 
-                    Log.d("credentials", credentials);
+                Log.d("credentials", credentials);
 
 
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    editor.putString("credentials", credentials);
-                    editor.apply();
+                editor.putString("credentials", credentials);
+                editor.apply();
 
-                    getActivity().setResult(200);
-                    getActivity().finish();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                getActivity().setResult(200);
+                getActivity().finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -132,7 +118,7 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> postParams = new HashMap<String, String>();
                 postParams.put("email", email);
                 postParams.put("password", password);

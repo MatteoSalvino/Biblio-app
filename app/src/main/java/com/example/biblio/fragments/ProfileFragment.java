@@ -24,22 +24,16 @@ public class ProfileFragment extends Fragment {
         MaterialButton mEmailLoginBtn = v.findViewById(R.id.email_login_btn);
         MaterialButton mSignupSuggestionBtn = v.findViewById(R.id.signup_suggestion_btn);
 
-        mEmailLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), EmailActivity.class);
-                startActivityForResult(i, 0);
-                //startActivity(i);
-            }
+        mEmailLoginBtn.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), EmailActivity.class);
+            startActivityForResult(i, 0);
+            //startActivity(i);
         });
 
-        mSignupSuggestionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), EmailActivity.class);
-                i.putExtra("page start", 1);
-                startActivity(i);
-            }
+        mSignupSuggestionBtn.setOnClickListener(view -> {
+            Intent i = new Intent(getActivity(), EmailActivity.class);
+            i.putExtra("page start", 1);
+            startActivity(i);
         });
 
         return v;

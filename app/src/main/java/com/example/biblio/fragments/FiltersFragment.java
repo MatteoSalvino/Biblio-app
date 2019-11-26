@@ -138,6 +138,7 @@ public class FiltersFragment extends Fragment {
             if (mGermanCb.isChecked()) languages.add("de");
 
 
+            //fixme: unused variable
             List<Ebook> filtered_results = filterResults(provider, rating, languages);
         });
 

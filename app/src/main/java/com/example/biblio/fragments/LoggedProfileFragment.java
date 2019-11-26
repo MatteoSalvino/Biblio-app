@@ -14,17 +14,18 @@ import androidx.preference.PreferenceManager;
 import com.example.biblio.R;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Objects;
+
 public class LoggedProfileFragment extends Fragment {
-    private MaterialButton mLogoffBtn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.logged_profile_fragment, container, false);
 
-        mLogoffBtn = v.findViewById(R.id.logoff_btn);
+        MaterialButton mLogoffBtn = v.findViewById(R.id.logoff_btn);
         mLogoffBtn.setOnClickListener(view -> {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             editor.putString("credentials", null);

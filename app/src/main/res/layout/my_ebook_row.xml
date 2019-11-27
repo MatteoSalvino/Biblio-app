@@ -20,7 +20,7 @@
             android:weightSum="4">
 
            <ImageView
-               android:id="@+id/mybook_cover"
+               android:id="@+id/my_ebook_cover"
                android:layout_width="70dp"
                android:layout_height="100dp"
                android:layout_margin="10dp" />
@@ -32,7 +32,7 @@
                 android:layout_weight="2">
 
                 <TextView
-                    android:id="@+id/mybook_title"
+                    android:id="@+id/my_ebook_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -44,7 +44,7 @@
                     android:textColor="@color/textcolor"/>
 
                 <TextView
-                    android:id="@+id/mybook_author"
+                    android:id="@+id/my_ebook_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -54,7 +54,7 @@
                     android:textColor="@color/textcolor"/>
 
                 <TextView
-                    android:id="@+id/mybook_pages"
+                    android:id="@+id/my_ebook_pages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"

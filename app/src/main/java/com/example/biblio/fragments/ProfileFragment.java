@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.biblio.R;
 import com.example.biblio.EmailActivity;
@@ -23,11 +24,11 @@ public class ProfileFragment extends Fragment {
 
         MaterialButton mEmailLoginBtn = v.findViewById(R.id.email_login_btn);
         MaterialButton mSignupSuggestionBtn = v.findViewById(R.id.signup_suggestion_btn);
+        MaterialButton mSettingsButton = v.findViewById(R.id.settings_btn);
 
         mEmailLoginBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), EmailActivity.class);
             startActivityForResult(i, 0);
-            //startActivity(i);
         });
 
         mSignupSuggestionBtn.setOnClickListener(view -> {
@@ -36,12 +37,20 @@ public class ProfileFragment extends Fragment {
             startActivity(i);
         });
 
+        mSettingsButton.setOnClickListener(view -> loadFragment(new SettingsFragment(), "SettingsFragment"));
+
         return v;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == 200)
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoggedProfileFragment(), "LoggedProfileFragment").commit();
+        if (resultCode == 200)
+            loadFragment(new LoggedProfileFragment(), "LoggedProfileFragment");
+    }
+
+    private void loadFragment(Fragment fragment, String tag) {
+        FragmentActivity activity = getActivity();
+        if (activity != null)
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
     }
 }

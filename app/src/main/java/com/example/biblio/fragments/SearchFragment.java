@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     public void onItemClick(int position) {
         //Log.d("onItemClicked", myDataset.get(position).toString());
 
-        Fragment to_render = new BookFragment();
+        Fragment to_render = new EbookDetailsFragment();
         Bundle args = new Bundle();
 
         args.putString("current", new Gson().toJson(myDataset.get(position)));

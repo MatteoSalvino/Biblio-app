@@ -16,7 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.example.biblio.fragments.LoggedProfileFragment;
-import com.example.biblio.fragments.MyBooksFragment;
+import com.example.biblio.fragments.MyEbooksFragment;
 import com.example.biblio.fragments.PopularFragment;
 import com.example.biblio.fragments.ProfileFragment;
 import com.example.biblio.fragments.RecentFragment;
@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
                         TAG = "RecentFragment";
                         break;
                     case R.id.nav_books:
-                        selectedFragment = new MyBooksFragment();
-                        TAG = "MyBooksFragment";
+                        selectedFragment = new MyEbooksFragment();
+                        TAG = "MyEBooksFragment";
                         break;
                     case R.id.nav_profile:
                         //Show custom user's fragment
-                        if(validCredentials) {
+                        if (validCredentials) {
                             selectedFragment = new LoggedProfileFragment();
                             TAG = "LoggedProfileFragment";
                         } else {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     jsonResponse = threadB.execute().get(10, TimeUnit.SECONDS);
-                    if(jsonResponse != null && !jsonResponse.isNull("auth_token")) {
+                    if (jsonResponse != null && !jsonResponse.isNull("auth_token")) {
                         Log.d("checkCredentials", "Valid credentials");
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sp.edit();

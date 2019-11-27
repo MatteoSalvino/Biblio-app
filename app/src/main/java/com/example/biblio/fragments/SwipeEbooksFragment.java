@@ -68,7 +68,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
 
     @Override
     public void onItemClick(int position) {
-        Fragment to_render = new BookFragment();
+        Fragment to_render = new EbookDetailsFragment();
         Bundle args = new Bundle();
 
         args.putString("current", new Gson().toJson(mEbooks.get(position)));

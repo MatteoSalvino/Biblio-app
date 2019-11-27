@@ -23,7 +23,7 @@ import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
-import com.example.biblio.helpers.CheckForSDCardHelper;
+import com.example.biblio.helpers.SDCardHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,7 +49,10 @@ import java.util.Objects;
 import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
 
-public class BookFragment extends Fragment {
+import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
+import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
+
+public class EbookDetailsFragment extends Fragment {
     //fixme: variable not used
     private static final int WRITE_REQUEST_CODE = 300;
     private MaterialButton mDownloadBtn;
@@ -65,7 +68,7 @@ public class BookFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.book_fragment, container, false);
+        View view = inflater.inflate(R.layout.ebook_fragment, container, false);
         RequestOptions option = new RequestOptions().centerCrop();
 
         TextView mBookTitle = view.findViewById(R.id.main_book_title);
@@ -81,7 +84,6 @@ public class BookFragment extends Fragment {
 
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
         }.getType());
-        //Log.d("fromJson", current.getTitle() + ", " + current.getAuthor() + ", " + current.getPublished() + ", " + current.getPages() + ", " + current.getDownload().get(0).getExtension());
 
         //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());
 
@@ -104,7 +106,7 @@ public class BookFragment extends Fragment {
         mBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
 
 
-        root_dir = new File(Environment.getExternalStorageDirectory() + File.separator + "biblioData/");
+        root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
         //TODO: this is an async call
         downloadList = current.getDownloads();
@@ -126,13 +128,13 @@ public class BookFragment extends Fragment {
         new getDownloadUrl().execute();
 
         mDownloadBtn.setOnClickListener(view1 -> {
-            if (CheckForSDCardHelper.isSDCardPresent()) {
+            if (SDCardHelper.isSDCardPresent()) {
 
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted())
-                            downloadFile(downloadList.get(0).getUri().toString(), Environment.getExternalStorageDirectory() + "/biblioData/" + filename);
+                            downloadFile(downloadList.get(0).getUri().toString(), String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR,  filename));
                         else
                             Log.d("Permissions", "Permissions not available.");
                     }
@@ -164,26 +166,26 @@ public class BookFragment extends Fragment {
         });
 
         mRemoveBtn.setOnClickListener(view12 -> {
-            CheckForSDCardHelper.findFile(root_dir, filename, true);
-            String response = sharedPreferences.getString("mybooks", null);
+            SDCardHelper.findFile(root_dir, filename, true);
+            String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
 
             if (response != null) {
-                ArrayList<Ebook> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+                ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
                 }.getType());
-                if (!myBooks.isEmpty()) {
+                if (!myEbooks.isEmpty()) {
                     //Remove current book from array myBooks
-                    int size = myBooks.size();
+                    int size = myEbooks.size();
 
                     for (int i = 0; i < size; i++) {
-                        Ebook elem = myBooks.get(i);
+                        Ebook elem = myEbooks.get(i);
 
                         if (elem.getId() == current.getId()) {
-                            myBooks.remove(i);
+                            myEbooks.remove(i);
                             break;
                         }
                     }
 
-                    editor.putString("mybooks", new Gson().toJson(myBooks));
+                    editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
                     editor.apply();
                 }
             }
@@ -196,7 +198,7 @@ public class BookFragment extends Fragment {
 
         //Check if selected book is yet downloaded
         if (root_dir.exists() && filename != null) {
-            if (CheckForSDCardHelper.findFile(root_dir, filename, false)) {
+            if (SDCardHelper.findFile(root_dir, filename, false)) {
                 mDownloadBtn.setVisibility(View.INVISIBLE);
                 mRemoveBtn.setVisibility(View.VISIBLE);
             }
@@ -237,18 +239,19 @@ public class BookFragment extends Fragment {
                         mRemoveBtn.setVisibility(View.VISIBLE);
 
                         //Array saved in sharedPrefs is empty
-                        String response = sharedPreferences.getString("mybooks", null);
+                        String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
 
+                        ArrayList<Ebook> myEbooks;
                         if (response == null) {
-                            ArrayList<Ebook> myBooks = new ArrayList<>();
-                            myBooks.add(current);
-                            editor.putString("mybooks", new Gson().toJson(myBooks));
+                            myEbooks = new ArrayList<>();
+                            myEbooks.add(current);
+                            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
                             editor.commit();
                         } else {
-                            ArrayList<Ebook> myBooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+                            myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
                             }.getType());
-                            myBooks.add(current);
-                            editor.putString("mybooks", new Gson().toJson(myBooks));
+                            myEbooks.add(current);
+                            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
                             editor.commit();
                         }
 

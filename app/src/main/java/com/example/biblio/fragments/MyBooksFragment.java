@@ -25,6 +25,8 @@ import com.example.biblio.adapters.MyBooksAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -70,13 +72,19 @@ public class MyBooksFragment extends Fragment {
             mImageTemplate.setVisibility(View.VISIBLE);
             mTextViewTemplate.setVisibility(View.VISIBLE);
         }
-
         return v;
     }
 
-    private void openFile(String filename, String extension) {
-        filename = filename + "." + extension;
-        File path = new File(Environment.getExternalStorageDirectory() + "/biblioData/" + filename);
+
+    /**
+     * Launches an ebook reader to open the file.
+     *
+     * @param filename  name of the file, already downloaded
+     * @param extension file format (e.g. pdf)
+     */
+    private void openFile(@NotNull String filename, @NotNull String extension) {
+        filename = String.format("%s.%s", filename, extension);
+        File path = new File(String.format("%s/biblioData/%s", Environment.getExternalStorageDirectory(), filename));
         Log.d("openFile", path.toString());
 
         Intent in = new Intent(Intent.ACTION_VIEW);
@@ -84,6 +92,7 @@ public class MyBooksFragment extends Fragment {
                 BuildConfig.APPLICATION_ID + ".provider",
                 path);
 
+        //todo: what about other extensions supported by Mu?
         if (extension.equals("epub"))
             in.setDataAndType(uri, "application/epub+zip");
         else if (extension.equals("pdf"))

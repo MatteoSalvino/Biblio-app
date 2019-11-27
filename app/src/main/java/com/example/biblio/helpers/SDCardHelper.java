@@ -4,7 +4,9 @@ import android.os.Environment;
 
 import java.io.File;
 
-public class CheckForSDCardHelper {
+public class SDCardHelper {
+
+    public static final String APP_ROOT_DIR = "Biblio";
 
     public static boolean isSDCardPresent() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -25,4 +27,5 @@ public class CheckForSDCardHelper {
         }
         return false;
     }
+
 }

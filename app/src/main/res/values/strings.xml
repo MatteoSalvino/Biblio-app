@@ -45,4 +45,5 @@
     <string name="introduction_search">Search any books simply typing a short query in the search bar.</string>
     <string name="introduction_download">Store your favorite ebooks in your device\'s local storage.</string>
     <string name="introduction_refresh">Swipe down in order to refresh data in Popular and Recent sections.</string>
+    <string name="nav_profile_title">Profile</string>
 </resources>

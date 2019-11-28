@@ -12,7 +12,7 @@
         android:text="@string/loading_msg"
         android:textSize="20sp"
         android:layout_margin="10dp"
-        android:textColor="@color/textcolor"
+        android:textColor="@color/text_color"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -36,6 +36,6 @@
             android:text="@string/loading_please_wait_msg"
             android:textSize="15sp"
             android:layout_margin="10dp"
-            android:textColor="@color/textcolor" />
+            android:textColor="@color/text_color" />
     </LinearLayout>
 </LinearLayout>

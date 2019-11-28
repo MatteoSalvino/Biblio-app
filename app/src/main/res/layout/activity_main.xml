@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/backgroundapp">
+    android:background="@color/app_background">
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -16,7 +16,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgroundnav"
+        android:background="@color/nav_background"
         android:layout_alignParentBottom="true"
         app:itemIconTint="@menu/bottom_nav_item_foreground"
         app:itemTextColor="@menu/bottom_nav_item_foreground"

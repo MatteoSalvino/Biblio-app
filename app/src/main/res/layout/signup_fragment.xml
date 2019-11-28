@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundapp">
+    android:background="@color/app_background">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/mainBookTextColor"
+        android:textColor="@color/main_book_text"
         android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -24,16 +24,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Name"
-        app:boxBackgroundColor="@color/backgroundapp"
+        app:boxBackgroundColor="@color/app_background"
         style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disableBtnColor"
+        android:textColorHint="@color/disabled_button"
         android:layout_margin="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:textColor="@color/mainBookTextColor"
+            android:textColor="@color/main_book_text"
             android:maxLength="20"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,16 +43,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email address"
-        app:boxBackgroundColor="@color/backgroundapp"
+        app:boxBackgroundColor="@color/app_background"
         style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disableBtnColor"
+        android:textColorHint="@color/disabled_button"
         android:layout_margin="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:textColor="@color/mainBookTextColor"/>
+            android:textColor="@color/main_book_text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -61,18 +61,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        app:boxBackgroundColor="@color/backgroundapp"
+        app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/disableBtnColor"
+        app:passwordToggleTint="@color/disabled_button"
         style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disableBtnColor"
+        android:textColorHint="@color/disabled_button"
         android:layout_margin="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/mainBookTextColor" />
+            android:textColor="@color/main_book_text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -80,18 +80,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Confirm password"
-        app:boxBackgroundColor="@color/backgroundapp"
+        app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/disableBtnColor"
+        app:passwordToggleTint="@color/disabled_button"
         style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disableBtnColor"
+        android:textColorHint="@color/disabled_button"
         android:layout_margin="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/mainBookTextColor" />
+            android:textColor="@color/main_book_text" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -99,9 +99,9 @@
         android:id="@+id/signup_terms_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/mainBookTextColor"
-        android:buttonTint="@color/mainBookTextColor"
-        android:textColor="@color/mainBookTextColor"
+        android:shadowColor="@color/main_book_text"
+        android:buttonTint="@color/main_book_text"
+        android:textColor="@color/main_book_text"
         android:text="I accept terms and rule of this application."
         android:layout_margin="10dp" />
 
@@ -115,8 +115,8 @@
         android:textAllCaps="false"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:backgroundTint="@color/backgroundapp"
-        app:strokeColor="@color/mainBookTextColor"
+        android:backgroundTint="@color/app_background"
+        app:strokeColor="@color/main_book_text"
         app:strokeWidth="2dp"/>
 
 </LinearLayout>

@@ -105,7 +105,7 @@ public class EbookDetailsFragment extends Fragment {
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
         mDownloadBtn.setEnabled(false);
-        mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
+        mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
 
         new Thread(() -> {
             downloadList = current.getDownloads();
@@ -223,9 +223,10 @@ public class EbookDetailsFragment extends Fragment {
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         progressDialog.dismiss();
-
                         mDownloadBtn.setVisibility(View.INVISIBLE);
                         mRemoveBtn.setVisibility(View.VISIBLE);
+
+                        //todo: should open the new file?
 
                         //Array saved in sharedPrefs is empty
                         String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);

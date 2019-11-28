@@ -29,16 +29,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:paddingTop="10dp"
-                app:mt_backIconTint="@color/searchBarTextColor"
-                app:mt_clearIconTint="@color/searchBarTextColor"
+                app:mt_backIconTint="@color/search_bar_text"
+                app:mt_clearIconTint="@color/search_bar_text"
                 app:mt_hint="Search any book !"
-                app:mt_hintColor="@color/searchBarTextColor"
+                app:mt_hintColor="@color/search_bar_text"
                 app:mt_maxSuggestionsCount="4"
                 app:mt_roundedSearchBarEnabled="true"
-                app:mt_searchBarColor="@color/backgroundapp"
-                app:mt_searchIconTint="@color/searchBarTextColor"
+                app:mt_searchBarColor="@color/app_background"
+                app:mt_searchIconTint="@color/search_bar_text"
                 app:mt_speechMode="false"
-                app:mt_textColor="@color/searchBarTextColor" />
+                app:mt_textColor="@color/search_bar_text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,9 +55,9 @@
                     android:backgroundTint="#FFFFFF"
                     android:text="@string/filters_option"
                     android:textAllCaps="false"
-                    android:textColor="@color/backgroundnav"
+                    android:textColor="@color/nav_background"
                     app:icon="@drawable/tune"
-                    app:iconTint="@color/backgroundnav" />
+                    app:iconTint="@color/nav_background" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/useless_btn"
@@ -80,9 +80,9 @@
                     android:backgroundTint="#FFFFFF"
                     android:text="@string/sort_by_field"
                     android:textAllCaps="false"
-                    android:textColor="@color/backgroundnav"
+                    android:textColor="@color/nav_background"
                     app:icon="@drawable/sort_variant"
-                    app:iconTint="@color/backgroundnav" />
+                    app:iconTint="@color/nav_background" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

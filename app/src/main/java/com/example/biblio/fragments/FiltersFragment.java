@@ -65,32 +65,32 @@ public class FiltersFragment extends Fragment {
 
 
         mLowRatingBtn.setOnClickListener(view12 -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
+            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
         });
 
         mMediumRatingBtn.setOnClickListener(view13 -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
+            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
         });
 
 
         mMediumHighRatingBtn.setOnClickListener(view14 -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
+            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
         });
 
         mHighRatingBtn.setOnClickListener(view15 -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
+            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
         });
 
 
@@ -115,10 +115,10 @@ public class FiltersFragment extends Fragment {
         mResetBtn.setOnClickListener(view18 -> {
             mLibgenesisCb.setChecked(false);
             mFeedbooksCb.setChecked(false);
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.btnAddColor));
+            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
             mItalianCb.setChecked(false);
             mEnglishCb.setChecked(false);
             mFrenchCb.setChecked(false);

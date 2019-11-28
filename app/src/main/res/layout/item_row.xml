@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="120sp"
+    android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp">
+    android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/cardBackgroundColor"
-        app:cardCornerRadius="5dp"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="120sp"
+            android:orientation="horizontal"
             android:weightSum="4">
 
-           <ImageView
-               android:id="@+id/book_cover"
-               android:layout_width="70dp"
-               android:layout_height="100dp"
-               android:layout_margin="10dp" />
+            <ImageView
+                android:id="@+id/book_cover"
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,6 +34,7 @@
 
                 <TextView
                     android:id="@+id/book_title"
+                    style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -41,38 +42,41 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/title_field"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/saffron"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/book_author"
+                    style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="@string/author_field"
-                    android:maxLines="2"
                     android:ellipsize="end"
-                    android:textColor="@color/textcolor"
+                    android:maxLines="2"
+                    android:text="@string/author_field"
+                    android:textColor="@color/text_color"
                     android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/book_pages"
+                    style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/text_color"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/book_source"
+                    style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/textcolor"
-                    android:textSize="12sp"/>
+                    android:textColor="@color/text_color"
+                    android:textSize="12sp" />
 
                 <!---
                 <LinearLayout
@@ -116,9 +120,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
+                    android:padding="20dp"
                     android:src="@drawable/baseline_keyboard_arrow_right_24"
-                    android:tint="@color/textcolor"
-                    android:padding="20dp"/>
+                    android:tint="@color/text_color" />
 
             </RelativeLayout>
         </LinearLayout>

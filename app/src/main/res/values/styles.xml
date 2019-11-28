@@ -1,7 +1,4 @@
 <resources>
-
-
-
     <!-- Night mode -->
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -16,17 +13,21 @@
 
     <style name="AppPreferenceTheme"
         parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="android:textColor">@color/preferencesTextColor</item>
+        <item name="android:textColor">@color/preferences_text</item>
     </style>
 
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/mainBookTextColor</item>
-        <item name="hintTextColor">@color/mainBookTextColor</item>
+        <item name="boxStrokeColor">@color/main_book_text</item>
+        <item name="hintTextColor">@color/main_book_text</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NirmalaStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:fontFamily">@font/nirmala</item>
     </style>
 </resources>

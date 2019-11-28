@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- todo: menu items should specify a 'title' -->
-    <item android:state_checked="true" android:color="#FFFFFF" />
-    <item android:color="#BDBDBD"/>
+    <item android:state_checked="true" android:color="@color/saffron" />
+    <item android:color="@color/ivory"/>
 </selector>

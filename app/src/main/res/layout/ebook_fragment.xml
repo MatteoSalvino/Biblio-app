@@ -37,7 +37,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/title_field"
-                android:textColor="@color/mainBookTextColor"
+                android:textColor="@color/main_book_text"
                 android:textSize="30sp" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@string/author_field"
-                android:textColor="@color/mainBookTextColor"
+                android:textColor="@color/main_book_text"
                 android:textSize="25sp" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/year_field_placeholder"
-                android:textColor="@color/mainBookTextColor"
+                android:textColor="@color/main_book_text"
                 android:textSize="20sp" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/pages_field"
-                android:textColor="@color/mainBookTextColor"
+                android:textColor="@color/main_book_text"
                 android:textSize="15sp" />
 
             <!---
@@ -105,8 +105,8 @@
                     android:layout_marginEnd="20dp"
                     android:text="@string/add_to_my_books_msg"
                     android:textAllCaps="false"
-                    android:textColor="@color/mainBookTextColor"
-                    app:backgroundTint="@color/btnAddColor" />
+                    android:textColor="@color/main_book_text"
+                    app:backgroundTint="@color/add_button" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/main_remove_btn"
@@ -116,9 +116,9 @@
                     android:layout_marginEnd="20dp"
                     android:text="@string/remove_from_my_books_msg"
                     android:textAllCaps="false"
-                    android:textColor="@color/mainBookTextColor"
+                    android:textColor="@color/main_book_text"
                     android:visibility="invisible"
-                    app:backgroundTint="@color/btnRemoveColor" />
+                    app:backgroundTint="@color/remove_button" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -131,6 +131,6 @@
         android:maxLines="14"
         android:scrollbars="vertical"
         android:text="@string/desc_sample"
-        android:textColor="@color/mainBookTextColor"
+        android:textColor="@color/main_book_text"
         android:textSize="15sp" />
 </LinearLayout>

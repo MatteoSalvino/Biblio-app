@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <!-- app palette -->
-    <!---
-    <color name="primary">#1976D2</color>
-    <color name="secondary">#F57C00</color>
-    <color name="error">#E53935</color>
-    <color name="backgroundnav">#1A237E</color>
-    <color name="backgroundapp">#EEEEEE</color>
-    <color name="textcolor">#000000</color>
-    <color name="disableBtnColor">#D7CCC8</color>
-    <color name="enableBtnColor">#0D47A1</color>
-    -->
+    <!-- (i) main colors -->
+    <color name="pattens_blue">#d1dce0</color>
+    <color name="pattens_light_blue">#e3e6e7</color>
+    <color name="ivory">#f8f8f2</color>
+    <color name="saffron">#fbc233</color>
 
-    <!-- app palette -->
+    <!-- (i) bright theme colors -->
+    <color name="colorPrimaryDark">@color/pattens_blue</color>
+    <color name="text_color">#000000</color>
+    <color name="card_background">@color/ivory</color>
+    <color name="app_background">@color/pattens_light_blue</color>
+    <color name="nav_background">@color/pattens_blue</color>
+
+    <!--todo: check these -->
+    <!--todo: add title color for item row -->
     <color name="primary">#1976D2</color> <!-- Blue 700 -->
     <color name="secondary">#F57C00</color> <!-- Orange 700 -->
-    <color name="colorPrimaryDark">#000051</color>
     <color name="error">#E53935</color> <!-- Red 600 -->
-    <color name="backgroundnav">#514aac</color>
-    <color name="backgroundapp">#18227c</color>
-    <color name="textcolor">#000000</color>
-    <color name="searchBarTextColor">#FFFFFF</color>
-    <color name="preferencesTextColor">#FFFFFF</color>
-    <color name="disableBtnColor">#D7CCC8</color>
-    <color name="enableBtnColor">#0D47A1</color>
-    <color name="mainBookTextColor">#FFFFFF</color>
-    <color name="btnAddColor">#514aac</color>
-    <color name="btnRemoveColor">#C62828</color>
-    <color name="cardBackgroundColor">#FFFFFF</color>
-
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/disableBtnColor</color>
+    <color name="search_bar_text">#FFFFFF</color>
+    <color name="preferences_text">#FFFFFF</color>
+    <color name="disabled_button">#D7CCC8</color>
+    <color name="enabled_button">#0D47A1</color>
+    <color name="main_book_text">#FFFFFF</color>
+    <color name="add_button">#514aac</color>
+    <color name="remove_button">#C62828</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/disabled_button</color>
 </resources>

@@ -3,7 +3,6 @@ package com.example.biblio.fragments;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
@@ -41,7 +40,6 @@ import com.liulishuo.filedownloader.FileDownloader;
 import org.threeten.bp.LocalDate;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,13 +62,13 @@ public class EbookDetailsFragment extends Fragment {
     private Ebook current;
     private List<Download> downloadList;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ebook_fragment, container, false);
         RequestOptions option = new RequestOptions().centerCrop();
 
+        //todo: bind views instead of calling findViewById
         TextView mBookTitle = view.findViewById(R.id.main_book_title);
         TextView mBookAuthor = view.findViewById(R.id.main_book_author);
         ImageView mBookCover = view.findViewById(R.id.main_book_cover);
@@ -80,7 +78,6 @@ public class EbookDetailsFragment extends Fragment {
         ImageView mBackBtn = view.findViewById(R.id.main_back_btn);
         mDownloadBtn = view.findViewById(R.id.main_download_btn);
         mRemoveBtn = view.findViewById(R.id.main_remove_btn);
-
 
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
         }.getType());
@@ -105,43 +102,39 @@ public class EbookDetailsFragment extends Fragment {
         mBookSummary.setMovementMethod(new ScrollingMovementMethod());
         mBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
 
-
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
-        //TODO: this is an async call
-        downloadList = current.getDownloads();
+        mDownloadBtn.setEnabled(false);
+        mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
 
-
-        if (!current.getDownloads().isEmpty())
-            filename = mBookTitle.getText().toString() + "_" + mBookAuthor.getText().toString() + "_" + mBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
-        else
-            mDownloadBtn.setEnabled(false);
+        new Thread(() -> {
+            downloadList = current.getDownloads();
+            if (!downloadList.isEmpty()) {
+                //todo: filename should be returned by some Helper Class
+                filename = mBookTitle.getText().toString() + "_" + mBookAuthor.getText().toString() + "_" + mBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> mDownloadBtn.setEnabled(true));
+            }
+        }).start();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
-
         mBackBtn.setOnClickListener(view13 -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
-
-
         Log.d("fileSource", ((current.getSource() == null) ? "null" : current.getSource()));
-        new getDownloadUrl().execute();
 
         mDownloadBtn.setOnClickListener(view1 -> {
             if (SDCardHelper.isSDCardPresent()) {
-
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted())
-                            downloadFile(downloadList.get(0).getUri().toString(), String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR,  filename));
+                            downloadFile(downloadList.get(0).getUri().toString(), String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename));
                         else
                             Log.d("Permissions", "Permissions not available.");
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
                     }
                 };
 
@@ -178,23 +171,18 @@ public class EbookDetailsFragment extends Fragment {
 
                     for (int i = 0; i < size; i++) {
                         Ebook elem = myEbooks.get(i);
-
                         if (elem.getId() == current.getId()) {
                             myEbooks.remove(i);
                             break;
                         }
                     }
-
                     editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
                     editor.apply();
                 }
             }
-
             mRemoveBtn.setVisibility(View.INVISIBLE);
             mDownloadBtn.setVisibility(View.VISIBLE);
-
         });
-
 
         //Check if selected book is yet downloaded
         if (root_dir.exists() && filename != null) {
@@ -203,11 +191,12 @@ public class EbookDetailsFragment extends Fragment {
                 mRemoveBtn.setVisibility(View.VISIBLE);
             }
         }
-
         return view;
     }
 
-    private void downloadFile(String url, String path) {
+    //fixme: Libgen uris are not valid!
+    private void downloadFile(String uri, String path) {
+        Log.d("download uri", uri);
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Downloading");
         progressDialog.setIcon(R.drawable.download);
@@ -216,7 +205,7 @@ public class EbookDetailsFragment extends Fragment {
         progressDialog.show();
 
         FileDownloader.setup(Objects.requireNonNull(getContext()));
-        FileDownloader.getImpl().create(url)
+        FileDownloader.getImpl().create(uri)
                 .setPath(path)
                 .setCallbackProgressTimes(300)
                 .setMinIntervalUpdateSpeed(400)
@@ -254,53 +243,23 @@ public class EbookDetailsFragment extends Fragment {
                             editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
                             editor.commit();
                         }
-
                     }
 
                     @Override
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                         Log.d("downloadFile", "pause state");
-
                     }
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
-                        Log.d("downloadFile", "error state");
-                        e.printStackTrace();
+                        Log.d("downloadFile", "" + e.getMessage());
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     protected void warn(BaseDownloadTask task) {
                         Log.d("downloadFile", "warning state");
-
                     }
                 }).start();
-    }
-
-    private class getDownloadUrl extends AsyncTask<Void, Ebook, URI> {
-
-
-        @Override
-        protected URI doInBackground(Void... voids) {
-            downloadList = current.getDownloads();
-            URI download_url;
-            Log.d("doInBackground", current.getProviderName());
-
-            download_url = (downloadList.isEmpty()) ? null : downloadList.get(0).getUri();
-
-            return download_url;
-        }
-
-        @Override
-        protected void onPostExecute(URI uri) {
-            if (uri == null) {
-                mDownloadBtn.setEnabled(false);
-                mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disableBtnColor));
-                Log.d("DownloadTask", "null");
-            } else {
-                Log.d("DownloadTask", uri.toString());
-            }
-
-        }
     }
 }

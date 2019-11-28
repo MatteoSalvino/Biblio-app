@@ -83,6 +83,7 @@ public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksView
             mBookCover = v.findViewById(R.id.book_cover);
             mBookPages = v.findViewById(R.id.book_pages);
             mBookSource = v.findViewById(R.id.book_source);
+
             this.itemListener = listener;
 
             v.setOnClickListener(this);

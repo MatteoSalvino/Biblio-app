@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,8 +20,8 @@ import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
+import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.SDCardHelper;
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
@@ -50,11 +48,11 @@ import lrusso96.simplebiblio.core.Ebook;
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
 
+//todo: add view model
 public class EbookDetailsFragment extends Fragment {
     //fixme: variable not used
     private static final int WRITE_REQUEST_CODE = 300;
-    private MaterialButton mDownloadBtn;
-    private MaterialButton mRemoveBtn;
+    private EbookFragmentBinding binding;
     private File root_dir;
     private String filename;
     private SharedPreferences sharedPreferences;
@@ -65,19 +63,8 @@ public class EbookDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ebook_fragment, container, false);
+        binding = EbookFragmentBinding.inflate(inflater);
         RequestOptions option = new RequestOptions().centerCrop();
-
-        //todo: bind views instead of calling findViewById
-        TextView mBookTitle = view.findViewById(R.id.main_book_title);
-        TextView mBookAuthor = view.findViewById(R.id.main_book_author);
-        ImageView mBookCover = view.findViewById(R.id.main_book_cover);
-        TextView mBookDate = view.findViewById(R.id.main_book_date);
-        TextView mBookPages = view.findViewById(R.id.main_book_pages);
-        TextView mBookSummary = view.findViewById(R.id.main_book_summary);
-        ImageView mBackBtn = view.findViewById(R.id.main_back_btn);
-        mDownloadBtn = view.findViewById(R.id.main_download_btn);
-        mRemoveBtn = view.findViewById(R.id.main_remove_btn);
 
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
         }.getType());
@@ -89,40 +76,40 @@ public class EbookDetailsFragment extends Fragment {
         int book_pages = current.getPages();
         String book_summary = current.getSummary();
 
-        mBookTitle.setText(current.getTitle());
-        mBookAuthor.setText(current.getAuthor());
+        binding.mainBookTitle.setText(current.getTitle());
+        binding.mainBookAuthor.setText(current.getAuthor());
 
         if (current.getCover() == null)
-            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(mBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(binding.mainBookCover);
         else
-            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(mBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(binding.mainBookCover);
 
-        mBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
-        mBookPages.setText(String.format("n° pages : %s", (book_pages == 0) ? "-" : String.valueOf(book_pages)));
-        mBookSummary.setMovementMethod(new ScrollingMovementMethod());
-        mBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
+        binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
+        binding.mainBookPages.setText(String.format("n° pages : %s", (book_pages == 0) ? "-" : String.valueOf(book_pages)));
+        binding.mainBookSummary.setMovementMethod(new ScrollingMovementMethod());
+        binding.mainBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
 
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
-        mDownloadBtn.setEnabled(false);
-        mDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+        binding.mainDownloadBtn.setEnabled(false);
+        binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
 
         new Thread(() -> {
             downloadList = current.getDownloads();
             if (!downloadList.isEmpty()) {
                 //todo: filename should be returned by some Helper Class
-                filename = mBookTitle.getText().toString() + "_" + mBookAuthor.getText().toString() + "_" + mBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> mDownloadBtn.setEnabled(true));
+                filename = binding.mainBookTitle.getText().toString() + "_" + binding.mainBookAuthor.getText().toString() + "_" + binding.mainBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> binding.mainDownloadBtn.setEnabled(true));
             }
         }).start();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
-        mBackBtn.setOnClickListener(view13 -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        binding.mainBackBtn.setOnClickListener(view13 -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
         Log.d("fileSource", ((current.getSource() == null) ? "null" : current.getSource()));
 
-        mDownloadBtn.setOnClickListener(view1 -> {
+        binding.mainDownloadBtn.setOnClickListener(view1 -> {
             if (SDCardHelper.isSDCardPresent()) {
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
@@ -158,7 +145,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         });
 
-        mRemoveBtn.setOnClickListener(view12 -> {
+        binding.mainRemoveBtn.setOnClickListener(view12 -> {
             SDCardHelper.findFile(root_dir, filename, true);
             String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
 
@@ -180,18 +167,18 @@ public class EbookDetailsFragment extends Fragment {
                     editor.apply();
                 }
             }
-            mRemoveBtn.setVisibility(View.INVISIBLE);
-            mDownloadBtn.setVisibility(View.VISIBLE);
+            binding.mainRemoveBtn.setVisibility(View.INVISIBLE);
+            binding.mainDownloadBtn.setVisibility(View.VISIBLE);
         });
 
         //Check if selected book is yet downloaded
         if (root_dir.exists() && filename != null) {
             if (SDCardHelper.findFile(root_dir, filename, false)) {
-                mDownloadBtn.setVisibility(View.INVISIBLE);
-                mRemoveBtn.setVisibility(View.VISIBLE);
+                binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
+                binding.mainRemoveBtn.setVisibility(View.VISIBLE);
             }
         }
-        return view;
+        return binding.getRoot();
     }
 
     //fixme: Libgen uris are not valid!
@@ -223,8 +210,8 @@ public class EbookDetailsFragment extends Fragment {
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         progressDialog.dismiss();
-                        mDownloadBtn.setVisibility(View.INVISIBLE);
-                        mRemoveBtn.setVisibility(View.VISIBLE);
+                        binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
+                        binding.mainRemoveBtn.setVisibility(View.VISIBLE);
 
                         //todo: should open the new file?
 

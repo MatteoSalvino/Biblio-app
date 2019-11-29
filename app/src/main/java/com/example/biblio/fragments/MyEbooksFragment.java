@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,11 +16,10 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblio.BuildConfig;
-import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
+import com.example.biblio.databinding.MyEbooksFragmentBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -38,52 +35,42 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
 
 //todo: handle duplicates!
 public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
-
     private ArrayList<Ebook> mEbooks;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.my_ebooks_fragment, container, false);
-
-        RecyclerView mRecyclerView = v.findViewById(R.id.my_ebooks_rv);
-        ImageView mImageTemplate = v.findViewById(R.id.iv_template);
-        TextView mTextViewTemplate = v.findViewById(R.id.tv_template);
+        MyEbooksFragmentBinding binding = MyEbooksFragmentBinding.inflate(inflater, container, false);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        binding.myEbooksRv.setLayoutManager(mLayoutManager);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
 
         if (response != null) {
-            mImageTemplate.setVisibility(View.INVISIBLE);
-            mTextViewTemplate.setVisibility(View.INVISIBLE);
+            binding.ivTemplate.setVisibility(View.INVISIBLE);
+            binding.tvTemplate.setVisibility(View.INVISIBLE);
 
             mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
             }.getType());
             Log.d("SharedPrefs", mEbooks.toString());
 
             if (mEbooks.isEmpty()) {
-                mImageTemplate.setVisibility(View.VISIBLE);
-                mTextViewTemplate.setVisibility(View.VISIBLE);
+                binding.ivTemplate.setVisibility(View.VISIBLE);
+                binding.tvTemplate.setVisibility(View.VISIBLE);
             } else {
-
-
                 MyEbooksAdapter.OnItemListener mMyEbooksListener = this;
-
                 MyEbooksAdapter mAdapter = new MyEbooksAdapter(mEbooks, mMyEbooksListener, getContext());
-                mRecyclerView.setAdapter(mAdapter);
-
+                binding.myEbooksRv.setAdapter(mAdapter);
             }
         } else {
-            mImageTemplate.setVisibility(View.VISIBLE);
-            mTextViewTemplate.setVisibility(View.VISIBLE);
+            binding.ivTemplate.setVisibility(View.VISIBLE);
+            binding.tvTemplate.setVisibility(View.VISIBLE);
         }
-        return v;
+        return binding.getRoot();
     }
-
 
     /**
      * Launches an ebook reader to open the file.

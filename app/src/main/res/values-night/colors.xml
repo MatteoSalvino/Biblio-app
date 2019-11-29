@@ -4,7 +4,7 @@
     <!-- app palette -->
     <color name="primary">#212121</color> <!-- Blue 300 -->
     <color name="secondary">#FFCC80</color> <!-- Orange 200 -->
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="primary_dark">#000000</color>
     <color name="error">#Ef9A9A</color> <!-- Red 200 -->
     <color name="nav_background">#1F1B24</color>
     <color name="app_background">#121212</color>
@@ -17,6 +17,5 @@
     <color name="add_button">#BB86FC</color>
     <color name="remove_button">#EF9A9A</color>
     <color name="card_background">#424242</color>
-
 </resources>
 

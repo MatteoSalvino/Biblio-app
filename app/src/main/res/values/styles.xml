@@ -1,8 +1,8 @@
 <resources>
-    <!-- Night mode -->
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="preferenceTheme">@style/AppPreferenceTheme</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:preferenceStyle">@style/AppPreferenceTheme</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 

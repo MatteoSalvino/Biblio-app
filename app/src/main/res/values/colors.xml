@@ -8,7 +8,8 @@
     <color name="saffron">#fbc233</color>
 
     <!-- (i) bright theme colors -->
-    <color name="colorPrimaryDark">@color/pattens_blue</color>
+    <color name="primary">@color/pattens_light_blue</color>
+    <color name="primary_dark">@color/pattens_blue</color>
     <color name="text_color">#000000</color>
     <color name="card_background">@color/ivory</color>
     <color name="app_background">@color/pattens_light_blue</color>
@@ -16,7 +17,6 @@
 
     <!--todo: check these -->
     <!--todo: add title color for item row -->
-    <color name="primary">#1976D2</color> <!-- Blue 700 -->
     <color name="secondary">#F57C00</color> <!-- Orange 700 -->
     <color name="error">#E53935</color> <!-- Red 600 -->
     <color name="search_bar_text">#FFFFFF</color>

@@ -1,5 +1,7 @@
 package com.example.biblio.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,8 +16,6 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
 
     private MutableLiveData<List<Ebook>> ebooks;
 
-    //todo: add a shared view model to handle filters
-
     public LiveData<List<Ebook>> getEbooks() {
         if (ebooks == null) {
             ebooks = new MutableLiveData<>();
@@ -26,13 +26,14 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
 
     public void refreshData() {
         new Thread(() -> {
+            Log.d(getClass().getName(), "refreshing data");
             SimpleBiblio sb = new SimpleBiblioBuilder().build();
             List<Ebook> ret = doRefresh(sb);
-            if(ret.size() > 0)
+            Log.d(getClass().getName(), String.format("ret has size: %d", ret.size()));
+            if (ret.size() > 0)
                 ebooks.postValue(ret);
         }).start();
     }
 
     protected abstract List<Ebook> doRefresh(SimpleBiblio sb);
-
 }

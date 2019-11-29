@@ -21,7 +21,7 @@ public class Introduction extends AppIntro {
         super.onCreate(savedInstanceState);
 
         createSlides();
-        setNavBarColor(R.color.colorPrimaryDark);
+        setNavBarColor(R.color.primary_dark);
         setSeparatorColor(getResources().getColor(R.color.white));
         showSkipButton(false);
 

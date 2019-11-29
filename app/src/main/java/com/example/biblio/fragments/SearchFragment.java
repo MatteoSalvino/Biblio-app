@@ -1,7 +1,5 @@
 package com.example.biblio.fragments;
 
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,17 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
+import com.example.biblio.databinding.SearchFragmentBinding;
 import com.example.biblio.viewmodels.SearchViewModel;
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,35 +29,29 @@ import java.util.concurrent.TimeUnit;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class SearchFragment extends Fragment implements EbooksAdapter.OnItemListener {
-    private RecyclerView mRecyclerView;
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
-    private MaterialSearchBar mSearchBar;
+    private SearchFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.search_fragment, container, false);
-        mSearchBar = view.findViewById(R.id.searchBar);
+        binding = SearchFragmentBinding.inflate(inflater, container, false);
 
         SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
 
-        MaterialButton mFiltersBtn = view.findViewById(R.id.filters_btn);
         //fixme: variable mSortBtn is never used
-        MaterialButton mSortBtn = view.findViewById(R.id.sort_btn);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+        binding.recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        binding.recyclerView.setLayoutManager(mLayoutManager);
         adapterListener = this;
 
-        RxTextView.textChanges(mSearchBar.getSearchEditText())
+        RxTextView.textChanges(binding.searchBar.getSearchEditText())
                 .debounce(750, TimeUnit.MILLISECONDS)
                 .subscribe(textChanged -> {
                     Log.d("TextChanges", "Stopped typing.");
-                    String query = mSearchBar.getSearchEditText().getText().toString();
+                    String query = binding.searchBar.getSearchEditText().getText().toString();
 
                     if (query.length() >= 5)
                         model.refreshData(query);
@@ -70,7 +60,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
                 });
 
 
-        mFiltersBtn.setOnClickListener(view1 -> {
+        binding.filtersBtn.setOnClickListener(view1 -> {
             Fragment to_render = new FiltersFragment();
             getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
                     .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
@@ -81,11 +71,10 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
             mEbooks = (ArrayList<Ebook>) ebooks;
             //todo: why this as listener?
             EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, adapterListener, getContext());
-            mRecyclerView.setAdapter(mAdapter);
+            binding.recyclerView.setAdapter(mAdapter);
         };
         model.getEbooks().observe(this, searchObserver);
-
-        return view;
+        return binding.getRoot();
     }
 
     @Override

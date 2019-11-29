@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,9 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.biblio.R;
+import com.example.biblio.databinding.FiltersFragmentBinding;
 import com.example.biblio.viewmodels.SearchViewModel;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.util.Objects;
 
@@ -23,96 +21,73 @@ import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 
 public class FiltersFragment extends Fragment {
-    private MaterialButton mLowRatingBtn;
-    private MaterialButton mMediumRatingBtn;
-    private MaterialButton mMediumHighRatingBtn;
-    private MaterialButton mHighRatingBtn;
-    private MaterialCheckBox mLibgenesisCb;
-    private MaterialCheckBox mFeedbooksCb;
-    private MaterialCheckBox mItalianCb;
-    private MaterialCheckBox mEnglishCb;
-    private MaterialCheckBox mFrenchCb;
-    private MaterialCheckBox mSpanishCb;
-    private MaterialCheckBox mGermanCb;
+    private FiltersFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.filters_fragment, container, false);
+        binding = FiltersFragmentBinding.inflate(inflater, container, false);
 
         SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
 
-        ImageView mBackBtn = view.findViewById(R.id.filters_back_btn);
-        MaterialButton mResetBtn = view.findViewById(R.id.filters_reset_btn);
-        mLowRatingBtn = view.findViewById(R.id.low_rating_btn);
-        mMediumRatingBtn = view.findViewById(R.id.medium_rating_btn);
-        mMediumHighRatingBtn = view.findViewById(R.id.medium_high_rating_btn);
-        mHighRatingBtn = view.findViewById(R.id.high_rating_btn);
-        mLibgenesisCb = view.findViewById(R.id.libgen_cb);
-        mFeedbooksCb = view.findViewById(R.id.feedbooks_cb);
-        mItalianCb = view.findViewById(R.id.italian_cb);
-        mEnglishCb = view.findViewById(R.id.english_cb);
-        mFrenchCb = view.findViewById(R.id.french_cb);
-        mSpanishCb = view.findViewById(R.id.spanish_cb);
-        mGermanCb = view.findViewById(R.id.german_cb);
+        binding.filtersBackBtn.setOnClickListener(x -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
 
-        mBackBtn.setOnClickListener(x -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        binding.lowRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.LOW));
+        binding.mediumRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM));
+        binding.mediumHighRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM_HIGH));
+        binding.highRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.HIGH));
 
-        mLowRatingBtn.setOnClickListener(x -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+        binding.feedbooksCb.setChecked(model.isEnabled(Provider.FEEDBOOKS));
+        binding.feedbooksCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(Feedbooks.class, isChecked));
+
+        binding.libgenCb.setChecked(model.isEnabled(Provider.LIBGEN));
+        binding.libgenCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(LibraryGenesis.class, isChecked));
+
+        binding.filtersResetBtn.setOnClickListener(x -> {
+            binding.libgenCb.setChecked(true);
+            binding.feedbooksCb.setChecked(true);
+            updateButtonBackgroundColors(RATING.LOW);
+            binding.italianCb.setChecked(false);
+            binding.englishCb.setChecked(false);
+            binding.frenchCb.setChecked(false);
+            binding.spanishCb.setChecked(false);
+            binding.germanCb.setChecked(false);
         });
+        return binding.getRoot();
+    }
 
-        mMediumRatingBtn.setOnClickListener(x -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-        });
+    /**
+     * Updates the background color of the rating buttons, according to the current minimum rating.
+     * @param rating the minimum value to be accepted
+     */
+    private void updateButtonBackgroundColors(RATING rating) {
+        int enabled = getResources().getColor(R.color.add_button);
+        int disabled = getResources().getColor(R.color.disabled_button);
+        int val = rating.getValue();
+        int c = RATING.LOW.getValue() >= val ? enabled : disabled;
+        binding.lowRatingBtn.setBackgroundColor(c);
+        c = RATING.MEDIUM.getValue() >= val ? enabled : disabled;
+        binding.mediumRatingBtn.setBackgroundColor(c);
+        c = RATING.MEDIUM_HIGH.getValue() >= val ? enabled : disabled;
+        binding.mediumHighRatingBtn.setBackgroundColor(c);
+        c = RATING.HIGH.getValue() >= val ? enabled : disabled;
+        binding.highRatingBtn.setBackgroundColor(c);
+    }
 
+    private enum RATING {
+        LOW(0),
+        MEDIUM(1),
+        MEDIUM_HIGH(2),
+        HIGH(3);
 
-        mMediumHighRatingBtn.setOnClickListener(x -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-        });
+        private final int value;
 
-        mHighRatingBtn.setOnClickListener(x -> {
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-        });
+        RATING(final int val) {
+            value = val;
+        }
 
-        mFeedbooksCb.setChecked(model.isEnabled(Provider.FEEDBOOKS));
-        mFeedbooksCb.setOnCheckedChangeListener((button, isChecked) -> {
-            model.enableProvider(Feedbooks.class, isChecked);
-        });
-
-        mLibgenesisCb.setChecked(model.isEnabled(Provider.LIBGEN));
-        mLibgenesisCb.setOnCheckedChangeListener((button, isChecked) -> {
-            model.enableProvider(LibraryGenesis.class, isChecked);
-        });
-
-
-        mResetBtn.setOnClickListener(x -> {
-            mLibgenesisCb.setChecked(true);
-            mFeedbooksCb.setChecked(true);
-
-            mLowRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mMediumRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mMediumHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mHighRatingBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
-            mItalianCb.setChecked(false);
-            mEnglishCb.setChecked(false);
-            mFrenchCb.setChecked(false);
-            mSpanishCb.setChecked(false);
-            mGermanCb.setChecked(false);
-        });
-
-        return view;
+        public int getValue() {
+            return value;
+        }
     }
 }

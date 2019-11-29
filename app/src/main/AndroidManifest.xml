@@ -18,7 +18,7 @@
 
         <activity android:name=".Introduction" android:screenOrientation="portrait" />
 
-        <activity android:name=".MainActivity" android:screenOrientation="portrait" android:noHistory="false">
+        <activity android:name=".MainActivity" android:screenOrientation="fullSensor" android:noHistory="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

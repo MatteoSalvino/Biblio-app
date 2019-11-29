@@ -20,9 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biblio.R;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.biblio.databinding.SignupFragmentBinding;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -33,30 +31,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignupFragment extends Fragment {
-    private TextInputLayout mNameLayout;
-    private TextInputLayout mEmailLayout;
-    private TextInputLayout mPasswordLayout;
-    private TextInputLayout mPasswordConfirmationLayout;
-    private MaterialCheckBox mTermsCheckBox;
+    private SignupFragmentBinding binding;
     private ProgressDialog progressDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.signup_fragment, container, false);
+        binding = SignupFragmentBinding.inflate(inflater, container, false);
 
-        mNameLayout = v.findViewById(R.id.signup_name_field);
-        mEmailLayout = v.findViewById(R.id.signup_email_field);
-        mPasswordLayout = v.findViewById(R.id.signup_password_field);
-        mPasswordConfirmationLayout = v.findViewById(R.id.signup_password_confirmation_field);
-        mTermsCheckBox = v.findViewById(R.id.signup_terms_cb);
-        MaterialButton mSignupBtn = v.findViewById(R.id.signup_btn);
-
-        mSignupBtn.setOnClickListener(view -> {
-            String name = mNameLayout.getEditText().getText().toString();
-            String email = mEmailLayout.getEditText().getText().toString();
-            String password = mPasswordLayout.getEditText().getText().toString();
-            String password_confirmation = mPasswordConfirmationLayout.getEditText().getText().toString();
+        binding.signupBtn.setOnClickListener(view -> {
+            String name = binding.signupNameField.getEditText().getText().toString();
+            String email = binding.signupEmailField.getEditText().getText().toString();
+            String password = binding.signupPasswordField.getEditText().getText().toString();
+            String password_confirmation = binding.signupPasswordConfirmationField.getEditText().getText().toString();
 
             if (isValidForm(name, email, password, password_confirmation)) {
                 progressDialog = ProgressDialog.show(getActivity(), "", "", true);
@@ -67,13 +54,13 @@ public class SignupFragment extends Fragment {
             }
         });
 
-        return v;
+        return binding.getRoot();
     }
 
+    //todo: make more sophisticated
     private boolean isValidForm(String name, String email, String password, String password_confirmation) {
-        //To make more sophisticated
         return !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !password_confirmation.isEmpty()
-                && (password.compareTo(password_confirmation) == 0) && mTermsCheckBox.isChecked();
+                && (password.compareTo(password_confirmation) == 0) && binding.signupTermsCb.isChecked();
     }
 
     private void signup(String name, String email, String password, String password_confirmation) {
@@ -123,9 +110,7 @@ public class SignupFragment extends Fragment {
                 postParams.put("email", email);
                 postParams.put("password", password);
                 postParams.put("password_confirmation", password_confirmation);
-
                 Log.d("getParams", postParams.toString());
-
                 return postParams;
             }
 

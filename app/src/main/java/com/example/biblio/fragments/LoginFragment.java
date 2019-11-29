@@ -21,8 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.biblio.R;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
+import com.example.biblio.databinding.LoginFragmentBinding;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -34,42 +33,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginFragment extends Fragment {
-    private TextInputLayout mEmailLayout;
-    private TextInputLayout mPasswordLayout;
     private ProgressDialog progressDialog;
+    private LoginFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.login_fragment, container, false);
+        binding = LoginFragmentBinding.inflate(inflater, container, false);
 
-        mEmailLayout = v.findViewById(R.id.email_field);
-        mPasswordLayout = v.findViewById(R.id.password_field);
-        MaterialButton mLoginBtn = v.findViewById(R.id.login_btn);
+        binding.loginBtn.setOnClickListener(view -> {
+            String email = binding.emailField.getEditText().getText().toString().trim();
+            String password = binding.passwordField.getEditText().getText().toString().trim();
 
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = mEmailLayout.getEditText().getText().toString().trim();
-                String password = mPasswordLayout.getEditText().getText().toString().trim();
-
-                if (isValid(email, "email") && isValid(password, "password")) {
-                    progressDialog = ProgressDialog.show(getActivity(), "Login process", "Logging in. Please wait...", true);
-                    progressDialog.setContentView(R.layout.login_dialog_view);
-                    login(email, password);
-                } else
-                    Log.d("onClick", "Wrong credentials");
-            }
+            if (isValid(email, "email") && isValid(password, "password")) {
+                progressDialog = ProgressDialog.show(getActivity(), "Login process", "Logging in. Please wait...", true);
+                progressDialog.setContentView(R.layout.login_dialog_view);
+                login(email, password);
+            } else
+                Log.d("onClick", "Wrong credentials");
         });
 
-        return v;
+        return binding.getRoot();
     }
 
     private boolean isValid(String param, String type) {
         if (type.equals("email"))
             return EmailValidator.getInstance().isValid(param);
         else return type.equals("password");
-
     }
 
     private void login(String email, String password) {
@@ -91,7 +81,6 @@ public class LoginFragment extends Fragment {
                         .put("auth_token", auth_token).toString();
 
                 Log.d("credentials", credentials);
-
 
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -133,7 +122,6 @@ public class LoginFragment extends Fragment {
                 return super.parseNetworkResponse(response);
             }
         };
-
 
         requestQueue.add(stringRequest);
         Log.d("login", "finished");

@@ -11,35 +11,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.biblio.R;
 import com.example.biblio.EmailActivity;
-import com.google.android.material.button.MaterialButton;
+import com.example.biblio.R;
+import com.example.biblio.databinding.ProfileFragmentBinding;
 
 public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.profile_fragment, container, false);
+        ProfileFragmentBinding binding = ProfileFragmentBinding.inflate(inflater, container, false);
 
-        MaterialButton mEmailLoginBtn = v.findViewById(R.id.email_login_btn);
-        MaterialButton mSignupSuggestionBtn = v.findViewById(R.id.signup_suggestion_btn);
-        MaterialButton mSettingsButton = v.findViewById(R.id.settings_btn);
-
-        mEmailLoginBtn.setOnClickListener(view -> {
+        binding.emailLoginBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), EmailActivity.class);
             startActivityForResult(i, 0);
         });
 
-        mSignupSuggestionBtn.setOnClickListener(view -> {
+        binding.signupSuggestionBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), EmailActivity.class);
             i.putExtra("page start", 1);
             startActivity(i);
         });
 
-        mSettingsButton.setOnClickListener(view -> loadFragment(new SettingsFragment(), "SettingsFragment"));
-
-        return v;
+        binding.settingsBtn.setOnClickListener(view -> loadFragment(new SettingsFragment(), "SettingsFragment"));
+        return binding.getRoot();
     }
 
     @Override

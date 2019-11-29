@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_filters_layout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="4"
-        android:gravity="center">
+        android:weightSum="4">
 
 
         <ImageView
@@ -28,76 +27,76 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="@string/filters_option"
-            android:textSize="20sp"
-            android:textColor="@color/main_book_text"/>
+            android:textColor="@color/main_book_text"
+            android:textSize="20sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filters_reset_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/remove_button"
             android:text="@string/reset_msg"
             android:textAllCaps="false"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/remove_button"/>
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/item_decorator"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:src="@drawable/item_decorator" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/provider_field"
         android:layout_margin="10dp"
+        android:text="@string/provider_field"
         android:textColor="@color/main_book_text"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
         android:weightSum="2">
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/libgen_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/library_genesis_tv"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/library_genesis_tv"
+            android:textColor="@color/main_book_text" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/feedbooks_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/feebooks_tv"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/feebooks_tv"
+            android:textColor="@color/main_book_text" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rating_field"
         android:layout_margin="10dp"
+        android:text="@string/rating_field"
         android:textColor="@color/main_book_text"
-        android:textSize="15sp"/>
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/low_rating_btn"
@@ -110,8 +109,7 @@
             android:minHeight="0dp"
             android:padding="5dp"
             android:text="@string/minimum_rating"
-            android:textColor="@color/main_book_text"/>
-
+            android:textColor="@color/main_book_text" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -125,7 +123,7 @@
             android:minHeight="0dp"
             android:padding="5dp"
             android:text="@string/low_rating"
-            android:textColor="@color/main_book_text"/>
+            android:textColor="@color/main_book_text" />
 
 
         <com.google.android.material.button.MaterialButton
@@ -139,7 +137,7 @@
             android:minHeight="0dp"
             android:padding="5dp"
             android:text="@string/medium_rating"
-            android:textColor="@color/main_book_text"/>
+            android:textColor="@color/main_book_text" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/high_rating_btn"
@@ -153,14 +151,14 @@
             android:minHeight="0dp"
             android:padding="5dp"
             android:text="@string/high_rating"
-            android:textColor="@color/main_book_text"/>
+            android:textColor="@color/main_book_text" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/language_field"
         android:layout_margin="10dp"
+        android:text="@string/language_field"
         android:textColor="@color/main_book_text"
         android:textSize="15sp" />
 
@@ -173,65 +171,47 @@
             android:id="@+id/italian_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/italian_lang"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:buttonTint="@color/main_book_text"
-            android:layout_marginStart="10dp"/>
+            android:text="@string/italian_lang"
+            android:textColor="@color/main_book_text" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/english_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/english_lang"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/english_lang"
+            android:textColor="@color/main_book_text" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/french_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/french_lang"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/french_lang"
+            android:textColor="@color/main_book_text" />
 
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/spanish_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/spanish_lang"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/spanish_lang"
+            android:textColor="@color/main_book_text" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/german_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/main_book_text"
-            android:text="@string/german_lang"
             android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"/>
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/german_lang"
+            android:textColor="@color/main_book_text" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/apply_filters_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/add_button"
-            android:text="@string/show_results_msg"
-            android:textAllCaps="false"
-            android:textColor="@color/main_book_text"/>
-    </LinearLayout>
-
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.biblio.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,6 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     private ArrayList<Ebook> mEbooks;
     private Class<? extends SwipeEbooksViewModel> mSwipeModel;
 
-
     SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
         mSwipeModel= clazz;
     }
@@ -42,27 +42,27 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
         View view = inflater.inflate(R.layout.swipe_ebooks_rv_fragment, container, false);
 
         mRecyclerView = view.findViewById(R.id.ebooks_rv);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
         SwipeRefreshLayout mSwipeContainer = view.findViewById(R.id.swipeContainer);
         mSwipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mEbooksListener = this;
         SwipeEbooksViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(mSwipeModel);
 
         mSwipeContainer.setOnRefreshListener(model::refreshData);
         mSwipeContainer.setRefreshing(true);
-        final Observer<List<Ebook>> popularObserver = ebooks -> {
+        final Observer<List<Ebook>> swipeObserver = ebooks -> {
             mSwipeContainer.setRefreshing(true);
+            Log.d(getClass().getName(), "swiping");
             mEbooks= (ArrayList<Ebook>) ebooks;
             EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, mEbooksListener, getContext());
             mRecyclerView.setAdapter(mAdapter);
             mSwipeContainer.setRefreshing(false);
         };
-        model.getEbooks().observe(this, popularObserver);
+        model.getEbooks().observe(this, swipeObserver);
         return view;
     }
 

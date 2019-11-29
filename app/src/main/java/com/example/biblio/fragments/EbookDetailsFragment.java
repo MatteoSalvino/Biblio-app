@@ -63,7 +63,7 @@ public class EbookDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = EbookFragmentBinding.inflate(inflater);
+        binding = EbookFragmentBinding.inflate(inflater, container, false);
         RequestOptions option = new RequestOptions().centerCrop();
 
         current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {

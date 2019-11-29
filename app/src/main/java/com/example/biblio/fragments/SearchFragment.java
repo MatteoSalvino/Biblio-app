@@ -47,10 +47,6 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
 
         SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        //fixme: variable editor is never used
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         MaterialButton mFiltersBtn = view.findViewById(R.id.filters_btn);
         //fixme: variable mSortBtn is never used
         MaterialButton mSortBtn = view.findViewById(R.id.sort_btn);

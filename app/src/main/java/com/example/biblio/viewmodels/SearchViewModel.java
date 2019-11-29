@@ -57,7 +57,7 @@ public class SearchViewModel extends ViewModel {
             List<Ebook> ret = sb.searchAll(query);
             if (ret.size() > 0) {
                 result = ret;
-                ebooks.postValue(ret);
+                applyFilters();
             }
         }).start();
     }

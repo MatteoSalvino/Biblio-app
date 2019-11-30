@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.BuildConfig;
+import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
 import com.google.gson.Gson;
@@ -90,7 +91,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onReadButtonClick(int position) {
         Ebook current = mEbooks.get(position);
         openFile(getFilename(current));
     }
@@ -99,5 +100,18 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         int visibility = should_hide ? View.INVISIBLE : View.VISIBLE;
         binding.ivTemplate.setVisibility(visibility);
         binding.tvTemplate.setVisibility(visibility);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Fragment to_render = new EbookDetailsFragment();
+        Bundle args = new Bundle();
+
+        args.putString("current", new Gson().toJson(mEbooks.get(position)));
+        to_render.setArguments(args);
+
+        getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+                .addToBackStack(null).commit();
     }
 }

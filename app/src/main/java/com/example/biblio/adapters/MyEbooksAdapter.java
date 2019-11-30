@@ -62,9 +62,11 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
 
     public interface OnItemListener {
         void onItemClick(int position);
+
+        void onReadButtonClick(int position);
     }
 
-    public static class MyEbooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyEbooksViewHolder extends RecyclerView.ViewHolder {
         final TextView mEbookTitle;
         final TextView mEbookAuthor;
         final ImageView mEbookCover;
@@ -80,13 +82,8 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
             mEbookPages = v.findViewById(R.id.my_ebook_pages);
             mReadButton = v.findViewById(R.id.read_btn);
             this.itemListener = listener;
-
-            mReadButton.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            itemListener.onItemClick(getAdapterPosition());
+            mReadButton.setOnClickListener(x -> this.itemListener.onReadButtonClick(getAdapterPosition()));
+            v.setOnClickListener(x -> itemListener.onItemClick((getAdapterPosition())));
         }
     }
 }

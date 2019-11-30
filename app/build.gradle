@@ -48,7 +48,7 @@ dependencies {
     implementation 'commons-validator:commons-validator:1.5.1'
     implementation 'com.github.AppIntro:AppIntro:5.1.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.github.lrusso96:simple-biblio:0.5.0'
+    implementation 'com.github.lrusso96:simple-biblio:0.5.1'
     implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
     implementation 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     implementation 'com.karumi:dexter:6.0.0'

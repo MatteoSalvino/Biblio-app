@@ -70,7 +70,6 @@ public class EbookDetailsFragment extends Fragment {
             }.getType());
         }
 
-        //Show retrieved informations
         LocalDate book_date = Objects.requireNonNull(current).getPublished();
         int book_pages = current.getPages();
         String book_summary = current.getSummary();
@@ -171,7 +170,6 @@ public class EbookDetailsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    //fixme: Libgen uris are not valid!
     private void downloadFile(String uri, String path) {
         Log.d("download uri", uri);
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -205,7 +203,6 @@ public class EbookDetailsFragment extends Fragment {
 
                         //todo: should open the new file?
 
-                        //fixme: defValue should be an empty list instead of null!
                         String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
                         ArrayList<Ebook> myEbooks = new Gson()
                                 .fromJson(response, new TypeToken<ArrayList<Ebook>>() {

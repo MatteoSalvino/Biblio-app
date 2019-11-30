@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
+import com.example.biblio.databinding.ActivityMainBinding;
 import com.example.biblio.fragments.LoggedProfileFragment;
 import com.example.biblio.fragments.MyEbooksFragment;
 import com.example.biblio.fragments.PopularFragment;
@@ -32,40 +33,14 @@ import java.util.concurrent.TimeoutException;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean isFirstStart = sharedPrefs.getBoolean("firstStart", true);
-
-        if (isFirstStart) {
-            //Launch introduction activity
-            Intent i = new Intent(MainActivity.this, Introduction.class);
-
-            runOnUiThread(() -> startActivity(i));
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
-        } else {
-            if (savedInstanceState == null)
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
-        }
-    }
-
     //todo: design a suitable menu to put more than 5 items!
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;
                 String TAG = "";
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                //fixme: move key to SharedPreferencesHelper
                 Boolean validCredentials = sp.getBoolean("validator", false);
-
                 switch (item.getItemId()) {
                     case R.id.nav_search:
                         selectedFragment = new SearchFragment();
@@ -93,20 +68,11 @@ public class MainActivity extends AppCompatActivity {
                             TAG = "ProfileFragment";
                         }
                         break;
-                    /*
-                    case R.id.nav_settings:
-                        selectedFragment = new SettingsFragment();
-                        TAG = "SettingsFragment";
-                        break;
-                    */
                 }
-
-
                 if (selectedFragment != null) {
                     Fragment previous_fragment = getSupportFragmentManager().findFragmentByTag(TAG);
                     if (previous_fragment != null && previous_fragment.isVisible()) {
                         return false;
-
                     } else {
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, TAG).commit();
                         return true;
@@ -114,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(navListener);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        //fixme: move key to SharedPreferencesHelper
+        boolean isFirstStart = sharedPrefs.getBoolean("firstStart", true);
+        if (isFirstStart) {
+            Intent i = new Intent(MainActivity.this, Introduction.class);
+            runOnUiThread(() -> startActivity(i));
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+        } else if (savedInstanceState == null)
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+    }
 
     @Override
     protected void onStart() {
@@ -126,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 ThreadB threadB = new ThreadB(getApplicationContext());
                 JSONObject jsonResponse;
-
                 try {
                     jsonResponse = threadB.execute().get(10, TimeUnit.SECONDS);
                     if (jsonResponse != null && !jsonResponse.isNull("auth_token")) {
@@ -146,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         threadA.start();
     }
 
+    //todo: remove AsyncTask
     private class ThreadB extends AsyncTask<Void, Void, JSONObject> {
         private Context mContext;
 
@@ -180,9 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             return null;
         }
     }
 }
-

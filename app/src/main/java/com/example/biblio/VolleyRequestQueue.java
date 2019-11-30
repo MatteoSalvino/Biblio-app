@@ -9,6 +9,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 
+//fixme: memory leaks!
 public class VolleyRequestQueue {
     private static VolleyRequestQueue mInstance;
     private static Context mContext;

@@ -13,8 +13,8 @@ import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 
 public abstract class SwipeEbooksViewModel extends ViewModel {
-
     private MutableLiveData<List<Ebook>> ebooks;
+    private final String LOG_TAG = getClass().getName();
 
     public LiveData<List<Ebook>> getEbooks() {
         if (ebooks == null) {
@@ -26,10 +26,10 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
 
     public void refreshData() {
         new Thread(() -> {
-            Log.d(getClass().getName(), "refreshing data");
+            Log.d(LOG_TAG, "refreshing data");
             SimpleBiblio sb = new SimpleBiblioBuilder().build();
             List<Ebook> ret = doRefresh(sb);
-            Log.d(getClass().getName(), String.format("ret has size: %d", ret.size()));
+            Log.d(LOG_TAG, String.format("ret has size: %d", ret.size()));
             if (ret.size() > 0)
                 ebooks.postValue(ret);
         }).start();

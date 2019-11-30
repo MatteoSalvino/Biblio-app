@@ -46,12 +46,11 @@ import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
+import static com.example.biblio.helpers.SDCardHelper.getFilename;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
 
 //todo: add view model
 public class EbookDetailsFragment extends Fragment {
-    //fixme: variable not used
-    private static final int WRITE_REQUEST_CODE = 300;
     private EbookFragmentBinding binding;
     private File root_dir;
     private String filename;
@@ -66,10 +65,10 @@ public class EbookDetailsFragment extends Fragment {
         binding = EbookFragmentBinding.inflate(inflater, container, false);
         RequestOptions option = new RequestOptions().centerCrop();
 
-        current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
-        }.getType());
-
-        //search_data = new Gson().fromJson(getArguments().getString("search_data"), new TypeToken<ArrayList<Ebook>> () {}.getType());
+        if (getArguments() != null) {
+            current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
+            }.getType());
+        }
 
         //Show retrieved informations
         LocalDate book_date = Objects.requireNonNull(current).getPublished();
@@ -97,9 +96,15 @@ public class EbookDetailsFragment extends Fragment {
         new Thread(() -> {
             downloadList = current.getDownloads();
             if (!downloadList.isEmpty()) {
-                //todo: filename should be returned by some Helper Class
-                filename = binding.mainBookTitle.getText().toString() + "_" + binding.mainBookAuthor.getText().toString() + "_" + binding.mainBookDate.getText().toString() + "." + downloadList.get(0).getExtension();
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> binding.mainDownloadBtn.setEnabled(true));
+                filename = getFilename(current);
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+                    ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+                    }.getType());
+                    binding.mainDownloadBtn.setEnabled(true);
+                    boolean present = myEbooks.contains(current);
+                    showRemoveButton(present);
+                });
             }
         }).start();
 
@@ -147,36 +152,21 @@ public class EbookDetailsFragment extends Fragment {
 
         binding.mainRemoveBtn.setOnClickListener(view12 -> {
             SDCardHelper.findFile(root_dir, filename, true);
-            String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
+            String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
 
-            if (response != null) {
-                ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-                }.getType());
-                if (!myEbooks.isEmpty()) {
-                    //Remove current book from array myBooks
-                    int size = myEbooks.size();
+            ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+            }.getType());
+            myEbooks.remove(current);
+            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
+            editor.apply();
 
-                    for (int i = 0; i < size; i++) {
-                        Ebook elem = myEbooks.get(i);
-                        if (elem.getId() == current.getId()) {
-                            myEbooks.remove(i);
-                            break;
-                        }
-                    }
-                    editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
-                    editor.apply();
-                }
-            }
-            binding.mainRemoveBtn.setVisibility(View.INVISIBLE);
-            binding.mainDownloadBtn.setVisibility(View.VISIBLE);
+            showRemoveButton(false);
         });
 
-        //Check if selected book is yet downloaded
+        //Check if selected book has already been downloaded
         if (root_dir.exists() && filename != null) {
-            if (SDCardHelper.findFile(root_dir, filename, false)) {
-                binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
-                binding.mainRemoveBtn.setVisibility(View.VISIBLE);
-            }
+            boolean present = SDCardHelper.findFile(root_dir, filename, false);
+            showRemoveButton(present);
         }
         return binding.getRoot();
     }
@@ -215,22 +205,16 @@ public class EbookDetailsFragment extends Fragment {
 
                         //todo: should open the new file?
 
-                        //Array saved in sharedPrefs is empty
-                        String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
-
-                        ArrayList<Ebook> myEbooks;
-                        if (response == null) {
-                            myEbooks = new ArrayList<>();
-                            myEbooks.add(current);
-                            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
-                            editor.commit();
-                        } else {
-                            myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-                            }.getType());
-                            myEbooks.add(current);
-                            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
-                            editor.commit();
-                        }
+                        //fixme: defValue should be an empty list instead of null!
+                        String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+                        ArrayList<Ebook> myEbooks = new Gson()
+                                .fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+                                }.getType());
+                        if (myEbooks.contains(current))
+                            return;
+                        myEbooks.add(current);
+                        editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
+                        editor.commit();
                     }
 
                     @Override
@@ -249,5 +233,15 @@ public class EbookDetailsFragment extends Fragment {
                         Log.d("downloadFile", "warning state");
                     }
                 }).start();
+    }
+
+    private void showRemoveButton(boolean bool) {
+        if (bool) {
+            binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
+            binding.mainRemoveBtn.setVisibility(View.VISIBLE);
+        } else {
+            binding.mainDownloadBtn.setVisibility(View.VISIBLE);
+            binding.mainRemoveBtn.setVisibility(View.INVISIBLE);
+        }
     }
 }

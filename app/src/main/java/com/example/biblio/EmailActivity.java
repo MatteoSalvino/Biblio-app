@@ -1,44 +1,37 @@
 package com.example.biblio;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.biblio.adapters.PageAdapter;
+import com.example.biblio.databinding.EmailActivityBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class EmailActivity extends AppCompatActivity {
-    private ViewPager mViewPager;
+    private EmailActivityBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.email_activity);
+        binding = EmailActivityBinding.inflate(getLayoutInflater());
 
         int page_start = getIntent().getIntExtra("page start", 0);
+        binding.emailBackBtn.setOnClickListener(view -> onBackPressed());
 
-        ImageView mBackBtn = findViewById(R.id.email_back_btn);
-        TabLayout mTabLayout = findViewById(R.id.tabLayout);
-        mViewPager = findViewById(R.id.viewPager);
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Login"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Signup"));
+        binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        mBackBtn.setOnClickListener(view -> onBackPressed());
+        PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), binding.tabLayout.getTabCount());
+        binding.viewPager.setAdapter(pageAdapter);
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("Login"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("Signup"));
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
-        mViewPager.setAdapter(pageAdapter);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout));
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
+                binding.viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -47,9 +40,8 @@ public class EmailActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-        mViewPager.setCurrentItem(page_start);
+        binding.viewPager.setCurrentItem(page_start);
     }
 }

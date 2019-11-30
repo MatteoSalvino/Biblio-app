@@ -23,6 +23,7 @@ import com.example.biblio.databinding.MyEbooksFragmentBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -31,55 +32,45 @@ import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
 
+import static com.example.biblio.helpers.SDCardHelper.getFilename;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
 
 //todo: handle duplicates!
 public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
-
+    private MyEbooksFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MyEbooksFragmentBinding binding = MyEbooksFragmentBinding.inflate(inflater, container, false);
+        binding = MyEbooksFragmentBinding.inflate(inflater, container, false);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.myEbooksRv.setLayoutManager(mLayoutManager);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        String response = sharedPreferences.getString(MY_EBOOKS_TAG, null);
+        String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
 
-        if (response != null) {
-            binding.ivTemplate.setVisibility(View.INVISIBLE);
-            binding.tvTemplate.setVisibility(View.INVISIBLE);
+        mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
+        }.getType());
+        Log.d("SharedPrefs", mEbooks.toString());
 
-            mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-            }.getType());
-            Log.d("SharedPrefs", mEbooks.toString());
+        hideTemplates(mEbooks.isEmpty());
+        binding.ivTemplate.setVisibility(View.INVISIBLE);
+        binding.tvTemplate.setVisibility(View.INVISIBLE);
+        MyEbooksAdapter.OnItemListener mMyEbooksListener = this;
+        MyEbooksAdapter mAdapter = new MyEbooksAdapter(mEbooks, mMyEbooksListener, getContext());
+        binding.myEbooksRv.setAdapter(mAdapter);
 
-            if (mEbooks.isEmpty()) {
-                binding.ivTemplate.setVisibility(View.VISIBLE);
-                binding.tvTemplate.setVisibility(View.VISIBLE);
-            } else {
-                MyEbooksAdapter.OnItemListener mMyEbooksListener = this;
-                MyEbooksAdapter mAdapter = new MyEbooksAdapter(mEbooks, mMyEbooksListener, getContext());
-                binding.myEbooksRv.setAdapter(mAdapter);
-            }
-        } else {
-            binding.ivTemplate.setVisibility(View.VISIBLE);
-            binding.tvTemplate.setVisibility(View.VISIBLE);
-        }
         return binding.getRoot();
     }
 
     /**
      * Launches an ebook reader to open the file.
      *
-     * @param filename  name of the file, already downloaded
-     * @param extension file format (e.g. pdf)
+     * @param filename name of the file, already downloaded, with extension (e.g. file.txt)
      */
-    private void openFile(@NotNull String filename, @NotNull String extension) {
-        filename = String.format("%s.%s", filename, extension);
+    private void openFile(@NotNull String filename) {
         File path = new File(String.format("%s/Biblio/%s", Environment.getExternalStorageDirectory(), filename));
         Log.d("openFile", path.toString());
 
@@ -87,20 +78,26 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getContext()),
                 BuildConfig.APPLICATION_ID + ".provider",
                 path);
+        in.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
+        String extension = FilenameUtils.getExtension(filename);
         //todo: what about other extensions supported by Mu?
         if (extension.equals("epub"))
             in.setDataAndType(uri, "application/epub+zip");
         else if (extension.equals("pdf"))
             in.setDataAndType(uri, "application/pdf");
-
-        in.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(in);
     }
 
     @Override
     public void onItemClick(int position) {
         Ebook current = mEbooks.get(position);
-        openFile(current.getTitle() + "_" + current.getAuthor() + "_" + current.getPublished().toString(), current.getDownloads().get(0).getExtension());
+        openFile(getFilename(current));
+    }
+
+    private void hideTemplates(boolean should_hide) {
+        int visibility = should_hide ? View.INVISIBLE : View.VISIBLE;
+        binding.ivTemplate.setVisibility(visibility);
+        binding.tvTemplate.setVisibility(visibility);
     }
 }

@@ -32,6 +32,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
     private SearchFragmentBinding binding;
+    private final String TAG = getClass().getName();
 
     @Nullable
     @Override
@@ -40,9 +41,8 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
 
         SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
 
-        //fixme: variable mSortBtn is never used
+        binding.filtersBtn.setOnClickListener(view -> renderFragment(new FiltersFragment()));
         binding.recyclerView.setHasFixedSize(true);
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(mLayoutManager);
         adapterListener = this;
@@ -50,22 +50,13 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
         RxTextView.textChanges(binding.searchBar.getSearchEditText())
                 .debounce(750, TimeUnit.MILLISECONDS)
                 .subscribe(textChanged -> {
-                    Log.d("TextChanges", "Stopped typing.");
+                    Log.d(TAG, "Stopped typing");
                     String query = binding.searchBar.getSearchEditText().getText().toString();
-
                     if (query.length() >= 5)
                         model.refreshData(query);
                     else
-                        Log.d("QueryAlert", "Query too short !");
+                        Log.d(TAG, String.format("Query too short: %d chars inserted", query.length()));
                 });
-
-
-        binding.filtersBtn.setOnClickListener(view1 -> {
-            Fragment to_render = new FiltersFragment();
-            getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                    .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                    .addToBackStack(null).commit();
-        });
 
         final Observer<List<Ebook>> searchObserver = ebooks -> {
             mEbooks = (ArrayList<Ebook>) ebooks;
@@ -83,9 +74,13 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
         Bundle args = new Bundle();
         args.putString("current", new Gson().toJson(mEbooks.get(position)));
         to_render.setArguments(args);
-        getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+        renderFragment(to_render);
+    }
+
+    private void renderFragment(Fragment to_render) {
+        Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(getActivity())
+                .getSupportFragmentManager().findFragmentById(R.id.fragment_container))
+                .getFragmentManager()).beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();
     }
 }
-

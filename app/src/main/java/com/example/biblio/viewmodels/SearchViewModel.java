@@ -1,5 +1,6 @@
 package com.example.biblio.viewmodels;
 
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,11 +20,10 @@ import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
 public class SearchViewModel extends ViewModel {
-
     private List<Ebook> result;
     private MutableLiveData<List<Ebook>> ebooks;
-
     private Map<String, Boolean> enabledProviders;
+    private final String LOG_TAG = getClass().getName();
 
     public SearchViewModel() {
         enabledProviders = new HashMap<>();
@@ -53,8 +53,10 @@ public class SearchViewModel extends ViewModel {
 
     public void refreshData(String query) {
         new Thread(() -> {
+            Log.d(LOG_TAG, "refreshing data");
             SimpleBiblio sb = new SimpleBiblioBuilder().build();
             List<Ebook> ret = sb.searchAll(query);
+            Log.d(LOG_TAG, String.format("ret has size: %d", ret.size()));
             if (ret.size() > 0) {
                 result = ret;
                 applyFilters();
@@ -76,8 +78,7 @@ public class SearchViewModel extends ViewModel {
         } else if (provider == Feedbooks.class) {
             enabledProviders.put(Provider.FEEDBOOKS, enabled);
             applyFilters();
-        }
-        else if (provider == StandardEbooks.class) {
+        } else if (provider == StandardEbooks.class) {
             enabledProviders.put(Provider.STANDARD_EBOOKS, enabled);
             applyFilters();
         }

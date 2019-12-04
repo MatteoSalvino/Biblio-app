@@ -34,7 +34,7 @@ import java.util.Objects;
 import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
-import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
+import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 //todo: handle duplicates!
 public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
@@ -50,7 +50,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         binding.myEbooksRv.setLayoutManager(mLayoutManager);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+        String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
 
         mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
         }.getType());

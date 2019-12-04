@@ -58,6 +58,15 @@
         android:textColor="@color/main_book_text"
         android:textAllCaps="false"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logoff_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Logoff"
+        android:textAllCaps="false"
+        android:layout_margin="15dp"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ public class EmailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = EmailActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         int page_start = getIntent().getIntExtra("page start", 0);
         binding.emailBackBtn.setOnClickListener(view -> onBackPressed());

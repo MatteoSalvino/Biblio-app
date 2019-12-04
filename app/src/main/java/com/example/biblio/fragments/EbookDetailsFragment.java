@@ -47,7 +47,7 @@ import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
-import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_TAG;
+import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 //todo: add view model
 public class EbookDetailsFragment extends Fragment {
@@ -97,7 +97,7 @@ public class EbookDetailsFragment extends Fragment {
             if (!downloadList.isEmpty()) {
                 filename = getFilename(current);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-                    String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+                    String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
                     ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
                     }.getType());
                     binding.mainDownloadBtn.setEnabled(true);
@@ -151,12 +151,12 @@ public class EbookDetailsFragment extends Fragment {
 
         binding.mainRemoveBtn.setOnClickListener(view12 -> {
             SDCardHelper.findFile(root_dir, filename, true);
-            String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+            String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
 
             ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
             }.getType());
             myEbooks.remove(current);
-            editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
+            editor.putString(MY_EBOOKS_KEY, new Gson().toJson(myEbooks));
             editor.apply();
 
             showRemoveButton(false);
@@ -203,14 +203,14 @@ public class EbookDetailsFragment extends Fragment {
 
                         //todo: should open the new file?
 
-                        String response = sharedPreferences.getString(MY_EBOOKS_TAG, "[]");
+                        String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
                         ArrayList<Ebook> myEbooks = new Gson()
                                 .fromJson(response, new TypeToken<ArrayList<Ebook>>() {
                                 }.getType());
                         if (myEbooks.contains(current))
                             return;
                         myEbooks.add(current);
-                        editor.putString(MY_EBOOKS_TAG, new Gson().toJson(myEbooks));
+                        editor.putString(MY_EBOOKS_KEY, new Gson().toJson(myEbooks));
                         editor.commit();
                     }
 

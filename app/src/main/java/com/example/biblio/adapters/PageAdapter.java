@@ -9,7 +9,7 @@ import com.example.biblio.fragments.LoginFragment;
 import com.example.biblio.fragments.SignupFragment;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
-    private int tab_counter;
+    private final int tab_counter;
 
     public PageAdapter(FragmentManager fm, int tab_counter) {
         super(fm,  BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

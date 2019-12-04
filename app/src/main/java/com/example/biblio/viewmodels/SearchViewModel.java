@@ -22,7 +22,7 @@ import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 public class SearchViewModel extends ViewModel {
     private List<Ebook> result;
     private MutableLiveData<List<Ebook>> ebooks;
-    private Map<String, Boolean> enabledProviders;
+    private final Map<String, Boolean> enabledProviders;
     private final String LOG_TAG = getClass().getName();
 
     public SearchViewModel() {

@@ -48,6 +48,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.myEbooksRv.setLayoutManager(mLayoutManager);
+        binding.myEbooksRv.setHasFixedSize(true);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");

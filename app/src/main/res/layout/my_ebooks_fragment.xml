@@ -8,9 +8,8 @@
        android:id="@+id/my_ebooks_rv"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_margin="5dp"
-       android:divider="@null"
-       android:dividerHeight="10dp"/>
+       android:layout_marginLeft="5dp"
+       android:layout_marginRight="5dp"/>
 
    <ImageView
        android:id="@+id/iv_template"

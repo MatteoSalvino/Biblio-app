@@ -4,13 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Signup to our service"
+        android:text="@string/signup_to_our_service_msg"
         android:textSize="25sp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
@@ -23,7 +22,7 @@
         android:id="@+id/signup_name_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="@string/name_hint"
         app:boxBackgroundColor="@color/app_background"
         style="@style/LoginTextInputLayoutStyle"
         android:textColorHint="@color/disabled_button"
@@ -42,7 +41,7 @@
         android:id="@+id/signup_email_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email address"
+        android:hint="@string/email_address_field"
         app:boxBackgroundColor="@color/app_background"
         style="@style/LoginTextInputLayoutStyle"
         android:textColorHint="@color/disabled_button"
@@ -60,7 +59,7 @@
         android:id="@+id/signup_password_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password_field"
         app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/disabled_button"
@@ -79,7 +78,7 @@
         android:id="@+id/signup_password_confirmation_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Confirm password"
+        android:hint="@string/confirm_password_field"
         app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/disabled_button"
@@ -102,7 +101,7 @@
         android:shadowColor="@color/main_book_text"
         android:buttonTint="@color/main_book_text"
         android:textColor="@color/main_book_text"
-        android:text="I accept terms and rule of this application."
+        android:text="@string/accept_terms_field"
         android:layout_margin="10dp" />
 
     <com.google.android.material.button.MaterialButton
@@ -110,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Signup"
+        android:text="@string/signup_msg"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_marginLeft="10dp"

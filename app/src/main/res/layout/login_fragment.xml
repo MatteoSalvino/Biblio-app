@@ -4,13 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_background">
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login to proceed"
+        android:text="@string/login_to_proceed_tv"
         android:textSize="25sp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
@@ -23,7 +22,7 @@
         android:id="@+id/email_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email address"
+        android:hint="@string/email_address_field"
         app:boxBackgroundColor="@color/app_background"
         style="@style/LoginTextInputLayoutStyle"
         android:textColorHint="@color/disabled_button"
@@ -41,7 +40,7 @@
         android:id="@+id/password_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password_field"
         app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/disabled_button"
@@ -62,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Login"
+        android:text="@string/login_msg"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_marginLeft="10dp"

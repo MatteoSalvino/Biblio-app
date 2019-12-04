@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login process"
+        android:text="@string/login_process_tv"
         android:textSize="20sp"
         android:layout_margin="10dp"
         android:textColor="@color/text_color"
@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logging in. Please wait..."
+            android:text="@string/please_wait_tv"
             android:textSize="15sp"
             android:layout_margin="10dp"
             android:textColor="@color/text_color" />

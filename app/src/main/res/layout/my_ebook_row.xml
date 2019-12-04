@@ -1,66 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="120sp">
+    android:layout_height="120sp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
+        android:elevation="8dp"
         app:cardBackgroundColor="@color/card_background"
-        android:elevation="8dp">
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="120sp"
             android:descendantFocusability="blocksDescendants"
+            android:orientation="horizontal"
             android:weightSum="4">
 
-           <ImageView
-               android:id="@+id/my_ebook_cover"
-               android:layout_width="70dp"
-               android:layout_height="100dp"
-               android:layout_margin="10dp" />
+            <ImageView
+                android:id="@+id/my_ebook_cover"
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_weight="2"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/my_ebook_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/title_field"
-                    android:maxLines="1"
-                    android:ellipsize="end"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/text_color"/>
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/title_field"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/my_ebook_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="@string/author_field"
-                    android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/text_color"/>
+                    android:layout_marginTop="5dp"
+                    android:text="@string/author_field"
+                    android:textColor="@color/text_color"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/my_ebook_pages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/text_color"/>
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp" />
 
                 <!--
                 <LinearLayout
@@ -103,10 +105,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/add_button"
                     android:text="@string/read_now_msg"
-                    android:textColor="@color/main_book_text"
                     android:textAllCaps="false"
-                    android:backgroundTint="@color/add_button"/>
+                    android:textColor="@color/main_book_text" />
 
             </RelativeLayout>
         </LinearLayout>

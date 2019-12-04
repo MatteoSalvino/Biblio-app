@@ -46,4 +46,16 @@
     <string name="introduction_download">Store your favorite ebooks in your device\'s local storage.</string>
     <string name="introduction_refresh">Swipe down in order to refresh data in Popular and Recent sections.</string>
     <string name="nav_profile_title">Profile</string>
+    <string name="login_process_tv">Login process</string>
+    <string name="please_wait_tv">Please wait…</string>
+    <string name="login_to_proceed_tv">Login to proceed</string>
+    <string name="email_address_field">Email address</string>
+    <string name="password_field">Password</string>
+    <string name="login_msg">Login</string>
+    <string name="logoff_msg">Logoff</string>
+    <string name="signup_to_our_service_msg">Signup to our service</string>
+    <string name="name_hint">Name</string>
+    <string name="confirm_password_field">Confirm password</string>
+    <string name="accept_terms_field">I accept terms and rule of this application.</string>
+    <string name="signup_msg">Signup</string>
 </resources>

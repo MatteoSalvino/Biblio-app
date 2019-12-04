@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.biblio.adapters.PageAdapter;
 import com.example.biblio.databinding.EmailActivityBinding;
+import com.example.biblio.fragments.LoginFragment;
+import com.example.biblio.fragments.SignupFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class EmailActivity extends AppCompatActivity {
@@ -21,8 +23,8 @@ public class EmailActivity extends AppCompatActivity {
         int page_start = getIntent().getIntExtra("page start", 0);
         binding.emailBackBtn.setOnClickListener(view -> onBackPressed());
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Login"));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Signup"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(LoginFragment.TITLE));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(SignupFragment.TITLE));
         binding.tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), binding.tabLayout.getTabCount());

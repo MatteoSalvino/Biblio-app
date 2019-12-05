@@ -27,6 +27,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 
 //todo: improve layout (e.g. showing stats if logged)
 public class ProfileFragment extends Fragment {
+    public static final String TAG = "ProfileFragment";
     private ProfileFragmentBinding binding;
 
     @Nullable
@@ -74,9 +75,8 @@ public class ProfileFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (activity != null) {
             Fragment fragment = new SettingsFragment();
-            String tag = "SettingsFragment";
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, tag).commit();
+                    .replace(R.id.fragment_container, fragment, SettingsFragment.TAG).commit();
         }
     }
 

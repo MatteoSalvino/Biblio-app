@@ -12,6 +12,7 @@ import com.example.biblio.helpers.ThemeHelper;
 import java.util.Objects;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+    public static final String TAG = "SettingsFragment";
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

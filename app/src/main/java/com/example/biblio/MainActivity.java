@@ -25,29 +25,26 @@ public class MainActivity extends AppCompatActivity {
             item -> {
                 Fragment selectedFragment = null;
                 String TAG = "";
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //fixme: move key to SharedPreferencesHelper
-                Boolean validCredentials = sp.getBoolean("validator", false);
                 switch (item.getItemId()) {
                     case R.id.nav_search:
                         selectedFragment = new SearchFragment();
-                        TAG = "SearchFragment";
+                        TAG = SearchFragment.TAG;
                         break;
                     case R.id.nav_popular:
                         selectedFragment = new PopularFragment();
-                        TAG = "PopularFragment";
+                        TAG = PopularFragment.TAG;
                         break;
                     case R.id.nav_recent:
                         selectedFragment = new RecentFragment();
-                        TAG = "RecentFragment";
+                        TAG = RecentFragment.TAG;
                         break;
                     case R.id.nav_books:
                         selectedFragment = new MyEbooksFragment();
-                        TAG = "MyEBooksFragment";
+                        TAG = MyEbooksFragment.TAG;
                         break;
                     case R.id.nav_profile:
                         selectedFragment = new ProfileFragment();
-                        TAG = "ProfileFragment";
+                        TAG = ProfileFragment.TAG;
                         break;
                 }
                 if (selectedFragment != null) {
@@ -75,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
         if (isFirstStart) {
             Intent i = new Intent(MainActivity.this, Introduction.class);
             runOnUiThread(() -> startActivity(i));
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), SearchFragment.TAG).commit();
         } else if (savedInstanceState == null)
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), "SearchFragment").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), SearchFragment.TAG).commit();
     }
 }

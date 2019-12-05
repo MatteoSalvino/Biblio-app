@@ -38,6 +38,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 //todo: handle duplicates!
 public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
+    public static final String TAG = "MyEBooksFragment";
     private ArrayList<Ebook> mEbooks;
     private MyEbooksFragmentBinding binding;
 

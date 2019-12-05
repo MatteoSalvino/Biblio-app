@@ -29,10 +29,11 @@ import java.util.concurrent.TimeUnit;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class SearchFragment extends Fragment implements EbooksAdapter.OnItemListener {
+    public static final String TAG = "SearchFragment";
+    private final String LOG_TAG = getClass().getName();
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
     private SearchFragmentBinding binding;
-    private final String TAG = getClass().getName();
 
     @Nullable
     @Override
@@ -50,12 +51,12 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
         RxTextView.textChanges(binding.searchBar.getSearchEditText())
                 .debounce(750, TimeUnit.MILLISECONDS)
                 .subscribe(textChanged -> {
-                    Log.d(TAG, "Stopped typing");
+                    Log.d(LOG_TAG, "Stopped typing");
                     String query = binding.searchBar.getSearchEditText().getText().toString();
                     if (query.length() >= 5)
                         model.refreshData(query);
                     else
-                        Log.d(TAG, String.format("Query too short: %d chars inserted", query.length()));
+                        Log.d(LOG_TAG, String.format("Query too short: %d chars inserted", query.length()));
                 });
 
         final Observer<List<Ebook>> searchObserver = ebooks -> {

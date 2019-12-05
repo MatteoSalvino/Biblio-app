@@ -16,6 +16,10 @@ import static com.example.biblio.api.BodyException.NULL_BODY_MSG;
 final class SimpleBiblioHelper {
     final static String ENDPOINT = "https://rocky-lake-33740.herokuapp.com";
     final static String AUTH_TOKEN_KEY = "auth_token";
+    final static String USER_KEY = "user";
+    final static String USERNAME_KEY = "name";
+    final static String DOWNLOADS_KEY = "count";
+
     final static OkHttpClient CLIENT = new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)

@@ -14,7 +14,10 @@ import java.io.IOException;
 
 import static com.example.biblio.api.SimpleBiblioHelper.AUTH_TOKEN_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
+import static com.example.biblio.api.SimpleBiblioHelper.DOWNLOADS_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.ENDPOINT;
+import static com.example.biblio.api.SimpleBiblioHelper.USERNAME_KEY;
+import static com.example.biblio.api.SimpleBiblioHelper.USER_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.getAuthReqBuilder;
 import static com.example.biblio.api.SimpleBiblioHelper.getMessage;
 import static com.example.biblio.api.SimpleBiblioHelper.parseBody;
@@ -60,10 +63,7 @@ class AuthenticationHandler {
         try {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
             Log.d(LOG_TAG, getMessage(result));
-            user.token = getToken(result);
-            String name = getUsername(result);
-            if (!name.isEmpty())
-                user.username = name;
+            update(user, result);
             Log.d(LOG_TAG, "token succesfully retrieved after login");
             return true;
         } catch (IOException | BodyException | TokenException e) {
@@ -81,13 +81,14 @@ class AuthenticationHandler {
         }
     }
 
-    @NotNull
-    private static String getUsername(@NotNull JSONObject result) {
+    private static void update(@NotNull User user, @NotNull JSONObject result) throws TokenException {
         try {
-            return result.getJSONObject("user").getString("name");
+            user.token = getToken(result);
+            user.username = result.getJSONObject(USER_KEY).getString(USERNAME_KEY);
+            user.total_downloads = result.getInt(DOWNLOADS_KEY);
+            Log.d(LOG_TAG, String.format("updated total downloads:%d", user.total_downloads));
         } catch (JSONException e) {
             Log.e(LOG_TAG, "" + e.getMessage());
-            return "";
         }
     }
 }

@@ -13,6 +13,7 @@ public final class User {
     String password;
     private final int MAX_TRIES = 2;
     String token;
+    int total_downloads;
 
     private final String LOG_TAG = getClass().getName();
 
@@ -62,5 +63,9 @@ public final class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getTotalDownloads() {
+        return total_downloads;
     }
 }

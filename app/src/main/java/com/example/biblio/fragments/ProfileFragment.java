@@ -25,8 +25,8 @@ import java.util.Objects;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
+//todo: improve layout (e.g. showing stats if logged)
 public class ProfileFragment extends Fragment {
-
     private ProfileFragmentBinding binding;
 
     @Nullable
@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
             showButtons(false);
         });
 
-        binding.settingsBtn.setOnClickListener(view -> loadFragment(new SettingsFragment(), "SettingsFragment"));
+        binding.settingsBtn.setOnClickListener(view -> loadSettingsFragment());
         return binding.getRoot();
     }
 
@@ -70,10 +70,14 @@ public class ProfileFragment extends Fragment {
             showButtons(true);
     }
 
-    private void loadFragment(Fragment fragment, String tag) {
+    private void loadSettingsFragment() {
         FragmentActivity activity = getActivity();
-        if (activity != null)
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, tag).commit();
+        if (activity != null) {
+            Fragment fragment = new SettingsFragment();
+            String tag = "SettingsFragment";
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment, tag).commit();
+        }
     }
 
     private void showButtons(boolean logged) {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.LoginFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.google.gson.Gson;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -27,7 +27,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 
 public class LoginFragment extends Fragment {
     public static final String TITLE = "Login";
-    private final String LOG_TAG = getClass().getName();
+    private final LogHelper logger = new LogHelper(getClass());
     private ProgressDialog progressDialog;
     private LoginFragmentBinding binding;
 
@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment {
                     boolean successful = user.login();
                     getActivity().runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
-                        Log.d(LOG_TAG, "successful login");
+                        logger.d("successful login");
                         //todo: check SP behaviour
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -58,13 +58,13 @@ public class LoginFragment extends Fragment {
                         getActivity().setResult(Activity.RESULT_OK);
                         getActivity().finish();
                     } else {
-                        Log.d(LOG_TAG, "login failed");
+                        logger.d("login failed");
                         //todo: show some error message
                         //todo: should return to previous fragment with different code?
                     }
                 }).start();
             } else
-                Log.d(LOG_TAG, "Wrong credentials");
+                logger.d("Wrong credentials");
         });
         return binding.getRoot();
     }

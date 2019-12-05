@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.SignupFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 
 public class SignupFragment extends Fragment {
     public static final String TITLE = "Signup";
-    private final String LOG_TAG = getClass().getName();
+    private final LogHelper logger =  new LogHelper(getClass());
     private SignupFragmentBinding binding;
     private ProgressDialog progressDialog;
 
@@ -49,7 +49,7 @@ public class SignupFragment extends Fragment {
                     boolean successful = user.signup();
                     getActivity().runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
-                        Log.d(LOG_TAG, "successful signup");
+                        logger.d("successful signup");
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
@@ -57,10 +57,10 @@ public class SignupFragment extends Fragment {
                         getActivity().setResult(Activity.RESULT_OK);
                         getActivity().finish();
                     } else
-                        Log.d(LOG_TAG, "signup failed");
+                       logger.e("signup failed");
                 }).start();
             } else {
-                Log.d(LOG_TAG, "The signup form is not valid.");
+                logger.d("The signup form is not valid.");
             }
         });
         return binding.getRoot();

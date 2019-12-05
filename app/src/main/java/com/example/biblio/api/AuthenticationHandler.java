@@ -1,6 +1,6 @@
 package com.example.biblio.api;
 
-import android.util.Log;
+import com.example.biblio.helpers.LogHelper;
 
 import okhttp3.FormBody;
 import okhttp3.Request;
@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static com.example.biblio.api.SimpleBiblioHelper.AUTH_TOKEN_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
@@ -28,7 +29,7 @@ class AuthenticationHandler {
     private static final String PASSWORD_PAR = "password";
     private static final String PASSWORD_CONFIRMATION_PAR = "password_confirmation";
 
-    private static final String LOG_TAG = AuthenticationHandler.class.getName();
+    private static final LogHelper logger = new LogHelper(AuthenticationHandler.class);
 
     static boolean signup(@NotNull User user) {
         RequestBody formBody = new FormBody.Builder()
@@ -42,11 +43,11 @@ class AuthenticationHandler {
                 .build();
         try {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
-            Log.d(LOG_TAG, getMessage(result));
+            logger.d(getMessage(result));
             user.token = getToken(result);
-            Log.d(LOG_TAG, "token succesfully retrieved on signup");
+            logger.d("token succesfully retrieved on signup");
         } catch (IOException | BodyException | TokenException e) {
-            Log.e(LOG_TAG, "" + e.getMessage());
+            logger.e(e.getMessage());
             return false;
         }
         return true;
@@ -62,12 +63,12 @@ class AuthenticationHandler {
                 .build();
         try {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
-            Log.d(LOG_TAG, getMessage(result));
+            logger.d(getMessage(result));
             update(user, result);
-            Log.d(LOG_TAG, "token succesfully retrieved after login");
+            logger.d("token succesfully retrieved after login");
             return true;
         } catch (IOException | BodyException | TokenException e) {
-            Log.e(LOG_TAG, "" + e.getMessage());
+            logger.e(e.getMessage());
             return false;
         }
     }
@@ -86,9 +87,9 @@ class AuthenticationHandler {
             user.token = getToken(result);
             user.username = result.getJSONObject(USER_KEY).getString(USERNAME_KEY);
             user.total_downloads = result.getInt(DOWNLOADS_KEY);
-            Log.d(LOG_TAG, String.format("updated total downloads:%d", user.total_downloads));
+            logger.d(String.format(Locale.getDefault(), "updated total downloads:%d", user.total_downloads));
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "" + e.getMessage());
+            logger.e(e.getMessage());
         }
     }
 }

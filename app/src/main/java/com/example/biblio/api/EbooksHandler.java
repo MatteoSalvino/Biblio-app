@@ -1,5 +1,7 @@
 package com.example.biblio.api;
 
+import com.example.biblio.helpers.LogHelper;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +25,7 @@ class EbooksHandler {
     private static final String PROVIDER_PAR = "provider";
     private static final String RATING_PAR = "rating";
 
-    private static final String LOG_TAG = EbooksHandler.class.getName();
+    private static final LogHelper logger = new LogHelper(EbooksHandler.class);
 
     @NotNull
     static RatingResult rate(User user, @NotNull Ebook ebook, int rating) throws UnhautorizedRequestException {
@@ -74,6 +76,7 @@ class EbooksHandler {
                 return "3";
         }
         //fixme throw exception
+        logger.e(String.format("invalid provider id:%s", provider));
         return "";
     }
 

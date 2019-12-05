@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.example.biblio.EmailActivity;
 import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.databinding.ProfileFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.google.gson.Gson;
 
 import java.util.Objects;
@@ -28,6 +28,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 //todo: improve layout (e.g. showing stats if logged)
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
+    private final LogHelper logger = new LogHelper(getClass());
     private ProfileFragmentBinding binding;
 
     @Nullable
@@ -38,7 +39,7 @@ public class ProfileFragment extends Fragment {
         boolean logged = false;
         if (sharedPreferences.contains(CURRENT_USER_KEY)) {
             User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), User.class);
-            Log.v(getClass().getName(), user.getEmail());
+            logger.v(user.getEmail());
             logged = true;
         }
         showButtons(logged);

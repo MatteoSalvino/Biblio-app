@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
 import com.example.biblio.databinding.EbookFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,6 +51,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 //todo: add view model
 public class EbookDetailsFragment extends Fragment {
+    private final LogHelper logger = new LogHelper(getClass());
     private EbookFragmentBinding binding;
     private File root_dir;
     private String filename;
@@ -111,7 +112,7 @@ public class EbookDetailsFragment extends Fragment {
         editor = sharedPreferences.edit();
 
         binding.mainBackBtn.setOnClickListener(view13 -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
-        Log.d("fileSource", ((current.getSource() == null) ? "null" : current.getSource()));
+        logger.d(String.format("fileSource: %s", current.getSource()));
 
         binding.mainDownloadBtn.setOnClickListener(view1 -> {
             if (SDCardHelper.isSDCardPresent()) {
@@ -121,7 +122,7 @@ public class EbookDetailsFragment extends Fragment {
                         if (report.areAllPermissionsGranted())
                             downloadFile(downloadList.get(0).getUri().toString(), String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename));
                         else
-                            Log.d("Permissions", "Permissions not available.");
+                            logger.d("Permissions not granted.");
                     }
 
                     @Override
@@ -144,7 +145,7 @@ public class EbookDetailsFragment extends Fragment {
                         .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .withListener(compositePermissionsListener).check();
             } else {
-                Log.d("SD Card", "SD Card not available");
+                logger.d("SD Card not available");
                 Toast.makeText(getContext(), "SD Card not found", Toast.LENGTH_LONG).show();
             }
         });
@@ -171,7 +172,7 @@ public class EbookDetailsFragment extends Fragment {
     }
 
     private void downloadFile(String uri, String path) {
-        Log.d("download uri", uri);
+        logger.d(String.format("download uri: %s", uri));
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Downloading");
         progressDialog.setIcon(R.drawable.download);
@@ -187,7 +188,7 @@ public class EbookDetailsFragment extends Fragment {
                 .setListener(new FileDownloadListener() {
                     @Override
                     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        Log.d("downloadFile", "pending state");
+                        logger.d("downloadFile - pending state");
                     }
 
                     @Override
@@ -216,18 +217,18 @@ public class EbookDetailsFragment extends Fragment {
 
                     @Override
                     protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
-                        Log.d("downloadFile", "pause state");
+                        logger.d("downloadFile - pause state");
                     }
 
                     @Override
                     protected void error(BaseDownloadTask task, Throwable e) {
-                        Log.d("downloadFile", "" + e.getMessage());
+                        logger.e(e.getMessage());
                         progressDialog.dismiss();
                     }
 
                     @Override
                     protected void warn(BaseDownloadTask task) {
-                        Log.d("downloadFile", "warning state");
+                        logger.w("downloadFile - warning state");
                     }
                 }).start();
     }

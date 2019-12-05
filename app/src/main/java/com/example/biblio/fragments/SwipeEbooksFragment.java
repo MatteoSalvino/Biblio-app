@@ -1,7 +1,6 @@
 package com.example.biblio.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.SwipeEbooksViewModel;
 import com.google.gson.Gson;
 
@@ -26,6 +26,7 @@ import java.util.Objects;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnItemListener {
+    private final LogHelper logger = new LogHelper(getClass());
     private EbooksAdapter.OnItemListener mEbooksListener;
     private ArrayList<Ebook> mEbooks;
     private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
@@ -52,7 +53,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
         binding.swipeContainer.setRefreshing(true);
         final Observer<List<Ebook>> swipeObserver = ebooks -> {
             binding.swipeContainer.setRefreshing(true);
-            Log.d(getClass().getName(), "swiping");
+            logger.d("swiping");
             mEbooks = (ArrayList<Ebook>) ebooks;
             EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, mEbooksListener, getContext());
             binding.ebooksRv.setAdapter(mAdapter);

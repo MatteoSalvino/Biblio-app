@@ -1,6 +1,6 @@
 package com.example.biblio.api;
 
-import android.util.Log;
+import com.example.biblio.helpers.LogHelper;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,14 +8,13 @@ import org.jetbrains.annotations.Nullable;
 import lrusso96.simplebiblio.core.Ebook;
 
 public final class User {
+    private final int MAX_TRIES = 2;
+    private final LogHelper logger = new LogHelper(this.getClass());
     String username;
     String email;
     String password;
-    private final int MAX_TRIES = 2;
     String token;
     int total_downloads;
-
-    private final String LOG_TAG = getClass().getName();
 
     User(@NotNull UserBuilder builder) {
         this.email = builder.email;
@@ -38,7 +37,7 @@ public final class User {
                 if (count == 0 || this.login())
                     return EbooksHandler.rate(this, ebook, rating);
             } catch (UnhautorizedRequestException e) {
-                Log.e(LOG_TAG, "" + e.getMessage());
+                logger.e(e.getMessage());
             }
         }
         return null;
@@ -51,7 +50,7 @@ public final class User {
                 if (count > 0) this.login();
                 return EbooksHandler.notifyDownload(this, ebook);
             } catch (UnhautorizedRequestException e) {
-                Log.e(LOG_TAG, "" + e.getMessage());
+                logger.e(e.getMessage());
             }
         }
         return null;

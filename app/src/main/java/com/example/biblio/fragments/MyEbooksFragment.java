@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.example.biblio.BuildConfig;
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
+import com.example.biblio.helpers.LogHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,6 +39,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 //todo: handle duplicates!
 public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
     public static final String TAG = "MyEBooksFragment";
+    public final LogHelper logger = new LogHelper(getClass());
     private ArrayList<Ebook> mEbooks;
     private MyEbooksFragmentBinding binding;
 
@@ -56,7 +57,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
 
         mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
         }.getType());
-        Log.d("SharedPrefs", mEbooks.toString());
+        logger.d(mEbooks.toString());
 
         hideTemplates(mEbooks.isEmpty());
         binding.ivTemplate.setVisibility(View.INVISIBLE);
@@ -75,7 +76,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
      */
     private void openFile(@NotNull String filename) {
         File path = new File(String.format("%s/Biblio/%s", Environment.getExternalStorageDirectory(), filename));
-        Log.d("openFile", path.toString());
+        logger.d(String.format("open file:%s", path.toString()));
 
         Intent in = new Intent(Intent.ACTION_VIEW);
         Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getContext()),

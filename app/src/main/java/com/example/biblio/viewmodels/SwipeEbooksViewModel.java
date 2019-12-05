@@ -1,12 +1,13 @@
 package com.example.biblio.viewmodels;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.biblio.helpers.LogHelper;
+
 import java.util.List;
+import java.util.Locale;
 
 import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
@@ -14,7 +15,7 @@ import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 
 public abstract class SwipeEbooksViewModel extends ViewModel {
     private MutableLiveData<List<Ebook>> ebooks;
-    private final String LOG_TAG = getClass().getName();
+    private final LogHelper logger = new LogHelper(getClass());
 
     public LiveData<List<Ebook>> getEbooks() {
         if (ebooks == null) {
@@ -26,10 +27,10 @@ public abstract class SwipeEbooksViewModel extends ViewModel {
 
     public void refreshData() {
         new Thread(() -> {
-            Log.d(LOG_TAG, "refreshing data");
+            logger.d("refreshing data");
             SimpleBiblio sb = new SimpleBiblioBuilder().build();
             List<Ebook> ret = doRefresh(sb);
-            Log.d(LOG_TAG, String.format("ret has size: %d", ret.size()));
+            logger.d(String.format(Locale.getDefault(), "ret has size: %d", ret.size()));
             if (ret.size() > 0)
                 ebooks.postValue(ret);
         }).start();

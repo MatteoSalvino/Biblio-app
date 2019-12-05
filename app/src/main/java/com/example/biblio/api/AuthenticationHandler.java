@@ -61,6 +61,9 @@ class AuthenticationHandler {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
             Log.d(LOG_TAG, getMessage(result));
             user.token = getToken(result);
+            String name = getUsername(result);
+            if (!name.isEmpty())
+                user.username = name;
             Log.d(LOG_TAG, "token succesfully retrieved after login");
             return true;
         } catch (IOException | BodyException | TokenException e) {
@@ -75,6 +78,16 @@ class AuthenticationHandler {
             return result.getString(AUTH_TOKEN_KEY);
         } catch (JSONException e) {
             throw new TokenException("no token received after signup");
+        }
+    }
+
+    @NotNull
+    private static String getUsername(@NotNull JSONObject result) {
+        try {
+            return result.getJSONObject("user").getString("name");
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "" + e.getMessage());
+            return "";
         }
     }
 }

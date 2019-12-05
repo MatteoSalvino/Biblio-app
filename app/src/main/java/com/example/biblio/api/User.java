@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 import lrusso96.simplebiblio.core.Ebook;
 
 public final class User {
-    final String username;
-    final String email;
-    final String password;
+    String username;
+    String email;
+    String password;
     private final int MAX_TRIES = 2;
     String token;
 

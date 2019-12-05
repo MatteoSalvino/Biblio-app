@@ -58,4 +58,5 @@
     <string name="confirm_password_field">Confirm password</string>
     <string name="accept_terms_field">I accept terms and rule of this application.</string>
     <string name="signup_msg">Signup</string>
+    <string name="ebook_cover_description">ebook cover</string>
 </resources>

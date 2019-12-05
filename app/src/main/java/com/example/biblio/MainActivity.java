@@ -16,6 +16,8 @@ import com.example.biblio.fragments.RecentFragment;
 import com.example.biblio.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static com.example.biblio.helpers.SharedPreferencesHelper.FIRST_START_KEY;
+
 public class MainActivity extends AppCompatActivity {
 
     //todo: design a suitable menu to put more than 5 items!
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         //fixme: move key to SharedPreferencesHelper
-        boolean isFirstStart = sharedPrefs.getBoolean("firstStart", true);
+        boolean isFirstStart = sharedPrefs.getBoolean(FIRST_START_KEY, true);
         if (isFirstStart) {
             Intent i = new Intent(MainActivity.this, Introduction.class);
             runOnUiThread(() -> startActivity(i));

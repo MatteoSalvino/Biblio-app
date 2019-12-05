@@ -14,6 +14,8 @@ import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
+import static com.example.biblio.helpers.SharedPreferencesHelper.FIRST_START_KEY;
+
 public class Introduction extends AppIntro {
 
     @Override
@@ -60,7 +62,7 @@ public class Introduction extends AppIntro {
         super.onDonePressed(currentFragment);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putBoolean("firstStart", false);
+        editor.putBoolean(FIRST_START_KEY, false);
         editor.apply();
         finish();
     }

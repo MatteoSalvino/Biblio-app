@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import lrusso96.simplebiblio.core.Ebook;
-import lrusso96.simplebiblio.core.Provider;
 import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -18,6 +17,7 @@ import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
 import static com.example.biblio.api.SimpleBiblioHelper.ENDPOINT;
 import static com.example.biblio.api.SimpleBiblioHelper.getAuthReqBuilder;
 import static com.example.biblio.api.SimpleBiblioHelper.getMessage;
+import static com.example.biblio.api.SimpleBiblioHelper.getProviderId;
 import static com.example.biblio.api.SimpleBiblioHelper.parseBody;
 
 class EbooksHandler {
@@ -31,7 +31,7 @@ class EbooksHandler {
     static RatingResult rate(User user, @NotNull Ebook ebook, int rating) throws UnhautorizedRequestException {
         RequestBody formBody = new FormBody.Builder()
                 .add(EBOOK_PAR, Integer.toString(ebook.getId()))
-                .add(PROVIDER_PAR, getProviderId(ebook.getProviderName()))
+                .add(PROVIDER_PAR, Integer.toString(getProviderId(ebook.getProviderName())))
                 .add(RATING_PAR, Integer.toString(rating))
                 .build();
         Request req = getAuthReqBuilder(user)
@@ -51,7 +51,7 @@ class EbooksHandler {
     static RatingResult notifyDownload(User user, @NotNull Ebook ebook) throws UnhautorizedRequestException {
         RequestBody formBody = new FormBody.Builder()
                 .add(EBOOK_PAR, Integer.toString(ebook.getId()))
-                .add(PROVIDER_PAR, getProviderId(ebook.getProviderName()))
+                .add(PROVIDER_PAR, Integer.toString(getProviderId(ebook.getProviderName())))
                 .build();
         Request req = getAuthReqBuilder(user)
                 .url(String.format("%s/ebooks/download", ENDPOINT))
@@ -66,28 +66,13 @@ class EbooksHandler {
         }
     }
 
-    private static String getProviderId(@NotNull String provider) {
-        switch (provider) {
-            case Provider.LIBGEN:
-                return "1";
-            case Provider.FEEDBOOKS:
-                return "2";
-            case Provider.STANDARD_EBOOKS:
-                return "3";
-        }
-        //fixme throw exception
-        logger.e(String.format("invalid provider id:%s", provider));
-        return "";
-    }
-
     @NotNull
     private static RatingResult extractDownloadRating(@NotNull JSONObject result) throws UnhautorizedRequestException {
         String tag = "ebook";
         try {
             JSONObject ebook = result.getJSONObject(tag);
             return parseRating(ebook);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             throw new UnhautorizedRequestException(getMessage(result));
         }
     }
@@ -103,5 +88,4 @@ class EbooksHandler {
             throw new UnhautorizedRequestException(e.getMessage());
         }
     }
-
 }

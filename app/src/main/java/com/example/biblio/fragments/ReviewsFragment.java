@@ -19,7 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class ReviewsFragment extends Fragment {
         mAdapter = new ReviewsAdapter();
         binding.ebooksRv.setAdapter(mAdapter);
         //todo: handle null ebook
-        if (mEbook!=null)
+        if (mEbook != null)
             retrieveReviews();
         return binding.getRoot();
     }

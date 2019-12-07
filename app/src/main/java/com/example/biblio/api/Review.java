@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import lrusso96.simplebiblio.core.Ebook;
 
-import static com.example.biblio.api.SimpleBiblioHelper.getProviderId;
-
 public class Review {
     private int provider_id;
     private int ebook_id;
@@ -18,17 +16,17 @@ public class Review {
 
     public Review(@NotNull User user, @NotNull Ebook ebook, String text, int rating) {
         this.ebook_id = ebook.getId();
-        this.provider_id = getProviderId(ebook.getProviderName());
+        this.provider_id = SimpleBiblioHelper.getProviderId(ebook.getProviderName());
         this.reviewer = user.getUsername();
         this.text = text;
         this.rating = rating;
     }
 
-    public int getProvider_id() {
+    public int getProviderId() {
         return provider_id;
     }
 
-    public int getEbook_id() {
+    public int getEbookId() {
         return ebook_id;
     }
 

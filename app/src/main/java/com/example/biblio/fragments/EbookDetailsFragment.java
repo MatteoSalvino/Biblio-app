@@ -42,6 +42,7 @@ import org.threeten.bp.LocalDate;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Download;
@@ -83,12 +84,13 @@ public class EbookDetailsFragment extends Fragment {
         }
 
         LocalDate book_date = current.getPublished();
-        int book_pages = current.getPages();
         binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
-        binding.mainBookPages.setText(String.format("n° pages : %s", (book_pages == 0) ? "-" : String.valueOf(book_pages)));
+        int book_pages = current.getPages();
+        if (book_pages > 0)
+            binding.mainBookPages.setText(String.format(Locale.getDefault(), "n° pages: %d", book_pages));
 
-        //fixme: this line breaks layout (how come!?)
-        //if (current.getSummary() != null) binding.mainBookSummary.setText(current.getSummary());
+        if (current.getSummary() != null)
+            binding.mainBookSummary.setText(current.getSummary());
 
         binding.mainDownloadBtn.setEnabled(false);
         binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));

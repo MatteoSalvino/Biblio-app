@@ -26,6 +26,7 @@ import java.util.Objects;
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 //todo: improve layout (e.g. showing stats if logged)
+//todo: add google sign-in option
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     private final LogHelper logger = new LogHelper(getClass());

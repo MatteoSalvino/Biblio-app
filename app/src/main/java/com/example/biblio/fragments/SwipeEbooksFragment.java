@@ -16,8 +16,8 @@ import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SwipeEbooksViewModel;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,12 +65,9 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
 
     @Override
     public void onItemClick(int position) {
+        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        model.setEbook(mEbooks.get(position));
         Fragment to_render = new EbookDetailsFragment();
-        Bundle args = new Bundle();
-
-        args.putString("current", new Gson().toJson(mEbooks.get(position)));
-        to_render.setArguments(args);
-
         getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
                 .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();

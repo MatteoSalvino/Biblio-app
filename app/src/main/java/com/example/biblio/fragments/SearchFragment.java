@@ -17,6 +17,7 @@ import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.SearchFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SearchViewModel;
 import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -35,6 +36,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
     private SearchFragmentBinding binding;
+    private EbookDetailsViewModel ebook_model;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 
         SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
+        ebook_model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
 
         binding.filtersBtn.setOnClickListener(view -> renderFragment(new FiltersFragment()));
         binding.recyclerView.setHasFixedSize(true);
@@ -73,9 +76,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     @Override
     public void onItemClick(int position) {
         Fragment to_render = new EbookDetailsFragment();
-        Bundle args = new Bundle();
-        args.putString("current", new Gson().toJson(mEbooks.get(position)));
-        to_render.setArguments(args);
+        ebook_model.setEbook(mEbooks.get(position));
         renderFragment(to_render);
     }
 

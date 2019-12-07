@@ -59,4 +59,5 @@
     <string name="accept_terms_field">I accept terms and rule of this application.</string>
     <string name="signup_msg">Signup</string>
     <string name="ebook_cover_description">ebook cover</string>
+    <string name="load_reviews_msg">Show reviews</string>
 </resources>

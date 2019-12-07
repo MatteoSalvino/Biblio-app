@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.example.biblio.R;
 import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
+import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
@@ -49,7 +51,6 @@ import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
-//todo: add view model
 public class EbookDetailsFragment extends Fragment {
     private final LogHelper logger = new LogHelper(getClass());
     private EbookFragmentBinding binding;
@@ -65,30 +66,29 @@ public class EbookDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = EbookFragmentBinding.inflate(inflater, container, false);
         RequestOptions option = new RequestOptions().centerCrop();
+        root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
-        if (getArguments() != null) {
-            current = new Gson().fromJson(getArguments().getString("current"), new TypeToken<Ebook>() {
-            }.getType());
-        }
-
-        LocalDate book_date = Objects.requireNonNull(current).getPublished();
-        int book_pages = current.getPages();
-        String book_summary = current.getSummary();
+        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        current = model.getEbook().getValue();
+        assert current != null;
+        logger.d(String.format("got ebook: %s", current.getTitle()));
 
         binding.mainBookTitle.setText(current.getTitle());
         binding.mainBookAuthor.setText(current.getAuthor());
 
         if (current.getCover() == null)
             Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(binding.mainBookCover);
-        else
+        else {
             Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(binding.mainBookCover);
+        }
 
+        LocalDate book_date = current.getPublished();
+        int book_pages = current.getPages();
         binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         binding.mainBookPages.setText(String.format("n° pages : %s", (book_pages == 0) ? "-" : String.valueOf(book_pages)));
-        binding.mainBookSummary.setMovementMethod(new ScrollingMovementMethod());
-        binding.mainBookSummary.setText((book_summary == null) ? "No summary available." : book_summary);
 
-        root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
+        //fixme: this line breaks layout (how come!?)
+        //if (current.getSummary() != null) binding.mainBookSummary.setText(current.getSummary());
 
         binding.mainDownloadBtn.setEnabled(false);
         binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
@@ -111,10 +111,9 @@ public class EbookDetailsFragment extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
-        binding.mainBackBtn.setOnClickListener(view13 -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
-        logger.d(String.format("fileSource: %s", current.getSource()));
+        binding.mainBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
 
-        binding.mainDownloadBtn.setOnClickListener(view1 -> {
+        binding.mainDownloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
@@ -150,7 +149,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         });
 
-        binding.mainRemoveBtn.setOnClickListener(view12 -> {
+        binding.mainRemoveBtn.setOnClickListener(view -> {
             SDCardHelper.findFile(root_dir, filename, true);
             String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
 
@@ -168,6 +167,14 @@ public class EbookDetailsFragment extends Fragment {
             boolean present = SDCardHelper.findFile(root_dir, filename, false);
             showRemoveButton(present);
         }
+
+        binding.mainReviewsBtn.setOnClickListener(view -> {
+            Fragment to_render = new ReviewsFragment();
+            getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                    .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+                    .addToBackStack(null).commit();
+        });
+
         return binding.getRoot();
     }
 

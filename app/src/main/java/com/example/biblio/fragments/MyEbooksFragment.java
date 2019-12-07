@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,6 +22,7 @@ import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -108,11 +110,8 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
     @Override
     public void onItemClick(int position) {
         Fragment to_render = new EbookDetailsFragment();
-        Bundle args = new Bundle();
-
-        args.putString("current", new Gson().toJson(mEbooks.get(position)));
-        to_render.setArguments(args);
-
+        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        model.setEbook(mEbooks.get(position));
         getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
                 .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();

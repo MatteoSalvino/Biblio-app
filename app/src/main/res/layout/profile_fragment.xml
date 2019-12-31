@@ -42,15 +42,12 @@
         android:backgroundTint="@color/error"
         app:icon="@drawable/email"/>
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/google_login_btn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/main_book_text"
-        android:text="@string/proceed_with_google_msg"
-        android:textAllCaps="false"
-        app:icon="@drawable/google"/>
+        android:textColor="@color/main_book_text"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signup_suggestion_btn"

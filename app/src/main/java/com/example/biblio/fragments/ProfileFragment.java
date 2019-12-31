@@ -19,6 +19,12 @@ import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 import java.util.Objects;
@@ -26,11 +32,13 @@ import java.util.Objects;
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 //todo: improve layout (e.g. showing stats if logged)
-//todo: add google sign-in option
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
+    private static final int RC_SIGN_IN = 1;
+    private static final int RC_GOOGLE_SIGN_IN = 2;
     private final LogHelper logger = new LogHelper(getClass());
     private ProfileFragmentBinding binding;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Nullable
     @Override
@@ -47,7 +55,7 @@ public class ProfileFragment extends Fragment {
 
         binding.emailLoginBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), EmailActivity.class);
-            startActivityForResult(i, 0);
+            startActivityForResult(i, RC_SIGN_IN);
         });
 
         binding.signupSuggestionBtn.setOnClickListener(view -> {
@@ -60,17 +68,62 @@ public class ProfileFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove(CURRENT_USER_KEY);
             editor.apply();
+            googleSignOut();
             showButtons(false);
         });
 
         binding.settingsBtn.setOnClickListener(view -> loadSettingsFragment());
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(Objects.requireNonNull(getActivity()), gso);
+
+        binding.googleLoginBtn.setOnClickListener(view -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
+        });
+
         return binding.getRoot();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK)
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN)
+            showButtons(resultCode == Activity.RESULT_OK);
+            // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        else if (requestCode == RC_GOOGLE_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            //updateUI(account);
+            if (account != null)
+                logger.d(String.format("%s - %s", account.getEmail(), account.getDisplayName()));
             showButtons(true);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            logger.w("signInResult:failed code=" + e.getStatusCode());
+            //updateUI(null);
+        }
+    }
+
+    private void googleSignOut() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(),
+                task -> showButtons(false));
     }
 
     private void loadSettingsFragment() {

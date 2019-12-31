@@ -132,6 +132,18 @@
                             app:backgroundTint="@color/add_button" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/main_add_reviews_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_below="@id/main_reviews_btn"
+                            android:layout_marginEnd="20dp"
+                            android:text="@string/add_review_msg"
+                            android:textAllCaps="false"
+                            android:textColor="@color/main_book_text"
+                            app:backgroundTint="@color/add_button" />
+
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/main_remove_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

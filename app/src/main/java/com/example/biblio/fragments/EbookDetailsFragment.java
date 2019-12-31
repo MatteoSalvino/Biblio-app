@@ -2,6 +2,7 @@ package com.example.biblio.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,10 +10,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
@@ -24,8 +27,10 @@ import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -44,9 +49,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
@@ -169,6 +176,33 @@ public class EbookDetailsFragment extends Fragment {
             boolean present = SDCardHelper.findFile(root_dir, filename, false);
             showRemoveButton(present);
         }
+
+        //Initialize AlertDialog to post a new review
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View dialogView = inflater.inflate(R.layout.review_dialog, null);
+        builder.setView(dialogView);
+
+        EditText reviewBody = dialogView.findViewById(R.id.review_body);
+        MaterialRatingBar ratingBar = dialogView.findViewById(R.id.review_rating);
+        MaterialButton cancelBtn = dialogView.findViewById(R.id.review_cancel_btn);
+        MaterialButton postBtn = dialogView.findViewById(R.id.review_post_btn);
+        AlertDialog alertDialog = builder.create();
+
+        cancelBtn.setOnClickListener(myView ->{
+            alertDialog.dismiss();
+        });
+
+        postBtn.setOnClickListener(myView -> {
+            Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+            alertDialog.dismiss();
+        });
+
+        //todo: Implement a text watcher to enable/disable post button + push the review
+
+        binding.mainAddReviewsBtn.setOnClickListener(view -> {
+            alertDialog.show();
+        });
 
         binding.mainReviewsBtn.setOnClickListener(view -> {
             Fragment to_render = new ReviewsFragment();

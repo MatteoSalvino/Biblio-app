@@ -19,7 +19,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import static com.example.biblio.helpers.SharedPreferencesHelper.FIRST_START_KEY;
 
 public class MainActivity extends AppCompatActivity {
-
     //todo: design a suitable menu to put more than 5 items!
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {

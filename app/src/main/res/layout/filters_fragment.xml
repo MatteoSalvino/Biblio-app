@@ -163,6 +163,7 @@
 
     <!--FIXME: text is not always displayed correctly (consider removing some of them) -->
     <LinearLayout
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -203,15 +204,6 @@
             android:layout_weight="1"
             android:buttonTint="@color/main_book_text"
             android:text="@string/spanish_lang"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/german_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"
-            android:text="@string/german_lang"
             android:textColor="@color/main_book_text" />
     </LinearLayout>
 </LinearLayout>

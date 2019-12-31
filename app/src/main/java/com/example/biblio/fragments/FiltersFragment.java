@@ -51,7 +51,6 @@ public class FiltersFragment extends Fragment {
             binding.englishCb.setChecked(false);
             binding.frenchCb.setChecked(false);
             binding.spanishCb.setChecked(false);
-            binding.germanCb.setChecked(false);
         });
         return binding.getRoot();
     }

@@ -21,6 +21,7 @@ import com.example.biblio.BuildConfig;
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
+
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.gson.Gson;
@@ -62,8 +63,8 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         logger.d(mEbooks.toString());
 
         hideTemplates(mEbooks.isEmpty());
-        binding.ivTemplate.setVisibility(View.INVISIBLE);
-        binding.tvTemplate.setVisibility(View.INVISIBLE);
+        //binding.ivTemplate.setVisibility(View.INVISIBLE);
+        //binding.tvTemplate.setVisibility(View.INVISIBLE);
         MyEbooksAdapter.OnItemListener mMyEbooksListener = this;
         MyEbooksAdapter mAdapter = new MyEbooksAdapter(mEbooks, mMyEbooksListener, getContext());
         binding.myEbooksRv.setAdapter(mAdapter);
@@ -102,7 +103,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
     }
 
     private void hideTemplates(boolean should_hide) {
-        int visibility = should_hide ? View.INVISIBLE : View.VISIBLE;
+        int visibility = should_hide ? View.VISIBLE : View.INVISIBLE;
         binding.ivTemplate.setVisibility(visibility);
         binding.tvTemplate.setVisibility(visibility);
     }

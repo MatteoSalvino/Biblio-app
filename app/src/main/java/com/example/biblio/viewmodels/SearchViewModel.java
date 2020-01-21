@@ -1,12 +1,8 @@
 package com.example.biblio.viewmodels;
 
-import android.app.Application;
-import android.content.SharedPreferences;
-
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.preference.PreferenceManager;
+import androidx.lifecycle.ViewModel;
 
 import com.example.biblio.helpers.LogHelper;
 
@@ -24,40 +20,32 @@ import lrusso96.simplebiblio.core.Provider;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
-import lrusso96.simplebiblio.core.providers.feedbooks.FeedbooksBuilder;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
-import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
-import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS_ENABLED_KEY;
-
-public class SearchViewModel extends AndroidViewModel {
-    private final Map<String, Boolean> filteredProviders;
-    private final Map<String, Boolean> filteredLanguages;
+public class SearchViewModel extends ViewModel {
+    private final Map<String, Boolean> enabledProviders;
+    private final Map<String, Boolean> enabledLanguages;
     private final LogHelper logger = new LogHelper(getClass());
     private List<Ebook> result;
     private MutableLiveData<List<Ebook>> ebooks;
-    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
-    public SearchViewModel(Application application) {
-        super(application);
-        filteredProviders = new HashMap<>();
-        filteredProviders.put(Provider.FEEDBOOKS, true);
-        filteredProviders.put(Provider.LIBGEN, true);
-        filteredProviders.put(Provider.STANDARD_EBOOKS, true);
+    public SearchViewModel() {
+        enabledProviders = new HashMap<>();
+        enabledProviders.put(Provider.FEEDBOOKS, true);
+        enabledProviders.put(Provider.LIBGEN, true);
+        enabledProviders.put(Provider.STANDARD_EBOOKS, true);
 
         //fixme: this is a temporary solution. Replace with Locale instead
-        filteredLanguages = new HashMap<>();
-        filteredLanguages.put("italian", true);
-        filteredLanguages.put("it", true);
-        filteredLanguages.put("english", true);
-        filteredLanguages.put("en", true);
-        filteredLanguages.put("spanish", true);
-        filteredLanguages.put("es", true);
-        filteredLanguages.put("french", true);
-        filteredLanguages.put("fr", true);
+        enabledLanguages = new HashMap<>();
+        enabledLanguages.put("italian", true);
+        enabledLanguages.put("it", true);
+        enabledLanguages.put("english", true);
+        enabledLanguages.put("en", true);
+        enabledLanguages.put("spanish", true);
+        enabledLanguages.put("es", true);
+        enabledLanguages.put("french", true);
+        enabledLanguages.put("fr", true);
     }
 
     public LiveData<List<Ebook>> getEbooks() {
@@ -73,7 +61,7 @@ public class SearchViewModel extends AndroidViewModel {
             return;
         List<Ebook> ret = new ArrayList<>();
         for (Ebook x : result) {
-            if (isProviderVisible(x.getProviderName()) && isLanguageVisible(x.getLanguage()))
+            if (isProviderEnabled(x.getProviderName()) && isLanguageEnabled(x.getLanguage()))
                 ret.add(x);
         }
         ebooks.postValue(ret);
@@ -105,23 +93,11 @@ public class SearchViewModel extends AndroidViewModel {
         ebooks.postValue(result);
     }
 
-    //fixme: consider refactoring and move to repository
-    private SimpleBiblio buildBiblio() {
-        SimpleBiblio fixme = new SimpleBiblioBuilder().build();
-        SimpleBiblioBuilder builder = new SimpleBiblioBuilder();
-        if (sharedPreferences.getBoolean(FEEDBOOKS_ENABLED_KEY, true))
-            builder.addProvider(new FeedbooksBuilder(fixme).build());
-        if (sharedPreferences.getBoolean(LIBGEN_ENABLED_KEY, true))
-            builder.addProvider(new LibraryGenesisBuilder(fixme).build());
-        if (sharedPreferences.getBoolean(STANDARD_EBOOKS_ENABLED_KEY, true))
-            builder.addProvider(new StandardEbooks(fixme));
-        return builder.build();
-    }
 
     public void refreshData(String query) {
         new Thread(() -> {
             logger.d("refreshing data");
-            SimpleBiblio sb = buildBiblio();
+            SimpleBiblio sb = new SimpleBiblioBuilder().build();
             List<Ebook> ret = sb.searchAll(query);
             logger.d(String.format(Locale.getDefault(), "ret has size: %d", ret.size()));
             if (ret.size() > 0) {
@@ -131,57 +107,59 @@ public class SearchViewModel extends AndroidViewModel {
         }).start();
     }
 
-    public boolean isProviderVisible(String provider_name) {
-        Boolean shouldShow = filteredProviders.get(provider_name);
-        if (shouldShow == null)
-            shouldShow = true;
-        return shouldShow;
+    public boolean isProviderEnabled(String provider_name) {
+        Boolean enabled = enabledProviders.get(provider_name);
+        if (enabled == null)
+            enabled = true;
+        return enabled;
     }
 
-    public boolean isLanguageVisible(@Nullable String language) {
+    public boolean isLanguageEnabled(@Nullable String language) {
         if (language == null)
             return false;
         language = language.toLowerCase();
-        Boolean filtered = filteredLanguages.get(language);
-        if (filtered == null)
-            filtered = false;
-        return filtered;
+        Boolean enabled = enabledLanguages.get(language);
+        if (enabled == null)
+            enabled = false;
+        return enabled;
     }
 
-    public void setProviderVisibility(Class<? extends Provider> provider, boolean visible) {
+    public void enableProvider(Class<? extends Provider> provider, boolean enabled) {
         if (provider == LibraryGenesis.class) {
-            filteredProviders.put(Provider.LIBGEN, visible);
+            enabledProviders.put(Provider.LIBGEN, enabled);
             applyFilters();
         } else if (provider == Feedbooks.class) {
-            filteredProviders.put(Provider.FEEDBOOKS, visible);
+            enabledProviders.put(Provider.FEEDBOOKS, enabled);
             applyFilters();
         } else if (provider == StandardEbooks.class) {
-            filteredProviders.put(Provider.STANDARD_EBOOKS, visible);
+            enabledProviders.put(Provider.STANDARD_EBOOKS, enabled);
             applyFilters();
         }
     }
 
-    public void showEnglish(boolean enabled) {
-        filteredLanguages.put("english", enabled);
-        filteredLanguages.put("en", enabled);
+    public void enableEnglish(boolean enabled) {
+        enabledLanguages.put("english", enabled);
+        enabledLanguages.put("en", enabled);
         applyFilters();
     }
 
-    public void showItalian(boolean enabled) {
-        filteredLanguages.put("italian", enabled);
-        filteredLanguages.put("it", enabled);
+    public void enableItalian(boolean enabled) {
+        enabledLanguages.put("italian", enabled);
+        enabledLanguages.put("it", enabled);
         applyFilters();
     }
 
-    public void showFrench(boolean enabled) {
-        filteredLanguages.put("french", enabled);
-        filteredLanguages.put("fr", enabled);
+    public void enableFrench(boolean enabled) {
+        enabledLanguages.put("french", enabled);
+        enabledLanguages.put("fr", enabled);
         applyFilters();
     }
 
-    public void showSpanish(boolean enabled) {
-        filteredLanguages.put("spanish", enabled);
-        filteredLanguages.put("es", enabled);
+    public void enableSpanish(boolean enabled) {
+        enabledLanguages.put("spanish", enabled);
+        enabledLanguages.put("es", enabled);
         applyFilters();
     }
+
+
 }

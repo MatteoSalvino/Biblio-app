@@ -13,47 +13,29 @@
     <PreferenceCategory android:title="Search options">
         <SwitchPreference
             android:defaultValue="true"
-            android:summary="Enable search on this provider"
-            app:key="@string/feedbooks_enabled_pref"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="feedbooks_enabled"
             app:title="Feedbooks" />
         <SwitchPreference
             android:defaultValue="true"
-            android:summary="Enable search on this provider"
-            app:key="@string/standard_ebooks_enabled_pref"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="standard_ebooks_enabled"
             app:title="StandardEbooks" />
         <SwitchPreference
             android:defaultValue="true"
-            android:summary="Enable search on this provider"
-            app:key="@string/libgen_enabled_pref"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="libgen_enabled"
             app:title="Library Genesis" />
         <EditTextPreference
             app:enabled="false"
-            app:summary="Choose a custom mirror for Libgen"
+            app:summary="choose a custom mirror for Libgen"
             app:title="Set mirror" />
         <DropDownPreference
             android:enabled="false"
             android:summary="Libgen allows to specify the sorting field"
             app:title="Sorting options for Libgen" />
     </PreferenceCategory>
-
-    <PreferenceCategory android:title="About">
-        <PreferenceScreen
-            app:title="Version"
-            app:summary="1.0">
-        </PreferenceScreen>
-        <PreferenceScreen
-            app:title="Authors"
-            app:summary="Luigi Russo, Matteo Salvino">
-        </PreferenceScreen>
-        <PreferenceScreen
-            app:key="github"
-            app:title="Source code"
-            app:summary="Check code on GitHub">
-        </PreferenceScreen>
-        <PreferenceScreen
-            app:title="Open source libraries"
-            app:summary="See the list of dependencies">
-        </PreferenceScreen>
-    </PreferenceCategory>
-
 </PreferenceScreen>

@@ -61,7 +61,4 @@
     <string name="ebook_cover_description">ebook cover</string>
     <string name="add_review_msg">Add review</string>
     <string name="load_reviews_msg">Show reviews</string>
-    <string name="feedbooks_enabled_pref">feedbooks_enabled</string>
-    <string name="libgen_enabled_pref">libgen_enabled</string>
-    <string name="standard_ebooks_enabled_pref">standard_ebooks_enabled</string>
 </resources>

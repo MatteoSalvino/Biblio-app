@@ -4,9 +4,4 @@ public class SharedPreferencesHelper {
     public static final String MY_EBOOKS_KEY = "my_ebooks";
     public static final String CURRENT_USER_KEY = "current_user";
     public static final String FIRST_START_KEY = "first_start";
-
-    public static final String LIBGEN_ENABLED_KEY = "libgen_enabled";
-    public static final String FEEDBOOKS_ENABLED_KEY = "feedbooks_enabled";
-    public static final String STANDARD_EBOOKS_ENABLED_KEY = "standard_ebooks_enabled";
-
 }

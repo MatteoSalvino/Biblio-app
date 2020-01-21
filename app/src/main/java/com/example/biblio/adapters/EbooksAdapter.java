@@ -48,7 +48,7 @@ public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksView
         holder.mBookTitle.setText(elem.getTitle());
         holder.mBookAuthor.setText(elem.getAuthor());
         int num_pages = elem.getPages();
-        holder.mBookPages.setText(String.format("n° pages : %s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
+        holder.mBookPages.setText(String.format("%s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
         if (elem.getCover() != null)
             Glide.with(mContext).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(holder.mBookCover);
         else

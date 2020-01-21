@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.ReviewsFragmentBinding;
+import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SwipeEbooksViewModel;
@@ -30,7 +31,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
     private EbooksAdapter.OnItemListener mEbooksListener;
     private ArrayList<Ebook> mEbooks;
-    private ReviewsFragmentBinding binding;
+    private SwipeEbooksRvFragmentBinding binding;
 
     SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
         mSwipeModel = clazz;
@@ -39,7 +40,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = ReviewsFragmentBinding.inflate(inflater, container, false);
+        binding = SwipeEbooksRvFragmentBinding.inflate(inflater, container, false);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.ebooksRv.setLayoutManager(mLayoutManager);

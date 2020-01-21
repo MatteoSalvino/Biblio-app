@@ -2,20 +2,16 @@ package com.example.biblio.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.PreferenceManager;
@@ -27,10 +23,8 @@ import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
-import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jakewharton.rxbinding.widget.RxTextView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -49,11 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import lrusso96.simplebiblio.core.Download;
 import lrusso96.simplebiblio.core.Ebook;
-import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
@@ -93,7 +85,7 @@ public class EbookDetailsFragment extends Fragment {
         LocalDate book_date = current.getPublished();
         binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         int book_pages = current.getPages();
-            binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
+        binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
 
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());

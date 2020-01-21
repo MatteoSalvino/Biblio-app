@@ -26,8 +26,8 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_
 import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS_ENABLED_KEY;
 
 public abstract class SwipeEbooksViewModel extends AndroidViewModel {
-    private MutableLiveData<List<Ebook>> ebooks;
     private final LogHelper logger = new LogHelper(getClass());
+    private MutableLiveData<List<Ebook>> ebooks;
     private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
 

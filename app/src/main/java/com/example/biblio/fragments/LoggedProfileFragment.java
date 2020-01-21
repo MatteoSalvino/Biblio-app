@@ -19,13 +19,12 @@ import java.util.Objects;
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class LoggedProfileFragment extends Fragment {
-    private LoggedProfileFragmentBinding binding;
     public static final String TAG = "LoggedProfileFragment";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
+        com.example.biblio.databinding.LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
 
         binding.profileLogoffBtn.setOnClickListener(view -> {

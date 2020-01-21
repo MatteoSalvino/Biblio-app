@@ -26,7 +26,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 
 public class SignupFragment extends Fragment {
     public static final String TITLE = "Signup";
-    private final LogHelper logger =  new LogHelper(getClass());
+    private final LogHelper logger = new LogHelper(getClass());
     private SignupFragmentBinding binding;
     private ProgressDialog progressDialog;
 
@@ -57,7 +57,7 @@ public class SignupFragment extends Fragment {
                         getActivity().setResult(Activity.RESULT_OK);
                         getActivity().finish();
                     } else
-                       logger.e("signup failed");
+                        logger.e("signup failed");
                 }).start();
             } else {
                 logger.d("The signup form is not valid.");

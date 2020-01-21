@@ -21,7 +21,6 @@ import com.example.biblio.BuildConfig;
 import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
-
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.gson.Gson;

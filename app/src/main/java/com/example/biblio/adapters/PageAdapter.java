@@ -12,7 +12,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     private final int tab_counter;
 
     public PageAdapter(FragmentManager fm, int tab_counter) {
-        super(fm,  BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.tab_counter = tab_counter;
     }
 

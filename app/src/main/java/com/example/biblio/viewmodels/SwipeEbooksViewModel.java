@@ -2,7 +2,6 @@ package com.example.biblio.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.biblio.helpers.LogHelper;
 
@@ -12,10 +11,6 @@ import java.util.Locale;
 import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
-
-import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS_ENABLED_KEY;
 
 public abstract class SwipeEbooksViewModel extends AndroidViewModel {
     private final LogHelper logger = new LogHelper(getClass());

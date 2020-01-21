@@ -22,7 +22,8 @@
         android:gravity="top"
         android:hint="Insert a review (max 100 characters)"
         android:inputType="text|textMultiLine"
-        android:maxLength="100" />
+        android:maxLength="100"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:layout_width="match_parent"

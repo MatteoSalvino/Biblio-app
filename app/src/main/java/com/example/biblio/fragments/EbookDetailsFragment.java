@@ -93,8 +93,7 @@ public class EbookDetailsFragment extends Fragment {
         LocalDate book_date = current.getPublished();
         binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         int book_pages = current.getPages();
-        if (book_pages > 0)
-            binding.mainBookPages.setText(String.format(Locale.getDefault(), "n° pages: %d", book_pages));
+            binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
 
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
@@ -176,33 +175,6 @@ public class EbookDetailsFragment extends Fragment {
             boolean present = SDCardHelper.findFile(root_dir, filename, false);
             showRemoveButton(present);
         }
-
-        //Initialize AlertDialog to post a new review
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        View dialogView = inflater.inflate(R.layout.review_dialog, null);
-        builder.setView(dialogView);
-
-        EditText reviewBody = dialogView.findViewById(R.id.review_body);
-        MaterialRatingBar ratingBar = dialogView.findViewById(R.id.review_rating);
-        MaterialButton cancelBtn = dialogView.findViewById(R.id.review_cancel_btn);
-        MaterialButton postBtn = dialogView.findViewById(R.id.review_post_btn);
-        AlertDialog alertDialog = builder.create();
-
-        cancelBtn.setOnClickListener(myView ->{
-            alertDialog.dismiss();
-        });
-
-        postBtn.setOnClickListener(myView -> {
-            Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
-            alertDialog.dismiss();
-        });
-
-        //todo: Implement a text watcher to enable/disable post button + push the review
-
-        binding.mainAddReviewsBtn.setOnClickListener(view -> {
-            alertDialog.show();
-        });
 
         binding.mainReviewsBtn.setOnClickListener(view -> {
             Fragment to_render = new ReviewsFragment();

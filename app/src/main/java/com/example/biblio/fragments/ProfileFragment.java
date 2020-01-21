@@ -1,7 +1,6 @@
 package com.example.biblio.fragments;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.preference.PreferenceManager;
 
 import com.example.biblio.EmailActivity;
 import com.example.biblio.R;
-import com.example.biblio.api.User;
 import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,11 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
 
 import java.util.Objects;
-
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
@@ -42,10 +36,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = ProfileFragmentBinding.inflate(inflater, container, false);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), User.class);
-        logger.v(user.getEmail());
-
         setUpButtons();
 
         binding.emailLoginBtn.setOnClickListener(view -> {

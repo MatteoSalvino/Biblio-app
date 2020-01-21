@@ -30,6 +30,7 @@ import java.util.Objects;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
+//todo: improve layout (e.g. showing stats if logged)
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
     private static final int RC_SIGN_IN = 1;
@@ -43,10 +44,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = ProfileFragmentBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), User.class);
-        logger.v(user.getEmail());
-
-        setUpButtons();
+        boolean logged = false;
+        //fixme: if logged we should show LoggedProfileFragment (?)
+        if (sharedPreferences.contains(CURRENT_USER_KEY)) {
+            User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), User.class);
+            logger.v(user.getEmail());
+            logged = true;
+        }
+        showButtons(logged);
 
         binding.emailLoginBtn.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), EmailActivity.class);
@@ -101,7 +106,7 @@ public class ProfileFragment extends Fragment {
             //updateUI(account);
             if (account != null)
                 logger.d(String.format("%s - %s", account.getEmail(), account.getDisplayName()));
-            setUpButtons();
+            showButtons(true);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -112,7 +117,7 @@ public class ProfileFragment extends Fragment {
 
     private void googleSignOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(),
-                task -> setUpButtons());
+                task -> showButtons(false));
     }
 
     private void loadSettingsFragment() {
@@ -124,10 +129,19 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void setUpButtons() {
-        binding.infoTv.setVisibility(View.VISIBLE);
-        binding.signupSuggestionBtn.setVisibility(View.VISIBLE);
-        binding.emailLoginBtn.setVisibility(View.VISIBLE);
-        binding.googleLoginBtn.setVisibility(View.VISIBLE);
+    private void showButtons(boolean logged) {
+        if (logged) {
+            //binding.logoffBtn.setVisibility(View.VISIBLE);
+            binding.infoTv.setVisibility(View.INVISIBLE);
+            binding.signupSuggestionBtn.setVisibility(View.INVISIBLE);
+            binding.emailLoginBtn.setVisibility(View.INVISIBLE);
+            binding.googleLoginBtn.setVisibility(View.INVISIBLE);
+        } else {
+            binding.infoTv.setVisibility(View.VISIBLE);
+            //binding.logoffBtn.setVisibility(View.INVISIBLE);
+            binding.signupSuggestionBtn.setVisibility(View.VISIBLE);
+            binding.emailLoginBtn.setVisibility(View.VISIBLE);
+            binding.googleLoginBtn.setVisibility(View.VISIBLE);
+        }
     }
 }

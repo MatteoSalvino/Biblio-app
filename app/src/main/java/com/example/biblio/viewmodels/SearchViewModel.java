@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.biblio.helpers.LogHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -23,13 +24,11 @@ import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
 public class SearchViewModel extends ViewModel {
-    private List<Ebook> result;
-    private MutableLiveData<List<Ebook>> ebooks;
     private final Map<String, Boolean> enabledProviders;
     private final Map<String, Boolean> enabledLanguages;
-
-
     private final LogHelper logger = new LogHelper(getClass());
+    private List<Ebook> result;
+    private MutableLiveData<List<Ebook>> ebooks;
 
     public SearchViewModel() {
         enabledProviders = new HashMap<>();
@@ -68,6 +67,33 @@ public class SearchViewModel extends ViewModel {
         ebooks.postValue(ret);
     }
 
+    public void sortByTitle() {
+        if (result == null)
+            return;
+        Collections.sort(result, (e1, e2) -> {
+            if (e1.getTitle() == null)
+                return 1;
+            if (e2.getTitle() == null)
+                return -1;
+            return e1.getTitle().compareTo(e2.getTitle());
+        });
+        ebooks.postValue(result);
+    }
+
+    public void sortByYear() {
+        if (result == null)
+            return;
+        Collections.sort(result, (e1, e2) -> {
+            if (e1.getPublished() == null)
+                return 1;
+            if (e2.getPublished() == null)
+                return -1;
+            return e1.getPublished().compareTo(e2.getPublished());
+        });
+        ebooks.postValue(result);
+    }
+
+
     public void refreshData(String query) {
         new Thread(() -> {
             logger.d("refreshing data");
@@ -98,8 +124,6 @@ public class SearchViewModel extends ViewModel {
         return enabled;
     }
 
-
-
     public void enableProvider(Class<? extends Provider> provider, boolean enabled) {
         if (provider == LibraryGenesis.class) {
             enabledProviders.put(Provider.LIBGEN, enabled);
@@ -124,11 +148,13 @@ public class SearchViewModel extends ViewModel {
         enabledLanguages.put("it", enabled);
         applyFilters();
     }
+
     public void enableFrench(boolean enabled) {
         enabledLanguages.put("french", enabled);
         enabledLanguages.put("fr", enabled);
         applyFilters();
     }
+
     public void enableSpanish(boolean enabled) {
         enabledLanguages.put("spanish", enabled);
         enabledLanguages.put("es", enabled);

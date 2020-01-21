@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,7 +20,6 @@ import com.example.biblio.databinding.SearchFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SearchViewModel;
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.ArrayList;
@@ -70,6 +70,27 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
             binding.recyclerView.setAdapter(mAdapter);
         };
         model.getEbooks().observe(this, searchObserver);
+
+        binding.sortBtn.setOnClickListener(v -> {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+            alertDialog.setTitle("Set custom sorting");
+            String[] items = {"Title", "Year"};
+            alertDialog.setSingleChoiceItems(items, -1, (dialog, which) -> {
+                switch (which) {
+                    case 0:
+                        model.sortByTitle();
+                        break;
+                    case 1:
+                        model.sortByYear();
+                        break;
+                }
+                dialog.dismiss();
+            });
+            AlertDialog alert = alertDialog.create();
+            alert.setCanceledOnTouchOutside(true);
+            alert.show();
+        });
+
         return binding.getRoot();
     }
 

@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreference
-        app:key="theme"
-        app:title="Night mode"
-        android:defaultValue="false"
-        android:icon="@drawable/theme_light_dark" />
+    <PreferenceCategory android:title="General">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/theme_light_dark"
+            app:key="theme"
+            app:title="Night mode" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Search options">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="feedbooks_enabled"
+            app:title="Feedbooks" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="standard_ebooks_enabled"
+            app:title="StandardEbooks" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:summary="enable search on this provider"
+            app:enabled="false"
+            app:key="libgen_enabled"
+            app:title="Library Genesis" />
+        <EditTextPreference
+            app:enabled="false"
+            app:summary="choose a custom mirror for Libgen"
+            app:title="Set mirror" />
+        <DropDownPreference
+            android:enabled="false"
+            android:summary="Libgen allows to specify the sorting field"
+            app:title="Sorting options for Libgen" />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -37,20 +37,29 @@ public class FiltersFragment extends Fragment {
         binding.mediumHighRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM_HIGH));
         binding.highRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.HIGH));
 
-        binding.feedbooksCb.setChecked(model.isEnabled(Provider.FEEDBOOKS));
+        binding.feedbooksCb.setChecked(model.isProviderEnabled(Provider.FEEDBOOKS));
         binding.feedbooksCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(Feedbooks.class, isChecked));
 
-        binding.libgenCb.setChecked(model.isEnabled(Provider.LIBGEN));
+        binding.libgenCb.setChecked(model.isProviderEnabled(Provider.LIBGEN));
         binding.libgenCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(LibraryGenesis.class, isChecked));
+
+        binding.englishCb.setChecked(model.isLanguageEnabled("english"));
+        binding.englishCb.setOnCheckedChangeListener((button, isChecked) -> model.enableEnglish(isChecked));
+        binding.italianCb.setChecked(model.isLanguageEnabled("italian"));
+        binding.italianCb.setOnCheckedChangeListener((button, isChecked) -> model.enableItalian(isChecked));
+        binding.frenchCb.setChecked(model.isLanguageEnabled("french"));
+        binding.frenchCb.setOnCheckedChangeListener((button, isChecked) -> model.enableFrench(isChecked));
+        binding.spanishCb.setChecked(model.isLanguageEnabled("spanish"));
+        binding.spanishCb.setOnCheckedChangeListener((button, isChecked) -> model.enableSpanish(isChecked));
 
         binding.filtersResetBtn.setOnClickListener(x -> {
             binding.libgenCb.setChecked(true);
             binding.feedbooksCb.setChecked(true);
             updateButtonBackgroundColors(RATING.LOW);
-            binding.italianCb.setChecked(false);
-            binding.englishCb.setChecked(false);
-            binding.frenchCb.setChecked(false);
-            binding.spanishCb.setChecked(false);
+            binding.italianCb.setChecked(true);
+            binding.englishCb.setChecked(true);
+            binding.frenchCb.setChecked(true);
+            binding.spanishCb.setChecked(true);
         });
         return binding.getRoot();
     }

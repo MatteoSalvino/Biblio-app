@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.Provider;
 import lrusso96.simplebiblio.core.SimpleBiblio;
@@ -24,6 +26,9 @@ public class SearchViewModel extends ViewModel {
     private List<Ebook> result;
     private MutableLiveData<List<Ebook>> ebooks;
     private final Map<String, Boolean> enabledProviders;
+    private final Map<String, Boolean> enabledLanguages;
+
+
     private final LogHelper logger = new LogHelper(getClass());
 
     public SearchViewModel() {
@@ -31,6 +36,17 @@ public class SearchViewModel extends ViewModel {
         enabledProviders.put(Provider.FEEDBOOKS, true);
         enabledProviders.put(Provider.LIBGEN, true);
         enabledProviders.put(Provider.STANDARD_EBOOKS, true);
+
+        //fixme: this is a temporary solution. Replace with Locale instead
+        enabledLanguages = new HashMap<>();
+        enabledLanguages.put("italian", true);
+        enabledLanguages.put("it", true);
+        enabledLanguages.put("english", true);
+        enabledLanguages.put("en", true);
+        enabledLanguages.put("spanish", true);
+        enabledLanguages.put("es", true);
+        enabledLanguages.put("french", true);
+        enabledLanguages.put("fr", true);
     }
 
     public LiveData<List<Ebook>> getEbooks() {
@@ -46,7 +62,7 @@ public class SearchViewModel extends ViewModel {
             return;
         List<Ebook> ret = new ArrayList<>();
         for (Ebook x : result) {
-            if (isEnabled(x.getProviderName()))
+            if (isProviderEnabled(x.getProviderName()) && isLanguageEnabled(x.getLanguage()))
                 ret.add(x);
         }
         ebooks.postValue(ret);
@@ -65,12 +81,24 @@ public class SearchViewModel extends ViewModel {
         }).start();
     }
 
-    public boolean isEnabled(String provider_name) {
+    public boolean isProviderEnabled(String provider_name) {
         Boolean enabled = enabledProviders.get(provider_name);
         if (enabled == null)
             enabled = true;
         return enabled;
     }
+
+    public boolean isLanguageEnabled(@Nullable String language) {
+        if (language == null)
+            return false;
+        language = language.toLowerCase();
+        Boolean enabled = enabledLanguages.get(language);
+        if (enabled == null)
+            enabled = false;
+        return enabled;
+    }
+
+
 
     public void enableProvider(Class<? extends Provider> provider, boolean enabled) {
         if (provider == LibraryGenesis.class) {
@@ -84,4 +112,28 @@ public class SearchViewModel extends ViewModel {
             applyFilters();
         }
     }
+
+    public void enableEnglish(boolean enabled) {
+        enabledLanguages.put("english", enabled);
+        enabledLanguages.put("en", enabled);
+        applyFilters();
+    }
+
+    public void enableItalian(boolean enabled) {
+        enabledLanguages.put("italian", enabled);
+        enabledLanguages.put("it", enabled);
+        applyFilters();
+    }
+    public void enableFrench(boolean enabled) {
+        enabledLanguages.put("french", enabled);
+        enabledLanguages.put("fr", enabled);
+        applyFilters();
+    }
+    public void enableSpanish(boolean enabled) {
+        enabledLanguages.put("spanish", enabled);
+        enabledLanguages.put("es", enabled);
+        applyFilters();
+    }
+
+
 }

@@ -37,20 +37,20 @@ public class FiltersFragment extends Fragment {
         binding.mediumHighRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM_HIGH));
         binding.highRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.HIGH));
 
-        binding.feedbooksCb.setChecked(model.isProviderEnabled(Provider.FEEDBOOKS));
-        binding.feedbooksCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(Feedbooks.class, isChecked));
+        binding.feedbooksCb.setChecked(model.isProviderVisible(Provider.FEEDBOOKS));
+        binding.feedbooksCb.setOnCheckedChangeListener((button, isChecked) -> model.setProviderVisibility(Feedbooks.class, isChecked));
 
-        binding.libgenCb.setChecked(model.isProviderEnabled(Provider.LIBGEN));
-        binding.libgenCb.setOnCheckedChangeListener((button, isChecked) -> model.enableProvider(LibraryGenesis.class, isChecked));
+        binding.libgenCb.setChecked(model.isProviderVisible(Provider.LIBGEN));
+        binding.libgenCb.setOnCheckedChangeListener((button, isChecked) -> model.setProviderVisibility(LibraryGenesis.class, isChecked));
 
-        binding.englishCb.setChecked(model.isLanguageEnabled("english"));
-        binding.englishCb.setOnCheckedChangeListener((button, isChecked) -> model.enableEnglish(isChecked));
-        binding.italianCb.setChecked(model.isLanguageEnabled("italian"));
-        binding.italianCb.setOnCheckedChangeListener((button, isChecked) -> model.enableItalian(isChecked));
-        binding.frenchCb.setChecked(model.isLanguageEnabled("french"));
-        binding.frenchCb.setOnCheckedChangeListener((button, isChecked) -> model.enableFrench(isChecked));
-        binding.spanishCb.setChecked(model.isLanguageEnabled("spanish"));
-        binding.spanishCb.setOnCheckedChangeListener((button, isChecked) -> model.enableSpanish(isChecked));
+        binding.englishCb.setChecked(model.isLanguageVisible("english"));
+        binding.englishCb.setOnCheckedChangeListener((button, isChecked) -> model.showEnglish(isChecked));
+        binding.italianCb.setChecked(model.isLanguageVisible("italian"));
+        binding.italianCb.setOnCheckedChangeListener((button, isChecked) -> model.showItalian(isChecked));
+        binding.frenchCb.setChecked(model.isLanguageVisible("french"));
+        binding.frenchCb.setOnCheckedChangeListener((button, isChecked) -> model.showFrench(isChecked));
+        binding.spanishCb.setChecked(model.isLanguageVisible("spanish"));
+        binding.spanishCb.setOnCheckedChangeListener((button, isChecked) -> model.showSpanish(isChecked));
 
         binding.filtersResetBtn.setOnClickListener(x -> {
             binding.libgenCb.setChecked(true);

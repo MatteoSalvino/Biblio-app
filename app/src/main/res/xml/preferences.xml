@@ -14,19 +14,16 @@
         <SwitchPreference
             android:defaultValue="true"
             android:summary="enable search on this provider"
-            app:enabled="false"
             app:key="feedbooks_enabled"
             app:title="Feedbooks" />
         <SwitchPreference
             android:defaultValue="true"
             android:summary="enable search on this provider"
-            app:enabled="false"
             app:key="standard_ebooks_enabled"
             app:title="StandardEbooks" />
         <SwitchPreference
             android:defaultValue="true"
             android:summary="enable search on this provider"
-            app:enabled="false"
             app:key="libgen_enabled"
             app:title="Library Genesis" />
         <EditTextPreference

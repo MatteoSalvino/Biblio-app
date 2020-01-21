@@ -66,6 +66,7 @@ public class FiltersFragment extends Fragment {
 
     /**
      * Updates the background color of the rating buttons, according to the current minimum rating.
+     *
      * @param rating the minimum value to be accepted
      */
     private void updateButtonBackgroundColors(RATING rating) {

@@ -1,46 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--TODO: improve this UI: in particular buttons must be fixed ad properly rendered-->
+<?xml version="1.0" encoding="utf-8"?><!--TODO: improve this UI: in particular buttons must be fixed ad properly rendered-->
 <!--TODO: apply changes for both bright and dark themes-->
 <!--TODO: show user details if logged (e.g. number of downloads, name, etc.)-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/your_profile_tv"
-        android:textSize="25sp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:text="@string/your_profile_tv"
         android:textColor="@color/main_book_text"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/info_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/perform_the_login_msg"
-        android:textSize="15sp"
-        android:textColor="@color/main_book_text"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:text="@string/perform_the_login_msg"
+        android:textColor="@color/main_book_text"
+        android:textSize="15sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/email_login_btn"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/main_book_text"
+        android:backgroundTint="@color/error"
         android:text="@string/proceed_with_email_msg"
         android:textAllCaps="false"
-        android:backgroundTint="@color/error"
+        android:textColor="@color/main_book_text"
         app:icon="@drawable/email" />
 
     <com.google.android.gms.common.SignInButton
@@ -54,32 +53,32 @@
         android:id="@+id/signup_suggestion_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/app_background"
         android:layout_gravity="start"
+        android:backgroundTint="@color/app_background"
         android:text="@string/no_account_yet_msg"
-        android:textColor="@color/main_book_text"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textColor="@color/main_book_text" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/item_decorator"
-        android:tint="@color/main_book_text"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/item_decorator"
+        android:tint="@color/main_book_text" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settings_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/settings_msg"
-        android:textAllCaps="false"
-        app:icon="@drawable/settings_outline"
-        app:iconTint="@color/main_book_text"
-        android:backgroundTint="@color/app_background"
-        android:textColor="@color/main_book_text"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/app_background"
+        android:text="@string/settings_msg"
+        android:textAllCaps="false"
+        android:textColor="@color/main_book_text"
+        app:icon="@drawable/settings_outline"
+        app:iconTint="@color/main_book_text" />
 </LinearLayout>

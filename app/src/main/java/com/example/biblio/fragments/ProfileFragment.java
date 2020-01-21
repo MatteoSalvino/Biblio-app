@@ -1,6 +1,5 @@
 package com.example.biblio.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,6 +46,7 @@ public class ProfileFragment extends Fragment {
         binding = ProfileFragmentBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         boolean logged = false;
+        //fixme: if logged we should show LoggedProfileFragment (?)
         if (sharedPreferences.contains(CURRENT_USER_KEY)) {
             User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), User.class);
             logger.v(user.getEmail());
@@ -64,16 +64,6 @@ public class ProfileFragment extends Fragment {
             i.putExtra("page start", 1);
             startActivity(i);
         });
-
-        /*
-        binding.logoffBtn.setOnClickListener(view -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove(CURRENT_USER_KEY);
-            editor.apply();
-            googleSignOut();
-            showButtons(false);
-        });
-        */
 
         binding.settingsBtn.setOnClickListener(view -> loadSettingsFragment());
 

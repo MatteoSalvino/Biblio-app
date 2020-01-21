@@ -22,14 +22,13 @@ public final class SimpleBiblioHelper {
     final static String USER_KEY = "user";
     final static String USERNAME_KEY = "name";
     final static String DOWNLOADS_KEY = "count";
-    private final static LogHelper logger = new LogHelper(SimpleBiblioHelper.class);
-
     final static OkHttpClient CLIENT = new OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .build();
+    private final static LogHelper logger = new LogHelper(SimpleBiblioHelper.class);
     private final static String MESSAGE_KEY = "message";
     private final static Request.Builder REQ_BUILDER = new Request.Builder()
             .header("Accept", "application/json")

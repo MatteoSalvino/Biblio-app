@@ -2,16 +2,16 @@ package com.example.biblio.api;
 
 import com.example.biblio.helpers.LogHelper;
 
-import okhttp3.FormBody;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Locale;
+
+import okhttp3.FormBody;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 import static com.example.biblio.api.SimpleBiblioHelper.AUTH_TOKEN_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;

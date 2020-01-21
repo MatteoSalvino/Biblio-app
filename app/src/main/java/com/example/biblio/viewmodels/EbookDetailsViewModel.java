@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class EbookDetailsViewModel extends ViewModel {
-    private MutableLiveData<Ebook> ebook;
     private final LogHelper logger = new LogHelper(getClass());
+    private MutableLiveData<Ebook> ebook;
 
     public EbookDetailsViewModel() {
         if (ebook == null)

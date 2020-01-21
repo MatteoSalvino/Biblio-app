@@ -24,7 +24,6 @@ import com.example.biblio.adapters.ReviewsAdapter;
 import com.example.biblio.api.Review;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
-import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.databinding.ReviewsFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
@@ -63,7 +62,7 @@ public class ReviewsFragment extends Fragment {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         //Logged user
-        if(!sharedPreferences.contains(CURRENT_USER_KEY)) {
+        if (!sharedPreferences.contains(CURRENT_USER_KEY)) {
             binding.reviewsAddBtn.setVisibility(View.INVISIBLE);
         } else
             binding.reviewsAddBtn.setVisibility(View.VISIBLE);
@@ -93,32 +92,27 @@ public class ReviewsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(editable.toString().length() >= 10 && ratingBar.getRating() > 0)
+                if (editable.toString().length() >= 10 && ratingBar.getRating() > 0)
                     postBtn.setEnabled(true);
                 else
                     postBtn.setEnabled(false);
             }
         });
 
-        ratingBar.setOnRatingChangeListener(new MaterialRatingBar.OnRatingChangeListener() {
-            @Override
-            public void onRatingChanged(MaterialRatingBar ratingBar, float rating) {
-                if(ratingBar.getRating() > 0 && reviewBody.getText().toString().length() >= 10)
-                    postBtn.setEnabled(true);
-                else
-                    postBtn.setEnabled(false);
-            }
+        ratingBar.setOnRatingChangeListener((bar, rating) -> {
+            if (bar.getRating() > 0 && reviewBody.getText().toString().length() >= 10)
+                postBtn.setEnabled(true);
+            else
+                postBtn.setEnabled(false);
         });
 
-        cancelBtn.setOnClickListener(myView ->{
-            alertDialog.dismiss();
-        });
+        cancelBtn.setOnClickListener(myView -> alertDialog.dismiss());
 
         postBtn.setOnClickListener(myView -> {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
             alertDialog.dismiss();
 
-            //Send review to the back-end
+            //todo: send review to the back-end
 
 
             //Clean dialog's fields
@@ -128,7 +122,7 @@ public class ReviewsFragment extends Fragment {
         });
 
         binding.reviewsBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
-        binding.reviewsAddBtn.setOnClickListener(view ->  alertDialog.show());
+        binding.reviewsAddBtn.setOnClickListener(view -> alertDialog.show());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.ebooksRv.setLayoutManager(mLayoutManager);

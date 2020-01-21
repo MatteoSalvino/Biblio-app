@@ -13,9 +13,14 @@ import lrusso96.simplebiblio.core.Ebook;
 import lrusso96.simplebiblio.core.SimpleBiblio;
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder;
 
-public abstract class SwipeEbooksViewModel extends ViewModel {
-    private MutableLiveData<List<Ebook>> ebooks;
+import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS_ENABLED_KEY;
+
+public abstract class SwipeEbooksViewModel extends AndroidViewModel {
     private final LogHelper logger = new LogHelper(getClass());
+    private MutableLiveData<List<Ebook>> ebooks;
+    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
     public LiveData<List<Ebook>> getEbooks() {
         if (ebooks == null) {

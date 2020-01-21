@@ -38,6 +38,7 @@ public class SearchViewModel extends AndroidViewModel {
     private final Map<String, Boolean> filteredLanguages;
     private final LogHelper logger = new LogHelper(getClass());
     private List<Ebook> result;
+    private List<Ebook> current;
     private MutableLiveData<List<Ebook>> ebooks;
     private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
@@ -71,38 +72,38 @@ public class SearchViewModel extends AndroidViewModel {
     private void applyFilters() {
         if (result == null || result.isEmpty())
             return;
-        List<Ebook> ret = new ArrayList<>();
+        current = new ArrayList<>();
         for (Ebook x : result) {
             if (isProviderVisible(x.getProviderName()) && isLanguageVisible(x.getLanguage()))
-                ret.add(x);
+                current.add(x);
         }
-        ebooks.postValue(ret);
+        ebooks.postValue(current);
     }
 
     public void sortByTitle() {
-        if (result == null)
+        if (current == null || current.isEmpty())
             return;
-        Collections.sort(result, (e1, e2) -> {
+        Collections.sort(current, (e1, e2) -> {
             if (e1.getTitle() == null)
                 return 1;
             if (e2.getTitle() == null)
                 return -1;
             return e1.getTitle().compareTo(e2.getTitle());
         });
-        ebooks.postValue(result);
+        ebooks.postValue(current);
     }
 
     public void sortByYear() {
-        if (result == null)
+        if (current == null || current.isEmpty())
             return;
-        Collections.sort(result, (e1, e2) -> {
+        Collections.sort(current, (e1, e2) -> {
             if (e1.getPublished() == null)
                 return 1;
             if (e2.getPublished() == null)
                 return -1;
             return e1.getPublished().compareTo(e2.getPublished());
         });
-        ebooks.postValue(result);
+        ebooks.postValue(current);
     }
 
     //fixme: consider refactoring and move to repository

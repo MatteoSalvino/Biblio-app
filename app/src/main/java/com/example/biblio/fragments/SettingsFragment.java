@@ -19,11 +19,12 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = "SettingsFragment";
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         SwitchPreference themePreference = findPreference("theme");
         if (themePreference != null) {
@@ -35,10 +36,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             });
         }
 
-        //fixme: extract key and refactor
-        SwitchPreference libgenPreference = findPreference("libgen_enabled");
-        if (libgenPreference != null) {
-            libgenPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+        setEnabledListeners(R.string.libgen_enabled_pref, LIBGEN_ENABLED_KEY);
+        setEnabledListeners(R.string.feedbooks_enabled_pref, FEEDBOOKS_ENABLED_KEY);
+        setEnabledListeners(R.string.standard_ebooks_enabled_pref, STANDARD_EBOOKS_ENABLED_KEY);
+    }
+
+    private void setEnabledListeners(int resource, String key) {
+        SwitchPreference switchPreference = findPreference(getResources().getString(resource));
+        if (switchPreference != null) {
+            switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean enabled = (boolean) newValue;
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(LIBGEN_ENABLED_KEY, enabled);
@@ -47,28 +53,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             });
         }
 
-        //fixme: extract key and refactor
-        SwitchPreference feedbooksPreference = findPreference("feedbooks_enabled");
-        if (feedbooksPreference != null) {
-            feedbooksPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                boolean enabled = (boolean) newValue;
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(FEEDBOOKS_ENABLED_KEY, enabled);
-                editor.apply();
-                return true;
-            });
-        }
-
-        //fixme: extract key and refactor
-        SwitchPreference standardPreference = findPreference("standard_ebooks_enabled");
-        if (standardPreference != null) {
-            standardPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                boolean enabled = (boolean) newValue;
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(STANDARD_EBOOKS_ENABLED_KEY, enabled);
-                editor.apply();
-                return true;
-            });
-        }
     }
 }

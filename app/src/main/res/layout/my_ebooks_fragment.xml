@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/my_ebooks_rv"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_marginLeft="5dp"
-       android:layout_marginRight="5dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_ebooks_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
-   <ImageView
-       android:id="@+id/iv_template"
-       android:layout_width="200dp"
-       android:layout_height="200dp"
-       android:src="@drawable/no_image"
-       android:layout_centerVertical="true"
-       android:layout_centerHorizontal="true"
-       android:paddingBottom="10dp"/>
+    <ImageView
+        android:id="@+id/iv_template"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="10dp"
+        android:src="@drawable/no_image" />
 
-   <TextView
-       android:id="@+id/tv_template"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/empty_my_books_msg"
-       android:textColor="@color/main_book_text"
-       android:layout_alignBottom="@id/iv_template"
-       android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/tv_template"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_template"
+        android:layout_centerHorizontal="true"
+        android:text="@string/empty_my_books_msg"
+        android:textColor="@color/main_book_text" />
 
 </RelativeLayout>

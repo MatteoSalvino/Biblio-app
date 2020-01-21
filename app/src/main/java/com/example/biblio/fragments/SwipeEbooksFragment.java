@@ -27,9 +27,9 @@ import lrusso96.simplebiblio.core.Ebook;
 
 public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnItemListener {
     private final LogHelper logger = new LogHelper(getClass());
+    private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
     private EbooksAdapter.OnItemListener mEbooksListener;
     private ArrayList<Ebook> mEbooks;
-    private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
     private ReviewsFragmentBinding binding;
 
     SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {

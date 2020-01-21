@@ -30,6 +30,6 @@ public class LogHelper {
 
     @NotNull
     private String lazy_null(@Nullable String msg) {
-        return msg!=null? msg : "";
+        return msg != null ? msg : "";
     }
 }

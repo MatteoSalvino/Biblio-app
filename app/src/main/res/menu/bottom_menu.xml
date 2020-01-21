@@ -2,28 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_search"
-        android:title="@string/nav_search_title"
-        android:icon="@drawable/baseline_search_24" />
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/nav_search_title" />
 
     <item
         android:id="@+id/nav_popular"
-        android:title="@string/nav_popular_title"
-        android:icon="@drawable/account_group"/>
+        android:icon="@drawable/account_group"
+        android:title="@string/nav_popular_title" />
 
     <item
         android:id="@+id/nav_recent"
-        android:title="@string/nav_recent_title"
-        android:icon="@drawable/baseline_update_24"/>
+        android:icon="@drawable/baseline_update_24"
+        android:title="@string/nav_recent_title" />
 
     <item
         android:id="@+id/nav_books"
-        android:title="@string/nav_books_title"
-        android:icon="@drawable/baseline_menu_book_24" />
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="@string/nav_books_title" />
 
     <item
         android:id="@+id/nav_profile"
-        android:title="@string/nav_profile_title"
-        android:icon="@drawable/baseline_person_24" />
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/nav_profile_title" />
 
     <!---
     <item

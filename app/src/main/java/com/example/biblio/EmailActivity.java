@@ -1,15 +1,12 @@
 package com.example.biblio;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.biblio.adapters.PageAdapter;
 import com.example.biblio.databinding.EmailActivityBinding;
-import com.example.biblio.fragments.LoggedProfileFragment;
 import com.example.biblio.fragments.LoginFragment;
 import com.example.biblio.fragments.SignupFragment;
 import com.google.android.material.tabs.TabLayout;

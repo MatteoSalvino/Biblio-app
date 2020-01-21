@@ -1,72 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--TODO: apply changes for both bright and dark themes-->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--TODO: apply changes for both bright and dark themes-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signup_to_our_service_msg"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:text="@string/signup_to_our_service_msg"
         android:textColor="@color/main_book_text"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signup_name_field"
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:hint="@string/name_hint"
-        app:boxBackgroundColor="@color/app_background"
-        style="@style/LoginTextInputLayoutStyle"
         android:textColorHint="@color/disabled_button"
-        android:layout_margin="10dp">
+        app:boxBackgroundColor="@color/app_background">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:textColor="@color/main_book_text"
-            android:maxLength="20"/>
+            android:maxLength="20"
+            android:textColor="@color/main_book_text" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signup_email_field"
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:hint="@string/email_address_field"
-        app:boxBackgroundColor="@color/app_background"
-        style="@style/LoginTextInputLayoutStyle"
         android:textColorHint="@color/disabled_button"
-        android:layout_margin="10dp">
+        app:boxBackgroundColor="@color/app_background">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:textColor="@color/main_book_text"/>
+            android:textColor="@color/main_book_text" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signup_password_field"
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:hint="@string/password_field"
+        android:textColorHint="@color/disabled_button"
         app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/disabled_button"
-        style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disabled_button"
-        android:layout_margin="10dp">
+        app:passwordToggleTint="@color/disabled_button">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -77,15 +75,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signup_password_confirmation_field"
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:hint="@string/confirm_password_field"
+        android:textColorHint="@color/disabled_button"
         app:boxBackgroundColor="@color/app_background"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/disabled_button"
-        style="@style/LoginTextInputLayoutStyle"
-        android:textColorHint="@color/disabled_button"
-        android:layout_margin="10dp">
+        app:passwordToggleTint="@color/disabled_button">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -99,24 +97,24 @@
         android:id="@+id/signup_terms_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/main_book_text"
+        android:layout_margin="10dp"
         android:buttonTint="@color/main_book_text"
-        android:textColor="@color/main_book_text"
+        android:shadowColor="@color/main_book_text"
         android:text="@string/accept_terms_field"
-        android:layout_margin="10dp" />
+        android:textColor="@color/main_book_text" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/signup_msg"
-        android:textSize="20sp"
-        android:textAllCaps="false"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="@color/app_background"
+        android:text="@string/signup_msg"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:strokeColor="@color/main_book_text"
-        app:strokeWidth="2dp"/>
+        app:strokeWidth="2dp" />
 
 </LinearLayout>

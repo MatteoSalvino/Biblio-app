@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <ImageView
@@ -17,10 +17,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,9 +47,9 @@
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        tools:text="@string/title_field"
                         android:textColor="@color/main_book_text"
-                        android:textSize="30sp" />
+                        android:textSize="30sp"
+                        tools:text="@string/title_field" />
 
                     <TextView
                         android:id="@+id/main_book_author"
@@ -56,18 +58,18 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        tools:text="@string/author_field"
                         android:textColor="@color/main_book_text"
-                        android:textSize="25sp" />
+                        android:textSize="25sp"
+                        tools:text="@string/author_field" />
 
                     <TextView
                         android:id="@+id/main_book_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        tools:text="@string/year_field_placeholder"
                         android:textColor="@color/main_book_text"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        tools:text="@string/year_field_placeholder" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -77,16 +79,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/book_open_page_variant"
                             android:layout_marginTop="5dp"
+                            android:src="@drawable/book_open_page_variant"
                             android:tint="@color/main_book_text" />
 
                         <TextView
                             android:id="@+id/main_book_pages"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
                             android:layout_marginStart="10dp"
+                            android:layout_marginTop="7dp"
                             android:textColor="@color/main_book_text"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -94,15 +96,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/main_reviews_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:src="@drawable/baseline_rate_review_24"
-                            android:tint="@color/main_book_text"
-                            android:layout_marginTop="5dp"/>
+                            android:tint="@color/main_book_text" />
                     </LinearLayout>
 
                     <!---
@@ -186,18 +188,19 @@
                             app:backgroundTint="@color/remove_button" />
                     </RelativeLayout>
                 </LinearLayout>
-        </LinearLayout>
+            </LinearLayout>
+
             <TextView
-                android:padding="10dp"
-                android:background="@color/card_background"
                 android:id="@+id/main_book_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:background="@color/card_background"
                 android:maxLines="14"
-                tools:text="@string/desc_sample"
+                android:padding="10dp"
                 android:textColor="@color/text_color"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="@string/desc_sample" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -20,23 +20,23 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Search options">
+    <PreferenceCategory app:title="Search options" app:summary="Load ebooks from these catalogs">
         <SwitchPreference
             app:defaultValue="true"
-            app:summary="Enable search on this provider"
             app:key="@string/feedbooks_enabled_pref"
             app:title="Feedbooks" />
         <SwitchPreference
             app:defaultValue="true"
-            app:summary="Enable search on this provider"
             app:key="@string/standard_ebooks_enabled_pref"
             app:title="StandardEbooks" />
         <SwitchPreference
             app:defaultValue="true"
-            app:summary="Enable search on this provider"
             app:key="@string/libgen_enabled_pref"
             app:title="Library Genesis" />
-        <SwitchPreference
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Advanced" app:summary="Customize your experience">
+    <SwitchPreference
             app:key="@string/override_libgen_pref"
             app:defaultValue="false"
             app:title="Override Libgen mirror" />
@@ -44,8 +44,8 @@
             app:key="@string/libgen_mirror_pref"
             app:enabled="false"
             app:defaultValue="http://libgen.is"
-            app:summary="Choose a custom mirror for Libgen"
-            app:title="Set mirror" />
+            app:summary="Insert the mirror you prefer"
+            app:title="Current Libgen mirror" />
         <DropDownPreference
             app:enabled="false"
             app:summary="Libgen allows to specify the sorting field"

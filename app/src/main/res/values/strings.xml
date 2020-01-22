@@ -3,7 +3,7 @@
     <string name="nav_search_title">Search</string>
     <string name="nav_books_title">My Ebooks</string>
     <string name="nav_settings_title">Settings</string>
-    <string name="desc_sample">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in tellus massa. Aenean et sagittis lacus, ut tincidunt mauris. Etiam cursus vitae mi non fringilla. Vestibulum cursus eleifend diam, tincidunt suscipit lorem viverra a. Morbi convallis posuere mauris, a dignissim enim ultricies ut. Fusce euismod est sed magna ultricies tristique. Nunc leo eros, tincidunt sed consectetur eget, bibendum vel quam. Nam mollis augue aliquam nibh maximus commodo. Nam ac turpis augue. Nam tempus erat ipsum, non ornare est consectetur ut. Maecenas rutrum dictum nibh, vitae placerat nisl. Curabitur efficitur nisl at elementum finibus. Praesent ex justo, porttitor vel ante at, consequat rhoncus purus. Donec ultrices, tellus eget commodo suscipit, tortor purus vulputate diam, in convallis diam elit vel nisl. Mauris interdum scelerisque ipsum, dapibus sodales diam. Etiam enim dolor, luctus vitae lacus et, fringilla aliquet mauris.</string>
+    <string name="desc_sample" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in tellus massa. Aenean et sagittis lacus, ut tincidunt mauris. Etiam cursus vitae mi non fringilla. Vestibulum cursus eleifend diam, tincidunt suscipit lorem viverra a. Morbi convallis posuere mauris, a dignissim enim ultricies ut. Fusce euismod est sed magna ultricies tristique. Nunc leo eros, tincidunt sed consectetur eget, bibendum vel quam. Nam mollis augue aliquam nibh maximus commodo. Nam ac turpis augue. Nam tempus erat ipsum, non ornare est consectetur ut. Maecenas rutrum dictum nibh, vitae placerat nisl. Curabitur efficitur nisl at elementum finibus. Praesent ex justo, porttitor vel ante at, consequat rhoncus purus. Donec ultrices, tellus eget commodo suscipit, tortor purus vulputate diam, in convallis diam elit vel nisl. Mauris interdum scelerisque ipsum, dapibus sodales diam. Etiam enim dolor, luctus vitae lacus et, fringilla aliquet mauris.</string>
     <string name="write_file">This app needs access to your file storage so that it can write files.</string>
     <string name="empty_my_books_msg">You have not added any book yet.</string>
     <string name="done_msg">Done</string>
@@ -13,13 +13,13 @@
     <string name="reset_msg">Reset</string>
     <string name="filters_option">Filters</string>
     <string name="provider_field">Provider</string>
-    <string name="library_genesis_tv">Library Genesis</string>
-    <string name="feebooks_tv">Feebooks</string>
+    <string name="library_genesis_tv" translatable="false">Library Genesis</string>
+    <string name="feebooks_tv" translatable="false">Feebooks</string>
     <string name="rating_field">Rating</string>
-    <string name="minimum_rating">0+</string>
-    <string name="low_rating">2.5+</string>
-    <string name="medium_rating">4+</string>
-    <string name="high_rating">4.5+</string>
+    <string name="minimum_rating" translatable="false">0+</string>
+    <string name="low_rating" translatable="false">2.5+</string>
+    <string name="medium_rating" translatable="false">4+</string>
+    <string name="high_rating" translatable="false">4.5+</string>
     <string name="language_field">Language</string>
     <string name="italian_lang">Italian</string>
     <string name="english_lang">English</string>
@@ -50,7 +50,7 @@
     <string name="please_wait_tv">Please wait…</string>
     <string name="login_to_proceed_tv">Login to proceed</string>
     <string name="email_address_field">Email address</string>
-    <string name="password_field">Password</string>
+    <string name="password_field" translatable="false">Password</string>
     <string name="login_msg">Login</string>
     <string name="logoff_msg">Logoff</string>
     <string name="signup_to_our_service_msg">Signup to our service</string>
@@ -61,11 +61,19 @@
     <string name="ebook_cover_description">ebook cover</string>
     <string name="add_review_msg">Add review</string>
     <string name="load_reviews_msg">Show reviews</string>
-    <string name="feedbooks_enabled_pref">feedbooks_enabled</string>
-    <string name="libgen_enabled_pref">libgen_enabled</string>
-    <string name="standard_ebooks_enabled_pref">standard_ebooks_enabled</string>
-    <string name="source_code_pref">github</string>
+    <string name="feedbooks_enabled_pref" translatable="false">feedbooks_enabled</string>
+    <string name="libgen_enabled_pref" translatable="false">libgen_enabled</string>
+    <string name="standard_ebooks_enabled_pref" translatable="false">standard_ebooks_enabled</string>
+    <string name="source_code_pref" translatable="false">github</string>
     <string name="dependencies_pref">dependencies</string>
     <string name="open_source_libs">Open source libraries</string>
-    <string name="external_readers_pref">external_readers</string>
+    <string name="external_readers_pref" translatable="false">external_readers</string>
+    <string name="username_tv">Username</string>
+    <string name="simple_review_tv">Simple review</string>
+    <string name="download_tv" translatable="false">Download</string>
+    <string name="reviews_tv">Reviews</string>
+    <string name="insert_review_tv">Insert a review (max 100 characters)</string>
+    <string name="cancel_msg">Cancel</string>
+    <string name="post_msg">Post</string>
+    <string name="search_hint_msg">Search any book!</string>
 </resources>

@@ -20,9 +20,10 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/review_form_bg"
         android:gravity="top"
-        android:hint="Insert a review (max 100 characters)"
+        android:hint="@string/insert_review_tv"
         android:inputType="text|textMultiLine"
-        android:maxLength="100" />
+        android:maxLength="100"
+        android:importantForAutofill="no" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,10 +35,10 @@
             android:id="@+id/review_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/remove_button"
-            android:text="Cancel"
+            android:text="@string/cancel_msg"
             android:textAllCaps="false"
             android:textColor="@color/main_book_text" />
 
@@ -45,11 +46,11 @@
             android:id="@+id/review_post_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:backgroundTint="@color/add_button"
             android:enabled="false"
-            android:text="Post"
+            android:text="@string/post_msg"
             android:textAllCaps="false"
             android:textColor="@color/main_book_text" />
     </LinearLayout>

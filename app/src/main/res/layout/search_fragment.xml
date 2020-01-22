@@ -31,7 +31,7 @@
                 android:paddingTop="10dp"
                 app:mt_backIconTint="@color/search_bar_text"
                 app:mt_clearIconTint="@color/search_bar_text"
-                app:mt_hint="Search any book !"
+                app:mt_hint="@string/search_hint_msg"
                 app:mt_hintColor="@color/search_bar_text"
                 app:mt_maxSuggestionsCount="4"
                 app:mt_roundedSearchBarEnabled="true"

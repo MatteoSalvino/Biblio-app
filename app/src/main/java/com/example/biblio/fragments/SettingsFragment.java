@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.example.biblio.R;
+import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.ThemeHelper;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
@@ -24,6 +25,8 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS
 public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = "SettingsFragment";
     private SharedPreferences sharedPreferences;
+    private final LogHelper logger = new LogHelper(getClass());
+
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -65,6 +68,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setEnabledListeners(R.string.libgen_enabled_pref, LIBGEN_ENABLED_KEY);
         setEnabledListeners(R.string.feedbooks_enabled_pref, FEEDBOOKS_ENABLED_KEY);
         setEnabledListeners(R.string.standard_ebooks_enabled_pref, STANDARD_EBOOKS_ENABLED_KEY);
+
+        Preference external = findPreference(getResources().getString(R.string.external_readers_pref));
+        external.setOnPreferenceClickListener(preference -> {
+            try {
+                String query = "ebook+reader";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://play.google.com/store/search?q=%s&c=apps\n", query))));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                logger.e(anfe.getMessage());
+            }
+            return true;
+        });
     }
 
     private void setEnabledListeners(int resource, String key) {
@@ -73,7 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean enabled = (boolean) newValue;
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(LIBGEN_ENABLED_KEY, enabled);
+                editor.putBoolean(key, enabled);
                 editor.apply();
                 return true;
             });

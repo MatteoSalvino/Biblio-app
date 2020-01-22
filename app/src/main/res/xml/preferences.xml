@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <PreferenceCategory android:title="General">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="General">
         <SwitchPreference
-            android:defaultValue="false"
-            android:icon="@drawable/theme_light_dark"
+            app:defaultValue="false"
+            app:icon="@drawable/theme_light_dark"
             app:key="theme"
             app:title="Night mode" />
+        <SwitchPreference
+            app:defaultValue="true"
+            app:enabled="false"
+            app:summary="Enable in-app reader"
+            app:key="reader"
+            app:title="Internal reader" />
+        <Preference
+            app:key="@string/external_readers_pref"
+            app:summary="3rd party readers"
+            app:title="Explore more readers">
+        </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Search options">
+    <PreferenceCategory app:title="Search options">
         <SwitchPreference
-            android:defaultValue="true"
-            android:summary="Enable search on this provider"
+            app:defaultValue="true"
+            app:summary="Enable search on this provider"
             app:key="@string/feedbooks_enabled_pref"
             app:title="Feedbooks" />
         <SwitchPreference
-            android:defaultValue="true"
-            android:summary="Enable search on this provider"
+            app:defaultValue="true"
+            app:summary="Enable search on this provider"
             app:key="@string/standard_ebooks_enabled_pref"
             app:title="StandardEbooks" />
         <SwitchPreference
-            android:defaultValue="true"
-            android:summary="Enable search on this provider"
+            app:defaultValue="true"
+            app:summary="Enable search on this provider"
             app:key="@string/libgen_enabled_pref"
             app:title="Library Genesis" />
         <EditTextPreference
@@ -31,26 +40,29 @@
             app:summary="Choose a custom mirror for Libgen"
             app:title="Set mirror" />
         <DropDownPreference
-            android:enabled="false"
-            android:summary="Libgen allows to specify the sorting field"
+            app:enabled="false"
+            app:summary="Libgen allows to specify the sorting field"
             app:title="Sorting options for Libgen" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="About">
-        <PreferenceScreen
+    <PreferenceCategory app:title="About">
+        <Preference
             app:summary="1.0"
-            app:title="Version"></PreferenceScreen>
-        <PreferenceScreen
+            app:title="Version">
+        </Preference>
+        <Preference
             app:summary="Luigi Russo, Matteo Salvino"
-            app:title="Authors"></PreferenceScreen>
-        <PreferenceScreen
+            app:title="Authors">
+        </Preference>
+        <Preference
             app:key="@string/source_code_pref"
             app:summary="Check code on GitHub"
-            app:title="Source code"></PreferenceScreen>
-        <PreferenceScreen
+            app:title="Source code">
+        </Preference>
+        <Preference
             app:key="@string/dependencies_pref"
             app:summary="See the list of dependencies"
-            app:title="Open source libraries"></PreferenceScreen>
+            app:title="Open source libraries">
+        </Preference>
     </PreferenceCategory>
-
 </PreferenceScreen>

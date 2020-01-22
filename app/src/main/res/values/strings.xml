@@ -67,4 +67,5 @@
     <string name="source_code_pref">github</string>
     <string name="dependencies_pref">dependencies</string>
     <string name="open_source_libs">Open source libraries</string>
+    <string name="external_readers_pref">external_readers</string>
 </resources>

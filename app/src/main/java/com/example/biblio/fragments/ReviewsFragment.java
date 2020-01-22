@@ -59,6 +59,7 @@ public class ReviewsFragment extends Fragment {
         assert mEbook != null;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+
         //Logged user
         if (!sharedPreferences.contains(CURRENT_USER_KEY)) {
             binding.reviewsAddBtn.setVisibility(View.INVISIBLE);

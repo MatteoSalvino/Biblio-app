@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +90,8 @@ public class EbookDetailsFragment extends Fragment {
 
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
+        else
+            binding.mainBookSummary.setText("Description not available.");
 
         binding.mainDownloadBtn.setEnabled(false);
         binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));

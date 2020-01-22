@@ -1,15 +1,20 @@
 package com.example.biblio.fragments;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.example.biblio.R;
 import com.example.biblio.helpers.ThemeHelper;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.util.Objects;
 
@@ -32,6 +37,28 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 boolean themeOption = (boolean) newValue;
                 ThemeHelper.applyTheme(themeOption);
                 Objects.requireNonNull(getActivity()).recreate();
+                return true;
+            });
+        }
+
+        Preference github = findPreference(getResources().getString(R.string.source_code_pref));
+        if (github != null) {
+            github.setOnPreferenceClickListener(preference -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/MatteoSalvino/Biblio-app"));
+                startActivity(intent);
+                return true;
+            });
+        }
+
+        Preference dependencies = findPreference(getResources().getString(R.string.dependencies_pref));
+        if (dependencies != null) {
+            dependencies.setOnPreferenceClickListener(preference -> {
+                new LibsBuilder()
+                        .withAutoDetect(true)
+                        .withActivityTitle(this.getResources().getString(R.string.open_source_libs))
+                        .withAboutIconShown(true)
+                        .withAboutVersionShown(true)
+                        .start(getContext());
                 return true;
             });
         }

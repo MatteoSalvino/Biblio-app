@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- Simple Biblio  section -->
+    <string name="define_int_simplebiblio" />
+    <string name="library_simplebiblio_author">Luigi Russo</string>
+    <string name="library_simplebiblio_authorWebsite">https://github.com/lrusso96</string>
+    <string name="library_simplebiblio_libraryName">SimpleBiblio</string>
+    <string name="library_simplebiblio_libraryDescription">A Java library to search for ebooks</string>
+    <string name="library_simplebiblio_libraryWebsite">https://github.com/lrusso96/simplebiblio</string>
+    <string name="library_simplebiblio_respositoryLink">https://github.com/lrusso96/simplebiblio</string>
+    <string name="library_simplebiblio_libraryVersion">0.5.1</string>
+    <string name="library_simplebiblio_isOpenSource">true</string>
+    <string name="library_simplebiblio_classPath">lrusso96.simplebiblio.core.SimpleBiblio</string>
+</resources>

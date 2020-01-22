@@ -64,4 +64,7 @@
     <string name="feedbooks_enabled_pref">feedbooks_enabled</string>
     <string name="libgen_enabled_pref">libgen_enabled</string>
     <string name="standard_ebooks_enabled_pref">standard_ebooks_enabled</string>
+    <string name="source_code_pref">github</string>
+    <string name="dependencies_pref">dependencies</string>
+    <string name="open_source_libs">Open source libraries</string>
 </resources>

@@ -13,7 +13,6 @@ import androidx.preference.SwitchPreference;
 
 import com.example.biblio.R;
 import com.example.biblio.helpers.ThemeHelper;
-import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import java.util.Objects;

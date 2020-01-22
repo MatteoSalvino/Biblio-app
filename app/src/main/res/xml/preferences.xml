@@ -39,22 +39,18 @@
     <PreferenceCategory android:title="About">
         <PreferenceScreen
             app:summary="1.0"
-            app:title="Version">
-        </PreferenceScreen>
+            app:title="Version"></PreferenceScreen>
         <PreferenceScreen
             app:summary="Luigi Russo, Matteo Salvino"
-            app:title="Authors">
-        </PreferenceScreen>
+            app:title="Authors"></PreferenceScreen>
         <PreferenceScreen
             app:key="@string/source_code_pref"
             app:summary="Check code on GitHub"
-            app:title="Source code">
-        </PreferenceScreen>
+            app:title="Source code"></PreferenceScreen>
         <PreferenceScreen
             app:key="@string/dependencies_pref"
             app:summary="See the list of dependencies"
-            app:title="Open source libraries">
-        </PreferenceScreen>
+            app:title="Open source libraries"></PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

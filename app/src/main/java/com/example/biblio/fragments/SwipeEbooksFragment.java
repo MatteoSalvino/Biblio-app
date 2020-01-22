@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
-import com.example.biblio.databinding.ReviewsFragmentBinding;
 import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;

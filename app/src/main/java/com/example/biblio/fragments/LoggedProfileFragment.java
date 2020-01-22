@@ -31,9 +31,10 @@ public class LoggedProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        User current = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {}.getType());
+        User current = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
+        }.getType());
 
-        Log.d("LoggedProfileFragment", current.getEmail() + ", " + current.getUsername() + ", " + String.valueOf(current.getTotalDownloads()));
+        Log.d("LoggedProfileFragment", current.getEmail() + ", " + current.getUsername() + ", " + current.getTotalDownloads());
 
         //Load current user's data
         binding.loggedUsernameTv.setText(current.getUsername());

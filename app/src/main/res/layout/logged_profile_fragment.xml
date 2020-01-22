@@ -36,26 +36,26 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/logged_username_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:textColor="@color/main_book_text"
-                android:layout_marginRight="5dp"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/logged_email_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/main_book_text"/>
+                android:textColor="@color/main_book_text"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 

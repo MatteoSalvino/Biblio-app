@@ -10,6 +10,9 @@ import androidx.preference.PreferenceManager;
 
 import com.example.biblio.helpers.LogHelper;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +34,9 @@ import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MAX_RESULTS_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MIRROR_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_OVERRIDE_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS_ENABLED_KEY;
 
 public class SearchViewModel extends AndroidViewModel {
@@ -112,8 +118,16 @@ public class SearchViewModel extends AndroidViewModel {
         SimpleBiblioBuilder builder = new SimpleBiblioBuilder();
         if (sharedPreferences.getBoolean(FEEDBOOKS_ENABLED_KEY, true))
             builder.addProvider(new FeedbooksBuilder(fixme).build());
-        if (sharedPreferences.getBoolean(LIBGEN_ENABLED_KEY, true))
-            builder.addProvider(new LibraryGenesisBuilder(fixme).build());
+        if (sharedPreferences.getBoolean(LIBGEN_ENABLED_KEY, true)) {
+            LibraryGenesisBuilder libgen_builder = new LibraryGenesisBuilder(fixme);
+            if (sharedPreferences.getBoolean(LIBGEN_OVERRIDE_KEY, false)) {
+                String mirror = sharedPreferences.getString(LIBGEN_MIRROR_KEY, "");
+                if (!StringUtils.isEmpty(mirror))
+                    libgen_builder.setMirror(URI.create(mirror));
+            }
+            libgen_builder.setMaxResultsNumber(sharedPreferences.getInt(LIBGEN_MAX_RESULTS_KEY, 10));
+            builder.addProvider(libgen_builder.build());
+        }
         if (sharedPreferences.getBoolean(STANDARD_EBOOKS_ENABLED_KEY, true))
             builder.addProvider(new StandardEbooks(fixme));
         return builder.build();

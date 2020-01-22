@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory app:title="General">
         <SwitchPreference
             app:defaultValue="false"
@@ -35,14 +36,28 @@
             app:summary="Enable search on this provider"
             app:key="@string/libgen_enabled_pref"
             app:title="Library Genesis" />
+        <SwitchPreference
+            app:key="@string/override_libgen_pref"
+            app:defaultValue="false"
+            app:title="Override Libgen mirror" />
         <EditTextPreference
+            app:key="@string/libgen_mirror_pref"
             app:enabled="false"
+            app:defaultValue="http://libgen.is"
             app:summary="Choose a custom mirror for Libgen"
             app:title="Set mirror" />
         <DropDownPreference
             app:enabled="false"
             app:summary="Libgen allows to specify the sorting field"
             app:title="Sorting options for Libgen" />
+        <SeekBarPreference
+            app:key="@string/libgen_max_pref"
+            app:title="Max results for Libgen"
+            android:max="100"
+            app:min="10"
+            app:showSeekBarValue="true"
+            app:defaultValue="25">
+        </SeekBarPreference>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="About">

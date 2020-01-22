@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
         if (activity != null) {
             Fragment fragment = new SettingsFragment();
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SettingsFragment.TAG).commit();
+                    .replace(R.id.fragment_container, fragment, SettingsFragment.TAG).addToBackStack(SettingsFragment.TAG).commit();
         }
     }
 

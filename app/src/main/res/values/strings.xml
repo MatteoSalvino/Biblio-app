@@ -31,8 +31,8 @@
     <string name="loading_please_wait_msg">Loading. Please wait…</string>
     <string name="year_field_placeholder">2008</string>
     <string name="pages_field">Pages :</string>
-    <string name="add_to_my_books_msg">Add to My Ebooks</string>
-    <string name="remove_from_my_books_msg">Remove from My Ebooks</string>
+    <string name="add_to_my_books_msg">Add</string>
+    <string name="remove_from_my_books_msg">Remove</string>
     <string name="sort_by_field">Sort by</string>
     <string name="nav_popular_title">Popular</string>
     <string name="nav_recent_title">Recent</string>

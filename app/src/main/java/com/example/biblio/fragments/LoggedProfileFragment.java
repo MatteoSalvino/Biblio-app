@@ -51,7 +51,7 @@ public class LoggedProfileFragment extends Fragment {
 
         binding.loggedSettingsBtn.setOnClickListener(view -> {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG).commit();
+                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG).addToBackStack(SettingsFragment.TAG).commit();
         });
 
         return binding.getRoot();

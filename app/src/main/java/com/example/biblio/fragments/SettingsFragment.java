@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
@@ -27,7 +29,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private SharedPreferences sharedPreferences;
     private final LogHelper logger = new LogHelper(getClass());
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
@@ -42,6 +43,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             });
         }
+
+        //Back pressed callback
+        //SettingsFragment current = this;
+        OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getFragmentManager().popBackStack();
+            }
+        };
 
         Preference github = findPreference(getResources().getString(R.string.source_code_pref));
         if (github != null) {

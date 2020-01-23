@@ -11,18 +11,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.biblio.EmailActivity;
+import com.example.biblio.LoginActivity;
 import com.example.biblio.R;
 import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import java.util.Objects;
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
     public static final String TAG = "ProfileFragment";
@@ -30,7 +28,6 @@ public class ProfileFragment extends Fragment {
     private static final int RC_GOOGLE_SIGN_IN = 2;
     private final LogHelper logger = new LogHelper(getClass());
     private ProfileFragmentBinding binding;
-    private GoogleSignInClient mGoogleSignInClient;
 
     @Nullable
     @Override
@@ -39,31 +36,12 @@ public class ProfileFragment extends Fragment {
         setUpButtons();
 
         binding.emailLoginBtn.setOnClickListener(view -> {
-            Intent i = new Intent(getActivity(), EmailActivity.class);
+            Intent i = new Intent(getActivity(), LoginActivity.class);
             startActivityForResult(i, RC_SIGN_IN);
         });
 
-        binding.signupSuggestionBtn.setOnClickListener(view -> {
-            Intent i = new Intent(getActivity(), EmailActivity.class);
-            i.putExtra("page start", 1);
-            startActivity(i);
-        });
-
+        //todo: add to bar!
         binding.settingsBtn.setOnClickListener(view -> loadSettingsFragment());
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(Objects.requireNonNull(getActivity()), gso);
-
-        binding.googleLoginBtn.setOnClickListener(view -> {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
-        });
 
         return binding.getRoot();
     }
@@ -72,11 +50,11 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoggedProfileFragment(), "LoggedProfileFragment").commit();
             //showButtons(resultCode == Activity.RESULT_OK);
             // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        } else if (requestCode == RC_GOOGLE_SIGN_IN) {
+        } else if (requestCode == RC_GOOGLE_SIGN_IN && resultCode == RESULT_OK) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -100,10 +78,12 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /*
     private void googleSignOut() {
         mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(),
                 task -> setUpButtons());
     }
+     */
 
     private void loadSettingsFragment() {
         FragmentActivity activity = getActivity();
@@ -116,8 +96,6 @@ public class ProfileFragment extends Fragment {
 
     private void setUpButtons() {
         binding.infoTv.setVisibility(View.VISIBLE);
-        binding.signupSuggestionBtn.setVisibility(View.VISIBLE);
         binding.emailLoginBtn.setVisibility(View.VISIBLE);
-        binding.googleLoginBtn.setVisibility(View.VISIBLE);
     }
 }

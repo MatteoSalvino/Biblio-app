@@ -15,6 +15,12 @@
     <color name="app_background">@color/pattens_light_blue</color>
     <color name="nav_background">@color/pattens_blue</color>
 
+    <!-- (i) login colors -->
+    <color name="login_bg">@color/pattens_blue</color>
+    <color name="login_box">@color/ivory</color>
+    <color name="login_btn">@color/saffron</color>
+    <color name="login_suggestion">#424242</color>
+
     <!--todo: check these -->
     <!--todo: add title color for item row -->
     <color name="secondary">#F57C00</color> <!-- Orange 700 -->
@@ -24,9 +30,9 @@
     <color name="disabled_button">#D7CCC8</color>
     <color name="enabled_button">#0D47A1</color>
     <color name="main_book_text">#FFFFFF</color>
+    <color name="login_text">@color/text_color</color>
     <color name="add_button">#514aac</color>
     <color name="remove_button">#C62828</color>
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
-        @color/disabled_button
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/card_background
     </color>
 </resources>

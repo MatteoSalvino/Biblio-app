@@ -41,6 +41,10 @@ public class LoggedProfileFragment extends Fragment {
         binding.loggedEmailTv.setText(current.getEmail());
         binding.loggedDownloadTv.setText(String.valueOf(current.getTotalDownloads()));
 
+        if(sharedPreferences.contains("timestamp")) {
+            String timestamp[] = sharedPreferences.getString("timestamp", null).split(",");
+            binding.loggedLastSearchTv.setText(timestamp[0] + " " + timestamp[1]);
+        }
 
         binding.logoutBtn.setOnClickListener(view -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();

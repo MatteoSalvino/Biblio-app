@@ -14,6 +14,7 @@
             app:title="Internal reader" />
         <Preference
             app:key="@string/external_readers_pref"
+            app:icon="@drawable/baseline_chrome_reader_mode_24"
             app:summary="3rd party readers"
             app:title="Explore more readers">
         </Preference>
@@ -22,16 +23,19 @@
     <PreferenceCategory app:title="Search options">
         <SwitchPreference
             app:defaultValue="true"
+            app:icon="@drawable/alpha_f"
             app:summary="Enable search on this provider"
             app:key="@string/feedbooks_enabled_pref"
             app:title="Feedbooks" />
         <SwitchPreference
             app:defaultValue="true"
+            app:icon="@drawable/alpha_s"
             app:summary="Enable search on this provider"
             app:key="@string/standard_ebooks_enabled_pref"
             app:title="StandardEbooks" />
         <SwitchPreference
             app:defaultValue="true"
+            app:icon="@drawable/alpha_l"
             app:summary="Enable search on this provider"
             app:key="@string/libgen_enabled_pref"
             app:title="Library Genesis" />
@@ -48,19 +52,23 @@
     <PreferenceCategory app:title="About">
         <Preference
             app:summary="1.0"
+            app:icon="@drawable/baseline_update_24"
             app:title="Version">
         </Preference>
         <Preference
             app:summary="Luigi Russo, Matteo Salvino"
+            app:icon="@drawable/account_multiple"
             app:title="Authors">
         </Preference>
         <Preference
             app:key="@string/source_code_pref"
+            app:icon="@drawable/github_circle"
             app:summary="Check code on GitHub"
             app:title="Source code">
         </Preference>
         <Preference
             app:key="@string/dependencies_pref"
+            app:icon="@drawable/puzzle_outline"
             app:summary="See the list of dependencies"
             app:title="Open source libraries">
         </Preference>

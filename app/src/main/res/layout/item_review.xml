@@ -27,7 +27,8 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/username_tv" />
+                android:text="@string/username_tv"
+                android:textColor="@color/main_book_text"/>
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/reviewItemRating"
@@ -43,9 +44,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/simple_review_tv" />
+                android:text="@string/simple_review_tv"
+                android:textColor="@color/main_book_text"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

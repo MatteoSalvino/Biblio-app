@@ -53,7 +53,7 @@
     <string name="password_field" translatable="false">Password</string>
     <string name="login_msg">Login</string>
     <string name="logoff_msg">Logoff</string>
-    <string name="signup_to_our_service_msg">Signup to our service</string>
+    <string name="create_account_msg">Create an account</string>
     <string name="name_hint">Name</string>
     <string name="confirm_password_field">Confirm password</string>
     <string name="accept_terms_field">I accept terms and rule of this application.</string>

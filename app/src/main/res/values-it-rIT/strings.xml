@@ -10,7 +10,7 @@
     <string name="signup_msg">Registrati</string>
     <string name="confirm_password_field">Confemra la password</string>
     <string name="name_hint">Nome</string>
-    <string name="signup_to_our_service_msg">Registrati all\'app</string>
+    <string name="create_account_msg">Crea un account</string>
     <string name="logoff_msg">Scollega l\'account</string>
     <string name="login_msg">Accedi</string>
     <string name="email_address_field">Indirizzo email</string>

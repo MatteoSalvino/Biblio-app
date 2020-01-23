@@ -63,4 +63,5 @@
     <string name="cancel_msg">Annulla</string>
     <string name="post_msg">Invia</string>
     <string name="search_hint_msg">Effettua una ricerca</string>
+    <string name="or_msg">O</string>
 </resources>

@@ -76,7 +76,8 @@
     <string name="cancel_msg">Cancel</string>
     <string name="post_msg">Post</string>
     <string name="search_hint_msg">Search any book!</string>
-    <string name="override_libgen_pref">override_libgen</string>
-    <string name="libgen_mirror_pref">libgen_mirror</string>
-    <string name="libgen_max_pref">libgen_max</string>
+    <string name="override_libgen_pref" translatable="false">override_libgen</string>
+    <string name="libgen_mirror_pref" translatable="false">libgen_mirror</string>
+    <string name="libgen_max_pref" translatable="false">libgen_max</string>
+    <string name="or_msg">OR</string>
 </resources>

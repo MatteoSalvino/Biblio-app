@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,7 +159,7 @@ public class ReviewsFragment extends Fragment {
                         }
                         for (QueryDocumentSnapshot document : snapshots) {
                             Review rev = document.toObject(Review.class);
-                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            logger.d(document.getId() + " => " + document.getData());
                             mReviews.add(rev);
                         }
                         //todo: handle empty list of reviews

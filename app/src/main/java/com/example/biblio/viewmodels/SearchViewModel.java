@@ -2,7 +2,6 @@ package com.example.biblio.viewmodels;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -143,7 +142,7 @@ public class SearchViewModel extends AndroidViewModel {
             List<Ebook> ret = sb.searchAll(query);
 
             String timestamp = new SimpleDateFormat("dd-MM-yyyy,HH:mm").format(new Date());
-            Log.d("SearchViewModel", timestamp);
+            logger.d(timestamp);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("timestamp", timestamp).apply();
 

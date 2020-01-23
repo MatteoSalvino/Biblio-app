@@ -34,8 +34,6 @@ public class LoggedProfileFragment extends Fragment {
         User current = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
         }.getType());
 
-        Log.d("LoggedProfileFragment", current.getEmail() + ", " + current.getUsername() + ", " + current.getTotalDownloads());
-
         //Load current user's data
         binding.loggedUsernameTv.setText(current.getUsername());
         binding.loggedEmailTv.setText(current.getEmail());

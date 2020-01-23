@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory app:title="General">
         <SwitchPreference
             app:defaultValue="false"
@@ -20,33 +21,47 @@
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Search options">
+    <PreferenceCategory app:title="Search options" app:summary="Load ebooks from these catalogs">
         <SwitchPreference
             app:defaultValue="true"
             app:icon="@drawable/alpha_f"
-            app:summary="Enable search on this provider"
             app:key="@string/feedbooks_enabled_pref"
             app:title="Feedbooks" />
         <SwitchPreference
             app:defaultValue="true"
             app:icon="@drawable/alpha_s"
-            app:summary="Enable search on this provider"
             app:key="@string/standard_ebooks_enabled_pref"
             app:title="StandardEbooks" />
         <SwitchPreference
             app:defaultValue="true"
             app:icon="@drawable/alpha_l"
-            app:summary="Enable search on this provider"
             app:key="@string/libgen_enabled_pref"
             app:title="Library Genesis" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Advanced" app:summary="Customize your experience">
+    <SwitchPreference
+            app:key="@string/override_libgen_pref"
+            app:defaultValue="false"
+            app:title="Override Libgen mirror" />
         <EditTextPreference
+            app:key="@string/libgen_mirror_pref"
             app:enabled="false"
-            app:summary="Choose a custom mirror for Libgen"
-            app:title="Set mirror" />
+            app:defaultValue="http://libgen.is"
+            app:summary="Insert the mirror you prefer"
+            app:title="Current Libgen mirror" />
         <DropDownPreference
             app:enabled="false"
             app:summary="Libgen allows to specify the sorting field"
             app:title="Sorting options for Libgen" />
+        <SeekBarPreference
+            app:key="@string/libgen_max_pref"
+            app:title="Max results for Libgen"
+            android:max="100"
+            app:min="10"
+            app:showSeekBarValue="true"
+            app:defaultValue="25">
+        </SeekBarPreference>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="About">

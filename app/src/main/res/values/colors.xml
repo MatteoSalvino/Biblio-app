@@ -2,12 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- app palette -->
     <!-- (i) main colors -->
-    <!--
+
     <color name="pattens_blue">#d1dce0</color>
     <color name="pattens_light_blue">#e3e6e7</color>
     <color name="ivory">#f8f8f2</color>
     <color name="saffron">#fbc233</color>
-    -->
     <!-- (i) bright theme colors --><!--
     <color name="primary">@color/pattens_light_blue</color>
     <color name="primary_dark">@color/pattens_blue</color>
@@ -16,6 +15,15 @@
     <color name="app_background">@color/pattens_light_blue</color>
     <color name="nav_background">@color/pattens_blue</color>
     -->
+
+    <!-- (i) login colors -->
+    <color name="login_bg">@color/app_background</color>
+    <color name="login_box">@color/ivory</color>
+    <color name="login_btn">@color/saffron</color>
+    <color name="login_suggestion">#424242</color>
+    <color name="login_hint">@color/nav_background</color>
+    <color name="login_text">@color/app_background</color>
+
     <!--todo: check these -->
     <!--todo: add title color for item row -->
     <color name="primary">#212121</color>

@@ -6,7 +6,11 @@ public class SharedPreferencesHelper {
     public static final String FIRST_START_KEY = "first_start";
 
     public static final String LIBGEN_ENABLED_KEY = "libgen_enabled";
+    public static final String LIBGEN_MIRROR_KEY = "libgen_mirror";
+    public static final String LIBGEN_OVERRIDE_KEY = "libgen_override";
+    public static final String LIBGEN_MAX_RESULTS_KEY = "libgen_max";
     public static final String FEEDBOOKS_ENABLED_KEY = "feedbooks_enabled";
     public static final String STANDARD_EBOOKS_ENABLED_KEY = "standard_ebooks_enabled";
+
 
 }

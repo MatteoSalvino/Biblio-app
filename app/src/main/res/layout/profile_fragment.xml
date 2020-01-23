@@ -36,28 +36,10 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/error"
-        android:text="@string/proceed_with_email_msg"
+        android:backgroundTint="@color/login_btn"
+        android:text="@string/login_msg"
         android:textAllCaps="false"
-        android:textColor="@color/main_book_text"
-        app:icon="@drawable/email" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_login_btn"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/main_book_text" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/signup_suggestion_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:backgroundTint="@color/app_background"
-        android:text="@string/no_account_yet_msg"
-        android:textAllCaps="false"
-        android:textColor="@color/main_book_text" />
+        android:textColor="@color/main_book_text"/>
 
     <ImageView
         android:layout_width="match_parent"

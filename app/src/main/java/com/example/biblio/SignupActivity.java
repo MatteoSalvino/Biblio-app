@@ -1,22 +1,17 @@
-package com.example.biblio.fragments;
+package com.example.biblio;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
-import com.example.biblio.databinding.SignupFragmentBinding;
+import com.example.biblio.databinding.SignupActivityBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.google.gson.Gson;
 
@@ -24,16 +19,16 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
-public class SignupFragment extends Fragment {
-    public static final String TITLE = "Signup";
+public class SignupActivity extends AppCompatActivity {
     private final LogHelper logger = new LogHelper(getClass());
-    private SignupFragmentBinding binding;
+    private SignupActivityBinding binding;
     private ProgressDialog progressDialog;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SignupFragmentBinding.inflate(inflater, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = SignupActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         binding.signupBtn.setOnClickListener(view -> {
             String name = binding.signupNameField.getEditText().getText().toString();
@@ -42,20 +37,20 @@ public class SignupFragment extends Fragment {
             String password_confirmation = binding.signupPasswordConfirmationField.getEditText().getText().toString();
 
             if (isValidForm(name, email, password, password_confirmation)) {
-                progressDialog = ProgressDialog.show(getActivity(), "", "", true);
+                progressDialog = ProgressDialog.show(this, "", "", true);
                 progressDialog.setContentView(R.layout.login_dialog_view);
                 new Thread(() -> {
                     User user = new UserBuilder().setEmail(email).setPassword(password).setUsername(name).build();
                     boolean successful = user.signup();
-                    getActivity().runOnUiThread(() -> progressDialog.dismiss());
+                    runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
                         logger.d("successful signup");
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
                         editor.apply();
-                        getActivity().setResult(Activity.RESULT_OK);
-                        getActivity().finish();
+                        setResult(Activity.RESULT_OK);
+                        finish();
                     } else
                         logger.e("signup failed");
                 }).start();
@@ -63,7 +58,6 @@ public class SignupFragment extends Fragment {
                 logger.d("The signup form is not valid.");
             }
         });
-        return binding.getRoot();
     }
 
     //todo: make more sophisticated
@@ -71,4 +65,4 @@ public class SignupFragment extends Fragment {
         return !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !password_confirmation.isEmpty()
                 && (password.compareTo(password_confirmation) == 0) && binding.signupTermsCb.isChecked();
     }
-}
+    }

@@ -17,5 +17,15 @@
     <color name="add_button">#BB86FC</color>
     <color name="remove_button">#EF9A9A</color>
     <color name="card_background">#424242</color>
+
+
+    <!-- (i) login colors -->
+    <color name="login_bg">@color/app_background</color>
+    <color name="login_box">@color/primary</color>
+    <color name="login_btn">#BB86FC</color>
+    <color name="login_suggestion">#424242</color>
+    <color name="login_hint">@color/ivory</color>
+    <color name="login_text">@color/white</color>
+
 </resources>
 

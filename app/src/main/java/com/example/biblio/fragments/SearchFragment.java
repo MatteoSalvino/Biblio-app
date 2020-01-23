@@ -65,7 +65,6 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
 
         final Observer<List<Ebook>> searchObserver = ebooks -> {
             mEbooks = (ArrayList<Ebook>) ebooks;
-            //todo: why this as listener?
             EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, adapterListener, getContext());
             binding.recyclerView.setAdapter(mAdapter);
         };

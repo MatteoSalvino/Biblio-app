@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnNavigationItemSelectedListener(navListener);
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        //fixme: move key to SharedPreferencesHelper
         boolean isFirstStart = sharedPrefs.getBoolean(FIRST_START_KEY, true);
         if (isFirstStart) {
             Intent i = new Intent(MainActivity.this, Introduction.class);

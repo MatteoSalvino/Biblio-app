@@ -18,58 +18,59 @@ import com.example.biblio.helpers.LogHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class LoginActivity extends AppCompatActivity {
-    private LoginActivityBinding binding;
-    private final LogHelper logger = new LogHelper(getClass());
-    private ProgressDialog progressDialog;
-    private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_UP = 1;
     private static final int RC_GOOGLE_SIGN_IN = 2;
-
+    private final LogHelper logger = new LogHelper(getClass());
+    private LoginActivityBinding binding;
+    private ProgressDialog progressDialog;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = LoginActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         binding.loginBtn.setOnClickListener(view -> {
             String email = binding.emailField.getEditText().getText().toString().trim();
             String password = binding.passwordField.getEditText().getText().toString().trim();
 
-            if (isValid(email, "email") && isValid(password, "password")) {
-                progressDialog = ProgressDialog.show(this, "Login process", "Please wait...", true);
-                progressDialog.setContentView(R.layout.login_dialog_view);
-                new Thread(() -> {
-                    User user = new UserBuilder().setEmail(email).setPassword(password).build();
-                    boolean successful = user.login();
-                    runOnUiThread(() -> progressDialog.dismiss());
-                    if (successful) {
-                        logger.d("successful login");
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
-                        editor.apply();
-                        setResult(Activity.RESULT_OK);
-                        finish();
-                    } else {
-                        logger.d("login failed");
-                        showErrorMessage();
-                    }
-                }).start();
-            } else {
-                logger.d("Wrong credentials");
-                showErrorMessage();
+            progressDialog = ProgressDialog.show(this, "Login process", "Please wait...", true);
+            progressDialog.setContentView(R.layout.login_dialog_view);
+            if (!EmailValidator.getInstance().isValid(email)) {
+                logger.d("Invalid email inserted");
+                runOnUiThread(() -> {
+                    progressDialog.dismiss();
+                    showErrorMessage();
+                });
+                return;
             }
+            new Thread(() -> {
+                User user = new UserBuilder().setEmail(email).setPassword(password).build();
+                boolean successful = user.login();
+                runOnUiThread(() -> progressDialog.dismiss());
+                if (successful) {
+                    logger.d("successful login");
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
+                    editor.apply();
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                } else {
+                    logger.d("login failed");
+                    runOnUiThread(this::showErrorMessage);
+                }
+            }).start();
         });
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -98,12 +99,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         setResult(resultCode);
         finish();
-    }
-
-    private boolean isValid(String param, @NotNull String type) {
-        if (type.equals("email"))
-            return EmailValidator.getInstance().isValid(param);
-        else return type.equals("password");
     }
 
     //todo: improve this

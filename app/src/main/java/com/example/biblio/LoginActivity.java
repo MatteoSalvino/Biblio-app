@@ -1,6 +1,7 @@
 package com.example.biblio;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import com.example.biblio.helpers.LogHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -53,22 +55,21 @@ public class LoginActivity extends AppCompatActivity {
                     runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
                         logger.d("successful login");
-                        //todo: check SP behaviour
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
                         editor.apply();
-                        //fixme: consider launching the activity here instead of returning to prev fragment
                         setResult(Activity.RESULT_OK);
                         finish();
                     } else {
                         logger.d("login failed");
-                        //todo: show some error message
-                        //todo: should return to previous fragment with different code?
+                        showErrorMessage();
                     }
                 }).start();
-            } else
+            } else {
                 logger.d("Wrong credentials");
+                showErrorMessage();
+            }
         });
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -103,5 +104,14 @@ public class LoginActivity extends AppCompatActivity {
         if (type.equals("email"))
             return EmailValidator.getInstance().isValid(param);
         else return type.equals("password");
+    }
+
+    //todo: improve this
+    private void showErrorMessage() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage("Login was not successful")
+                .create();
+        dialog.show();
     }
 }

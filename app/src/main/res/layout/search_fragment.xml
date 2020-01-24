@@ -50,6 +50,7 @@
                     android:id="@+id/filters_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_weight="2"
                     android:backgroundTint="#FFFFFF"
@@ -64,8 +65,8 @@
                     android:id="@+id/scanner_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:src="@drawable/barcode_scan"
                     android:tint="@color/nav_background" />
 
@@ -73,6 +74,7 @@
                     android:id="@+id/sort_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="2"
                     android:backgroundTint="#FFFFFF"

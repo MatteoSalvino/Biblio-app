@@ -39,7 +39,7 @@ import java.util.Objects;
 import lrusso96.simplebiblio.core.Ebook;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-import static com.example.biblio.api.SimpleBiblioHelper.getProviderId;
+import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class ReviewsFragment extends Fragment {

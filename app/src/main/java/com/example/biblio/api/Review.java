@@ -16,7 +16,7 @@ public class Review {
 
     public Review(@NotNull User user, @NotNull Ebook ebook, String text, int rating) {
         this.ebook_id = ebook.getId();
-        this.provider_id = SimpleBiblioHelper.getProviderId(ebook.getProviderName());
+        this.provider_id = SimpleBiblioCommons.getProviderId(ebook.getProviderName());
         this.reviewer = user.getUsername();
         this.text = text;
         this.rating = rating;

@@ -13,12 +13,12 @@ import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
-import static com.example.biblio.api.SimpleBiblioHelper.ENDPOINT;
-import static com.example.biblio.api.SimpleBiblioHelper.getAuthReqBuilder;
-import static com.example.biblio.api.SimpleBiblioHelper.getMessage;
-import static com.example.biblio.api.SimpleBiblioHelper.getProviderId;
-import static com.example.biblio.api.SimpleBiblioHelper.parseBody;
+import static com.example.biblio.api.SimpleBiblioCommons.CLIENT;
+import static com.example.biblio.api.SimpleBiblioCommons.ENDPOINT;
+import static com.example.biblio.api.SimpleBiblioCommons.getAuthReqBuilder;
+import static com.example.biblio.api.SimpleBiblioCommons.getMessage;
+import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
+import static com.example.biblio.api.SimpleBiblioCommons.parseBody;
 
 class EbooksHandler {
     private static final String EBOOK_PAR = "ebook";

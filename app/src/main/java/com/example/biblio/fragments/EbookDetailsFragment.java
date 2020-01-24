@@ -2,7 +2,6 @@ package com.example.biblio.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,9 +22,8 @@ import com.example.biblio.api.User;
 import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -41,7 +38,6 @@ import com.liulishuo.filedownloader.FileDownloader;
 import org.threeten.bp.LocalDate;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -51,16 +47,13 @@ import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 public class EbookDetailsFragment extends Fragment {
     private final LogHelper logger = new LogHelper(getClass());
+    private final SimpleBiblioHelper biblioHelper = new SimpleBiblioHelper(getContext());
     private EbookFragmentBinding binding;
     private File root_dir;
     private String filename;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private Ebook current;
     private List<Download> downloadList;
 
@@ -75,8 +68,6 @@ public class EbookDetailsFragment extends Fragment {
         current = model.getEbook().getValue();
         assert current != null;
         logger.d(String.format("got ebook: %s", current.getTitle()));
-
-        showRating();
 
         binding.mainBookTitle.setText(current.getTitle());
         binding.mainBookAuthor.setText(current.getAuthor());
@@ -105,18 +96,11 @@ public class EbookDetailsFragment extends Fragment {
             if (!downloadList.isEmpty()) {
                 filename = getFilename(current);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-                    String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
-                    ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-                    }.getType());
                     binding.mainDownloadBtn.setEnabled(true);
-                    boolean present = myEbooks.contains(current);
-                    showRemoveButton(present);
+                    showRemoveButton(biblioHelper.isFavorite(current));
                 });
             }
         }).start();
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        editor = sharedPreferences.edit();
 
         binding.mainBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
 
@@ -158,13 +142,7 @@ public class EbookDetailsFragment extends Fragment {
 
         binding.mainRemoveBtn.setOnClickListener(view -> {
             SDCardHelper.findFile(root_dir, filename, true);
-            String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
-
-            ArrayList<Ebook> myEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-            }.getType());
-            myEbooks.remove(current);
-            editor.putString(MY_EBOOKS_KEY, new Gson().toJson(myEbooks));
-            editor.apply();
+            biblioHelper.removeEbook(current);
 
             showRemoveButton(false);
         });
@@ -217,16 +195,7 @@ public class EbookDetailsFragment extends Fragment {
                         binding.mainRemoveBtn.setVisibility(View.VISIBLE);
 
                         //todo: should open the new file?
-
-                        String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
-                        ArrayList<Ebook> myEbooks = new Gson()
-                                .fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-                                }.getType());
-                        if (myEbooks.contains(current))
-                            return;
-                        myEbooks.add(current);
-                        editor.putString(MY_EBOOKS_KEY, new Gson().toJson(myEbooks));
-                        editor.commit();
+                        biblioHelper.addEbookk(current);
                     }
 
                     @Override
@@ -261,8 +230,7 @@ public class EbookDetailsFragment extends Fragment {
      * Note: use runonuithread() to update UI
      */
     private void showRating() {
-        User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
-        }.getType());
+        User user = biblioHelper.getCurrentUser();
         if (user == null)
             return;
         new Thread(() -> {

@@ -2,22 +2,18 @@ package com.example.biblio;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.SignupActivityBinding;
 import com.example.biblio.helpers.LogHelper;
-import com.google.gson.Gson;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 
 import org.jetbrains.annotations.NotNull;
-
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class SignupActivity extends AppCompatActivity {
     private final LogHelper logger = new LogHelper(getClass());
@@ -45,10 +41,7 @@ public class SignupActivity extends AppCompatActivity {
                     runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
                         logger.d("successful signup");
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
-                        editor.apply();
+                        new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
                         setResult(Activity.RESULT_OK);
                         finish();
                     } else
@@ -65,4 +58,4 @@ public class SignupActivity extends AppCompatActivity {
         return !name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !password_confirmation.isEmpty()
                 && (password.compareTo(password_confirmation) == 0) && binding.signupTermsCb.isChecked();
     }
-    }
+}

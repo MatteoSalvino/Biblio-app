@@ -13,16 +13,16 @@ import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-import static com.example.biblio.api.SimpleBiblioHelper.AUTH_TOKEN_KEY;
-import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
-import static com.example.biblio.api.SimpleBiblioHelper.DOWNLOADS_KEY;
-import static com.example.biblio.api.SimpleBiblioHelper.ENDPOINT;
-import static com.example.biblio.api.SimpleBiblioHelper.REVIEWS_KEY;
-import static com.example.biblio.api.SimpleBiblioHelper.USERNAME_KEY;
-import static com.example.biblio.api.SimpleBiblioHelper.USER_KEY;
-import static com.example.biblio.api.SimpleBiblioHelper.getAuthReqBuilder;
-import static com.example.biblio.api.SimpleBiblioHelper.getMessage;
-import static com.example.biblio.api.SimpleBiblioHelper.parseBody;
+import static com.example.biblio.api.SimpleBiblioCommons.AUTH_TOKEN_KEY;
+import static com.example.biblio.api.SimpleBiblioCommons.CLIENT;
+import static com.example.biblio.api.SimpleBiblioCommons.DOWNLOADS_KEY;
+import static com.example.biblio.api.SimpleBiblioCommons.ENDPOINT;
+import static com.example.biblio.api.SimpleBiblioCommons.REVIEWS_KEY;
+import static com.example.biblio.api.SimpleBiblioCommons.USERNAME_KEY;
+import static com.example.biblio.api.SimpleBiblioCommons.USER_KEY;
+import static com.example.biblio.api.SimpleBiblioCommons.getAuthReqBuilder;
+import static com.example.biblio.api.SimpleBiblioCommons.getMessage;
+import static com.example.biblio.api.SimpleBiblioCommons.parseBody;
 
 class AuthenticationHandler {
     private static final String USERNAME_PAR = "name";

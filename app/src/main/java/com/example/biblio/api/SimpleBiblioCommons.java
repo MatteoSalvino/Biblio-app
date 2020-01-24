@@ -16,7 +16,7 @@ import okhttp3.ResponseBody;
 
 import static com.example.biblio.api.BodyException.NULL_BODY_MSG;
 
-public final class SimpleBiblioHelper {
+public final class SimpleBiblioCommons {
     final static String ENDPOINT = "https://rocky-lake-33740.herokuapp.com";
     final static String AUTH_TOKEN_KEY = "auth_token";
     final static String USER_KEY = "user";
@@ -29,7 +29,7 @@ public final class SimpleBiblioHelper {
             .readTimeout(10, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .build();
-    private final static LogHelper logger = new LogHelper(SimpleBiblioHelper.class);
+    private final static LogHelper logger = new LogHelper(SimpleBiblioCommons.class);
     private final static String MESSAGE_KEY = "message";
     private final static Request.Builder REQ_BUILDER = new Request.Builder()
             .header("Accept", "application/json")

@@ -4,27 +4,23 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.LoginActivityBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.gson.Gson;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Objects;
-
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_UP = 1;
@@ -44,9 +40,11 @@ public class LoginActivity extends AppCompatActivity {
             String email = binding.emailField.getEditText().getText().toString().trim();
             String password = binding.passwordField.getEditText().getText().toString().trim();
 
+            //todo: extract strings
             progressDialog = ProgressDialog.show(this, "Login process", "Please wait...", true);
             progressDialog.setContentView(R.layout.login_dialog_view);
             if (!EmailValidator.getInstance().isValid(email)) {
+                //todo: extract string
                 logger.d("Invalid email inserted");
                 runOnUiThread(() -> {
                     progressDialog.dismiss();
@@ -59,14 +57,13 @@ public class LoginActivity extends AppCompatActivity {
                 boolean successful = user.login();
                 runOnUiThread(() -> progressDialog.dismiss());
                 if (successful) {
+                    //todo: extract string
                     logger.d("successful login");
-                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(CURRENT_USER_KEY, new Gson().toJson(user));
-                    editor.apply();
+                    new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
                     setResult(Activity.RESULT_OK);
                     finish();
                 } else {
+                    //todo: extract string
                     logger.d("login failed");
                     runOnUiThread(this::showErrorMessage);
                 }
@@ -104,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     //todo: improve this
     private void showErrorMessage() {
         AlertDialog dialog = new AlertDialog.Builder(this)
+                //todo: extract string
                 .setTitle("Error")
                 .setMessage(R.string.login_error_msg)
                 .setIcon(R.drawable.baseline_error_outline_24)

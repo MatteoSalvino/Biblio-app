@@ -15,11 +15,9 @@ import com.example.biblio.fragments.PopularFragment;
 import com.example.biblio.fragments.ProfileFragment;
 import com.example.biblio.fragments.RecentFragment;
 import com.example.biblio.fragments.SearchFragment;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Objects;
-
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.FIRST_START_KEY;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         TAG = MyEbooksFragment.TAG;
                         break;
                     case R.id.nav_profile:
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getApplicationContext()));
-                        if (sharedPreferences.contains(CURRENT_USER_KEY)) {
+                        if (new SimpleBiblioHelper(getApplicationContext()).getCurrentUser() != null) {
                             selectedFragment = new LoggedProfileFragment();
                             TAG = LoggedProfileFragment.TAG;
                         } else {

@@ -34,14 +34,13 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS
 public class SettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = "SettingsFragment";
     private final LogHelper logger = new LogHelper(getClass());
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
         SwitchPreference themePreference = findPreference("theme");

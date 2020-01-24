@@ -48,6 +48,26 @@ class EbooksHandler {
     }
 
     @NotNull
+    static RatingResult stats(User user, @NotNull Ebook ebook) throws UnhautorizedRequestException {
+        RequestBody formBody = new FormBody.Builder()
+                .add(EBOOK_PAR, Integer.toString(ebook.getId()))
+                .add(PROVIDER_PAR, Integer.toString(getProviderId(ebook.getProviderName())))
+                .build();
+        Request req = getAuthReqBuilder(user)
+                .url(String.format("%s/ebooks/stats", ENDPOINT))
+                .post(formBody)
+                .build();
+        try {
+            JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
+            return parseRating(result);
+        } catch (IOException | BodyException e) {
+            //fixme: add generic exception here!
+            throw new UnhautorizedRequestException(e.getMessage());
+        }
+    }
+
+
+    @NotNull
     static RatingResult notifyDownload(User user, @NotNull Ebook ebook) throws UnhautorizedRequestException {
         RequestBody formBody = new FormBody.Builder()
                 .add(EBOOK_PAR, Integer.toString(ebook.getId()))

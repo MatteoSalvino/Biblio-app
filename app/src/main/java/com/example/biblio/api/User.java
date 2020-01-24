@@ -44,6 +44,20 @@ public final class User {
     }
 
     @Nullable
+    public RatingResult getEbookStats(Ebook ebook) {
+        for (int count = 0; count < MAX_TRIES; count++) {
+            try {
+                if (count == 0 || this.login())
+                    return EbooksHandler.stats(this, ebook);
+            } catch (UnhautorizedRequestException e) {
+                logger.e(e.getMessage());
+            }
+        }
+        return null;
+    }
+
+
+    @Nullable
     public RatingResult notifyDownload(Ebook ebook) {
         for (int count = 0; count < MAX_TRIES; count++) {
             try {

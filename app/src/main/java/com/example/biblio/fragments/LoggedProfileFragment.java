@@ -34,21 +34,24 @@ public class LoggedProfileFragment extends Fragment {
         User current = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
         }.getType());
 
+        assert current!=null;
+
         //Load current user's data
         binding.loggedUsernameTv.setText(current.getUsername());
         binding.loggedEmailTv.setText(current.getEmail());
         binding.loggedDownloadTv.setText(String.valueOf(current.getTotalDownloads()));
+        binding.loggedReviewsTv.setText(String.valueOf(current.getTotalDownloads()));
 
         if(sharedPreferences.contains("timestamp")) {
-            String timestamp[] = sharedPreferences.getString("timestamp", null).split(",");
-            binding.loggedLastSearchTv.setText(timestamp[0] + " " + timestamp[1]);
+            String[] timestamp = sharedPreferences.getString("timestamp", null).split(",");
+            binding.loggedLastSearchTv.setText(String.format("%s %s", timestamp[0], timestamp[1]));
         }
 
         binding.logoutBtn.setOnClickListener(view -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove(CURRENT_USER_KEY);
             editor.apply();
-            getFragmentManager().beginTransaction().remove(this).replace(R.id.fragment_container, new ProfileFragment(), "ProfileFragment").commit();
+            getFragmentManager().beginTransaction().remove(this).replace(R.id.fragment_container, new ProfileFragment(), ProfileFragment.TAG).commit();
         });
 
         binding.loggedSettingsBtn.setOnClickListener(view -> {

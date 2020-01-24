@@ -38,9 +38,9 @@ public class Introduction extends AppIntro {
 
     private void createSlides() {
         Resources resources = getResources();
-        createSlideFragment("Search facility", resources.getString(R.string.introduction_search), R.drawable.search, resources.getColor(R.color.app_background));
-        createSlideFragment("Store books", resources.getString(R.string.introduction_download), R.drawable.cloud_download, resources.getColor(R.color.secondary));
-        createSlideFragment("Refresh facility", resources.getString(R.string.introduction_refresh), R.drawable.swipe_down, resources.getColor(R.color.primary));
+        createSlideFragment(resources.getString(R.string.introduction_search_title), resources.getString(R.string.introduction_search), R.drawable.search, resources.getColor(R.color.app_background));
+        createSlideFragment(resources.getString(R.string.introduction_download_title), resources.getString(R.string.introduction_download), R.drawable.cloud_download, resources.getColor(R.color.secondary));
+        createSlideFragment(resources.getString(R.string.introduction_refresh_title), resources.getString(R.string.introduction_refresh), R.drawable.swipe_down, resources.getColor(R.color.colorAccent));
     }
 
     private void createSlideFragment(String title, String description, int image, int background) {

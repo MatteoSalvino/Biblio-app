@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/login_process_tv"
-        android:textColor="@color/text_color"
+        android:textColor="@color/dialog_text_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/please_wait_tv"
-            android:textColor="@color/text_color"
+            android:textColor="@color/dialog_text_color"
             android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

@@ -59,6 +59,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
     implementation 'org.threeten:threetenbp:1.4.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'com.google.zxing:core:3.3.0'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

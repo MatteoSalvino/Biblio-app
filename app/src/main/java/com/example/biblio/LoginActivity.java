@@ -105,7 +105,8 @@ public class LoginActivity extends AppCompatActivity {
     private void showErrorMessage() {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Error")
-                .setMessage("Login was not successful")
+                .setMessage(R.string.login_error_msg)
+                .setIcon(R.drawable.baseline_error_outline_24)
                 .create();
         dialog.show();
     }

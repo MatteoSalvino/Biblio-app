@@ -60,14 +60,14 @@
                     app:icon="@drawable/tune"
                     app:iconTint="@color/nav_background" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/useless_btn"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/scanner_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#FFFFFF"
-                    android:visibility="invisible"
-                    app:icon="@drawable/tune" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/barcode_scan"
+                    android:tint="@color/nav_background" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sort_btn"

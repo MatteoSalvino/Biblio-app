@@ -16,8 +16,8 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:paddingBottom="10dp"
-        android:src="@drawable/no_image" />
+        android:src="@drawable/book"
+        android:tint="@color/main_book_text"/>
 
     <TextView
         android:id="@+id/tv_template"
@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_template"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-20dp"
+        android:textStyle="bold"
         android:text="@string/empty_my_books_msg"
         android:textColor="@color/main_book_text" />
 

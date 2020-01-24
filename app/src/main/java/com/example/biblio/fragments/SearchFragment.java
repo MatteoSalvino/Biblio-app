@@ -1,9 +1,12 @@
 package com.example.biblio.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +23,8 @@ import com.example.biblio.databinding.SearchFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SearchViewModel;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.ArrayList;
@@ -90,7 +95,22 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
             alert.show();
         });
 
+        binding.scannerBtn.setOnClickListener(view -> {
+            IntentIntegrator.forSupportFragment(this).initiateScan();
+        });
+
         return binding.getRoot();
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        //ToDo call search function with the scanned code as input
+        binding.searchBar.getSearchEditText().setText(intentResult.getContents());
     }
 
     @Override

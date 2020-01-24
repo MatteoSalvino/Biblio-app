@@ -17,6 +17,9 @@
     <string name="login_to_proceed_tv">Accedi per proseguire</string>
     <string name="please_wait_tv">Attendi…</string>
     <string name="nav_profile_title">Profilo</string>
+    <string name="introduction_search_title">Funzione di ricerca</string>
+    <string name="introduction_download_title">Download dei libri</string>
+    <string name="introduction_refresh_title">Funzione di aggiornamento</string>
     <string name="introduction_refresh">Aggiorna le sezioni con un semplice swipe down</string>
     <string name="introduction_download">Salva i tuoi libri preferiti</string>
     <string name="introduction_search">Usa la barra di ricerca in modo rapido</string>
@@ -50,7 +53,7 @@
     <string name="title_field">Titolo</string>
     <string name="author_field">Autore</string>
     <string name="done_msg">Fatto</string>
-    <string name="empty_my_books_msg">Non hai aggiunto ancora nulla</string>
+    <string name="empty_my_books_msg">Non hai aggiunto ancora nulla.</string>
     <string name="write_file">È necessario fornire l\'autorizzazione alla memoria del telefono</string>
     <string name="nav_settings_title">Impostazioni</string>
     <string name="nav_books_title">Preferiti</string>
@@ -64,4 +67,5 @@
     <string name="post_msg">Invia</string>
     <string name="search_hint_msg">Effettua una ricerca</string>
     <string name="or_msg">O</string>
+    <string name="login_error_msg">Si è verificato un errore durante in login</string>
 </resources>

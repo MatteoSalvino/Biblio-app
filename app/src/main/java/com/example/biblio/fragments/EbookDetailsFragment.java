@@ -19,6 +19,8 @@ import androidx.preference.PreferenceManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
+import com.example.biblio.api.RatingResult;
+import com.example.biblio.api.User;
 import com.example.biblio.databinding.EbookFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
@@ -49,6 +51,7 @@ import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
+import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
 public class EbookDetailsFragment extends Fragment {
@@ -72,6 +75,8 @@ public class EbookDetailsFragment extends Fragment {
         current = model.getEbook().getValue();
         assert current != null;
         logger.d(String.format("got ebook: %s", current.getTitle()));
+
+        showRating();
 
         binding.mainBookTitle.setText(current.getTitle());
         binding.mainBookAuthor.setText(current.getAuthor());
@@ -250,5 +255,21 @@ public class EbookDetailsFragment extends Fragment {
             binding.mainDownloadBtn.setVisibility(View.VISIBLE);
             binding.mainRemoveBtn.setVisibility(View.INVISIBLE);
         }
+    }
+
+    /* This shows how to retrieve ebook stats!
+     * Note: use runonuithread() to update UI
+     */
+    private void showRating() {
+        User user = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
+        }.getType());
+        if (user == null)
+            return;
+        new Thread(() -> {
+            RatingResult ebookStats = user.getEbookStats(current);
+            if (ebookStats != null) {
+                logger.d(String.format(Locale.getDefault(), "%d reviews with average of %.1f", ebookStats.getRatings(), ebookStats.getRating_avg()));
+            }
+        }).start();
     }
 }

@@ -2,7 +2,6 @@ package com.example.biblio.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,20 +20,20 @@ import com.google.gson.reflect.TypeToken;
 import java.util.Objects;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LAST_SEARCH_TS_KEY;
 
 public class LoggedProfileFragment extends Fragment {
     public static final String TAG = "LoggedProfileFragment";
-    private LoggedProfileFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
+        com.example.biblio.databinding.LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         User current = new Gson().fromJson(sharedPreferences.getString(CURRENT_USER_KEY, null), new TypeToken<User>() {
         }.getType());
 
-        assert current!=null;
+        assert current != null;
 
         //Load current user's data
         binding.loggedUsernameTv.setText(current.getUsername());
@@ -42,8 +41,11 @@ public class LoggedProfileFragment extends Fragment {
         binding.loggedDownloadTv.setText(String.valueOf(current.getTotalDownloads()));
         binding.loggedReviewsTv.setText(String.valueOf(current.getTotalDownloads()));
 
-        if(sharedPreferences.contains("timestamp")) {
-            String[] timestamp = sharedPreferences.getString("timestamp", null).split(",");
+        if (sharedPreferences.contains(LAST_SEARCH_TS_KEY)) {
+            //todo: 0,0 as default?
+            String default_ts = "0,0";
+            String[] timestamp = sharedPreferences.getString(LAST_SEARCH_TS_KEY, default_ts)
+                    .split(",");
             binding.loggedLastSearchTv.setText(String.format("%s %s", timestamp[0], timestamp[1]));
         }
 
@@ -51,12 +53,18 @@ public class LoggedProfileFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove(CURRENT_USER_KEY);
             editor.apply();
-            getFragmentManager().beginTransaction().remove(this).replace(R.id.fragment_container, new ProfileFragment(), ProfileFragment.TAG).commit();
+            getFragmentManager()
+                    .beginTransaction()
+                    .remove(this)
+                    .replace(R.id.fragment_container, new ProfileFragment(), ProfileFragment.TAG)
+                    .commit();
         });
 
         binding.loggedSettingsBtn.setOnClickListener(view -> {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG).addToBackStack(SettingsFragment.TAG).commit();
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
+                    .addToBackStack(SettingsFragment.TAG).commit();
         });
 
         return binding.getRoot();

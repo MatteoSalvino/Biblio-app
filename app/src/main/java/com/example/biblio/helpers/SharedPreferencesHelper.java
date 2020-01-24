@@ -4,6 +4,7 @@ public class SharedPreferencesHelper {
     public static final String MY_EBOOKS_KEY = "my_ebooks";
     public static final String CURRENT_USER_KEY = "current_user";
     public static final String FIRST_START_KEY = "first_start";
+    public static final String LAST_SEARCH_TS_KEY = "last_search_ts";
 
     public static final String LIBGEN_ENABLED_KEY = "libgen_enabled";
     public static final String LIBGEN_MIRROR_KEY = "libgen_mirror";

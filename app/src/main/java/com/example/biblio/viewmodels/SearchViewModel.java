@@ -35,6 +35,7 @@ import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
+import static com.example.biblio.helpers.SharedPreferencesHelper.LAST_SEARCH_TS_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MAX_RESULTS_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MIRROR_KEY;
@@ -144,7 +145,7 @@ public class SearchViewModel extends AndroidViewModel {
             String timestamp = new SimpleDateFormat("dd-MM-yyyy,HH:mm").format(new Date());
             logger.d(timestamp);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("timestamp", timestamp).apply();
+            editor.putString(LAST_SEARCH_TS_KEY, timestamp).apply();
 
             logger.d(String.format(Locale.getDefault(), "ret has size: %d", ret.size()));
             if (ret.size() > 0) {

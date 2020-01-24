@@ -17,6 +17,7 @@ import static com.example.biblio.api.SimpleBiblioHelper.AUTH_TOKEN_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.CLIENT;
 import static com.example.biblio.api.SimpleBiblioHelper.DOWNLOADS_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.ENDPOINT;
+import static com.example.biblio.api.SimpleBiblioHelper.REVIEWS_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.USERNAME_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.USER_KEY;
 import static com.example.biblio.api.SimpleBiblioHelper.getAuthReqBuilder;
@@ -87,7 +88,9 @@ class AuthenticationHandler {
             user.token = getToken(result);
             user.username = result.getJSONObject(USER_KEY).getString(USERNAME_KEY);
             user.total_downloads = result.getInt(DOWNLOADS_KEY);
+            user.total_downloads = result.getInt(REVIEWS_KEY);
             logger.d(String.format(Locale.getDefault(), "updated total downloads:%d", user.total_downloads));
+            logger.d(String.format(Locale.getDefault(), "updated total reviews:%d", user.total_reviews));
         } catch (JSONException e) {
             logger.e(e.getMessage());
         }

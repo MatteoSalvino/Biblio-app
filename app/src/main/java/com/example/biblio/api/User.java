@@ -15,6 +15,7 @@ public final class User {
     String password;
     String token;
     int total_downloads;
+    int total_reviews;
 
     User(@NotNull UserBuilder builder) {
         this.email = builder.email;
@@ -81,4 +82,9 @@ public final class User {
     public int getTotalDownloads() {
         return total_downloads;
     }
+
+    public int getTotalReviews() {
+        return total_reviews;
+    }
+
 }

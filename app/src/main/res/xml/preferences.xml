@@ -13,6 +13,12 @@
             app:summary="Enable in-app reader"
             app:key="reader"
             app:title="Internal reader" />
+        <SwitchPreference
+            app:defaultValue="true"
+            app:enabled="false"
+            app:summary="Enable ISBN scanning"
+            app:key="scanning"
+            app:title="EAN" />
         <Preference
             app:key="@string/external_readers_pref"
             app:icon="@drawable/baseline_chrome_reader_mode_24"

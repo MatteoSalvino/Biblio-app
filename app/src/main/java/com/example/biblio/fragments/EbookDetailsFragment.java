@@ -50,7 +50,6 @@ import static com.example.biblio.helpers.SDCardHelper.getFilename;
 
 public class EbookDetailsFragment extends Fragment {
     private final LogHelper logger = new LogHelper(getClass());
-    private final SimpleBiblioHelper biblioHelper = new SimpleBiblioHelper(getContext());
     private EbookFragmentBinding binding;
     private File root_dir;
     private String filename;
@@ -97,7 +96,7 @@ public class EbookDetailsFragment extends Fragment {
                 filename = getFilename(current);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                     binding.mainDownloadBtn.setEnabled(true);
-                    showRemoveButton(biblioHelper.isFavorite(current));
+                    showRemoveButton(new SimpleBiblioHelper(getContext()).isFavorite(current));
                 });
             }
         }).start();
@@ -142,7 +141,7 @@ public class EbookDetailsFragment extends Fragment {
 
         binding.mainRemoveBtn.setOnClickListener(view -> {
             SDCardHelper.findFile(root_dir, filename, true);
-            biblioHelper.removeEbook(current);
+            new SimpleBiblioHelper(getContext()).removeEbook(current);
 
             showRemoveButton(false);
         });
@@ -195,7 +194,7 @@ public class EbookDetailsFragment extends Fragment {
                         binding.mainRemoveBtn.setVisibility(View.VISIBLE);
 
                         //todo: should open the new file?
-                        biblioHelper.addEbookk(current);
+                        new SimpleBiblioHelper(getContext()).addEbook(current);
                     }
 
                     @Override
@@ -230,7 +229,7 @@ public class EbookDetailsFragment extends Fragment {
      * Note: use runonuithread() to update UI
      */
     private void showRating() {
-        User user = biblioHelper.getCurrentUser();
+        User user = new SimpleBiblioHelper(getContext()).getCurrentUser();
         if (user == null)
             return;
         new Thread(() -> {

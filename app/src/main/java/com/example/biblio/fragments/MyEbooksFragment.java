@@ -22,6 +22,7 @@ import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -54,16 +55,10 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         binding.myEbooksRv.setLayoutManager(mLayoutManager);
         binding.myEbooksRv.setHasFixedSize(true);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        String response = sharedPreferences.getString(MY_EBOOKS_KEY, "[]");
-
-        mEbooks = new Gson().fromJson(response, new TypeToken<ArrayList<Ebook>>() {
-        }.getType());
+        mEbooks = new SimpleBiblioHelper(getContext()).getMyEbooks();
         logger.d(mEbooks.toString());
 
         hideTemplates(mEbooks.isEmpty());
-        //binding.ivTemplate.setVisibility(View.INVISIBLE);
-        //binding.tvTemplate.setVisibility(View.INVISIBLE);
         MyEbooksAdapter.OnItemListener mMyEbooksListener = this;
         MyEbooksAdapter mAdapter = new MyEbooksAdapter(mEbooks, mMyEbooksListener, getContext());
         binding.myEbooksRv.setAdapter(mAdapter);

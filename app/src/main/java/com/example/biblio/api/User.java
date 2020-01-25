@@ -22,7 +22,7 @@ public final class User {
         this.email = builder.email;
         this.password = builder.password;
         this.username = builder.username;
-        this.photo_uri = builder.photo.toString();
+        this.photo_uri = (builder.photo == null) ? null : builder.photo.toString();
     }
 
     public boolean signup() {

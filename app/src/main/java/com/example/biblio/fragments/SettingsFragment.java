@@ -126,7 +126,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             new Handler().post(() -> libgen_max.setValue(val_5));
             editor.putInt(LIBGEN_MAX_RESULTS_KEY, val_5);
             return true;
-        } );
+        });
     }
 
     private boolean isValidMirror(@NotNull String mirror) {

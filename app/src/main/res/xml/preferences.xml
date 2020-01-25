@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory app:title="General">
         <SwitchPreference
             app:defaultValue="false"
@@ -10,24 +10,25 @@
         <SwitchPreference
             app:defaultValue="true"
             app:enabled="false"
-            app:summary="Enable in-app reader"
             app:key="reader"
+            app:summary="Enable in-app reader"
             app:title="Internal reader" />
         <SwitchPreference
             app:defaultValue="true"
             app:enabled="false"
-            app:summary="Enable ISBN scanning"
             app:key="scanning"
+            app:summary="Enable ISBN scanning"
             app:title="EAN" />
         <Preference
-            app:key="@string/external_readers_pref"
             app:icon="@drawable/baseline_chrome_reader_mode_24"
+            app:key="@string/external_readers_pref"
             app:summary="3rd party readers"
-            app:title="Explore more readers">
-        </Preference>
+            app:title="Explore more readers"></Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Search options" app:summary="Load ebooks from these catalogs">
+    <PreferenceCategory
+        app:summary="Load ebooks from these catalogs"
+        app:title="Search options">
         <SwitchPreference
             app:defaultValue="true"
             app:icon="@drawable/alpha_f"
@@ -45,15 +46,17 @@
             app:title="Library Genesis" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Advanced" app:summary="Customize your experience">
-    <SwitchPreference
-            app:key="@string/override_libgen_pref"
+    <PreferenceCategory
+        app:summary="Customize your experience"
+        app:title="Advanced">
+        <SwitchPreference
             app:defaultValue="false"
+            app:key="@string/override_libgen_pref"
             app:title="Override Libgen mirror" />
         <EditTextPreference
-            app:key="@string/libgen_mirror_pref"
-            app:enabled="false"
             app:defaultValue="http://libgen.is"
+            app:enabled="false"
+            app:key="@string/libgen_mirror_pref"
             app:summary="Insert the mirror you prefer"
             app:title="Current Libgen mirror" />
         <DropDownPreference
@@ -61,37 +64,32 @@
             app:summary="Libgen allows to specify the sorting field"
             app:title="Sorting options for Libgen" />
         <SeekBarPreference
-            app:key="@string/libgen_max_pref"
-            app:title="Max results for Libgen"
             android:max="100"
+            app:defaultValue="25"
+            app:key="@string/libgen_max_pref"
             app:min="10"
             app:showSeekBarValue="true"
-            app:defaultValue="25">
-        </SeekBarPreference>
+            app:title="Max results for Libgen"></SeekBarPreference>
     </PreferenceCategory>
 
     <PreferenceCategory app:title="About">
         <Preference
-            app:summary="1.0"
             app:icon="@drawable/baseline_update_24"
-            app:title="Version">
-        </Preference>
+            app:summary="1.0"
+            app:title="Version"></Preference>
         <Preference
-            app:summary="Luigi Russo, Matteo Salvino"
             app:icon="@drawable/account_multiple"
-            app:title="Authors">
-        </Preference>
+            app:summary="Luigi Russo, Matteo Salvino"
+            app:title="Authors"></Preference>
         <Preference
-            app:key="@string/source_code_pref"
             app:icon="@drawable/github_circle"
+            app:key="@string/source_code_pref"
             app:summary="Check code on GitHub"
-            app:title="Source code">
-        </Preference>
+            app:title="Source code"></Preference>
         <Preference
-            app:key="@string/dependencies_pref"
             app:icon="@drawable/puzzle_outline"
+            app:key="@string/dependencies_pref"
             app:summary="See the list of dependencies"
-            app:title="Open source libraries">
-        </Preference>
+            app:title="Open source libraries"></Preference>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -39,7 +39,7 @@
         android:backgroundTint="@color/login_btn"
         android:text="@string/login_msg"
         android:textAllCaps="false"
-        android:textColor="@color/main_book_text"/>
+        android:textColor="@color/main_book_text" />
 
     <ImageView
         android:layout_width="match_parent"

@@ -15,8 +15,11 @@ import com.example.biblio.databinding.LoginActivityBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -94,6 +97,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_GOOGLE_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+            logger.d("resultcode is " + resultCode);
+            resultCode = RESULT_OK;
+        }
         setResult(resultCode);
         finish();
     }
@@ -108,4 +119,24 @@ public class LoginActivity extends AppCompatActivity {
                 .create();
         dialog.show();
     }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            // Signed in successfully, show authenticated UI.
+            //updateUI(account);
+            if (account != null) {
+                //fixme: handle more fields!
+                User user = new UserBuilder().setEmail(account.getEmail()).setUsername(account.getDisplayName()).setPhoto(account.getPhotoUrl()).build();
+                new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
+                logger.d(String.format("%s - %s", account.getEmail(), account.getDisplayName()));
+            }
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            logger.w("signInResult:failed code=" + e.getStatusCode());
+            //updateUI(null);
+        }
+    }
+
 }

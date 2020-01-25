@@ -1,5 +1,6 @@
 package com.example.biblio.fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.Objects;
 
+import static com.example.biblio.helpers.GoogleHelper.getClient;
 import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LAST_SEARCH_TS_KEY;
 

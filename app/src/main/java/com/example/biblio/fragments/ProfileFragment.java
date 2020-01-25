@@ -54,13 +54,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    /*
-    private void googleSignOut() {
-        mGoogleSignInClient.signOut().addOnCompleteListener(getActivity(),
-                task -> setUpButtons());
-    }
-     */
-
     private void loadSettingsFragment() {
         FragmentActivity activity = getActivity();
         if (activity != null) {

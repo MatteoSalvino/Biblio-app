@@ -1,7 +1,5 @@
 package com.example.biblio.api;
 
-import android.net.Uri;
-
 import com.example.biblio.helpers.LogHelper;
 
 import org.jetbrains.annotations.NotNull;

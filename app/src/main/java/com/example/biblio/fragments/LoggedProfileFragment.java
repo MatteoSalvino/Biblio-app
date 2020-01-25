@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.databinding.LoggedProfileFragmentBinding;
@@ -40,6 +42,10 @@ public class LoggedProfileFragment extends Fragment {
         binding.loggedEmailTv.setText(current.getEmail());
         binding.loggedDownloadTv.setText(String.valueOf(current.getTotalDownloads()));
         binding.loggedReviewsTv.setText(String.valueOf(current.getTotalDownloads()));
+        if (current.getPhotoUri()!=null) {
+            Glide.with(getContext()).load(current.getPhotoUri())
+                    .placeholder(R.drawable.account_circle_outline).apply(new RequestOptions().centerInside()).into(binding.loggedPhoto);
+        }
 
         if (sharedPreferences.contains(LAST_SEARCH_TS_KEY)) {
             //todo: 0,0 as default?

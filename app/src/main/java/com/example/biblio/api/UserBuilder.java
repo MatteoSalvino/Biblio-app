@@ -1,9 +1,12 @@
 package com.example.biblio.api;
 
+import android.net.Uri;
+
 public final class UserBuilder {
     String username;
     String email;
     String password;
+    Uri photo;
 
     public UserBuilder setUsername(String username) {
         this.username = username;
@@ -17,6 +20,11 @@ public final class UserBuilder {
 
     public UserBuilder setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public UserBuilder setPhoto(Uri photo) {
+        this.photo = photo;
         return this;
     }
 

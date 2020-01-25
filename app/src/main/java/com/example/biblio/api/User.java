@@ -1,5 +1,7 @@
 package com.example.biblio.api;
 
+import android.net.Uri;
+
 import com.example.biblio.helpers.LogHelper;
 
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +16,7 @@ public final class User {
     String email;
     String password;
     String token;
+    String photo_uri;
     int total_downloads;
     int total_reviews;
 
@@ -21,6 +24,7 @@ public final class User {
         this.email = builder.email;
         this.password = builder.password;
         this.username = builder.username;
+        this.photo_uri = builder.photo.toString();
     }
 
     public boolean signup() {
@@ -87,4 +91,7 @@ public final class User {
         return total_reviews;
     }
 
+    public String getPhotoUri() {
+        return photo_uri;
+    }
 }

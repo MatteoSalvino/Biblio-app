@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,14 +20,15 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.jetbrains.annotations.NotNull;
 
 import static com.example.biblio.helpers.GoogleHelper.getSignInIntent;
-
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_UP = 1;
     private static final int RC_GOOGLE_SIGN_IN = 2;
     private final LogHelper logger = new LogHelper(getClass());
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,40 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(view -> {
             String email = binding.emailField.getEditText().getText().toString().trim();
             String password = binding.passwordField.getEditText().getText().toString().trim();
-
-            //todo: extract strings
-            ProgressDialog progressDialog = ProgressDialog.show(this, "Login process", "Please wait...", true);
-            progressDialog.setContentView(R.layout.login_dialog_view);
-            if (!EmailValidator.getInstance().isValid(email)) {
-                //todo: extract string
-                logger.d("Invalid email inserted");
-                runOnUiThread(() -> {
-                    progressDialog.dismiss();
-                    showErrorMessage();
-                });
-                return;
-            }
-            new Thread(() -> {
-                User user = new UserBuilder().setEmail(email).setPassword(password).build();
-                boolean successful = user.login();
-                runOnUiThread(progressDialog::dismiss);
-                if (successful) {
-                    //todo: extract string
-                    logger.d("successful login");
-                    new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
-                    setResult(Activity.RESULT_OK);
-                    finish();
-                } else {
-                    //todo: extract string
-                    logger.d("login failed");
-                    runOnUiThread(this::showErrorMessage);
-                }
-            }).start();
+            if (validateEmail(email))
+                executeLogin(new UserBuilder().setEmail(email).setPassword(password).build());
         });
 
         binding.googleLoginBtn.setOnClickListener(view -> startActivityForResult(getSignInIntent(this), RC_GOOGLE_SIGN_IN));
-
-        //todo: handle the result
         binding.signupSuggestionBtn.setOnClickListener(view -> startActivityForResult(new Intent(this, SignupActivity.class), RC_SIGN_UP));
     }
 
@@ -84,13 +55,13 @@ public class LoginActivity extends AppCompatActivity {
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-            resultCode = RESULT_OK;
+        } else {
+            // Handles RC_SIGN_UP requests
+            setResult(resultCode);
+            finish();
         }
-        setResult(resultCode);
-        finish();
     }
 
-    //todo: improve this
     private void showErrorMessage() {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 //todo: extract string
@@ -101,22 +72,45 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void handleSignInResult(@NotNull Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);
             if (account != null) {
-                //fixme: handle more fields!
-                User user = new UserBuilder().setEmail(account.getEmail()).setUsername(account.getDisplayName()).setPhoto(account.getPhotoUrl()).build();
-                new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
-                logger.d(String.format("%s - %s", account.getEmail(), account.getDisplayName()));
+                User user = new UserBuilder().fromGoogleAccount(account).build();
+                executeLogin(user);
             }
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             logger.w("signInResult:failed code=" + e.getStatusCode());
-            //updateUI(null);
         }
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    private boolean validateEmail(String email) {
+        if (EmailValidator.getInstance().isValid(email)) return true;
+        logger.d("Invalid email inserted");
+        runOnUiThread(this::showErrorMessage);
+        return false;
+    }
+
+    private void executeLogin(@NotNull User user) {
+        ProgressDialog progressDialog = ProgressDialog.show(this, getResources().getString(R.string.login_process_tv), getResources().getString(R.string.please_wait_tv), true);
+        progressDialog.setContentView(R.layout.login_dialog_view);
+
+        new Thread(() -> {
+            boolean successful = user.login();
+            runOnUiThread(progressDialog::dismiss);
+            if (successful) {
+                logger.d("successful login");
+                new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
+                setResult(Activity.RESULT_OK);
+                finish();
+            } else {
+                logger.d("login failed");
+                runOnUiThread(this::showErrorMessage);
+            }
+        }).start();
     }
 }

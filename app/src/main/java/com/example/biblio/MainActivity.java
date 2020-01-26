@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         TAG = MyEbooksFragment.TAG;
                         break;
                     case R.id.nav_profile:
-                        if (new SimpleBiblioHelper(getApplicationContext()).getCurrentUser() != null) {
+                        if (SimpleBiblioHelper.getCurrentUser(getApplicationContext()) != null) {
                             selectedFragment = new LoggedProfileFragment();
                             TAG = LoggedProfileFragment.TAG;
                         } else {

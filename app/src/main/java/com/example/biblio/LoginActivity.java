@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 runOnUiThread(dialog::dismiss);
             if (successful) {
                 logger.d("successful login");
-                new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
+                SimpleBiblioHelper.setCurrentUser(user, getApplicationContext());
                 setResult(Activity.RESULT_OK);
                 finish();
             } else {

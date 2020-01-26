@@ -85,6 +85,7 @@ public class EbookDetailsFragment extends Fragment {
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
         else
+            //fixme: extract string
             binding.mainBookSummary.setText("Description not available.");
 
         binding.mainDownloadBtn.setEnabled(false);
@@ -96,7 +97,7 @@ public class EbookDetailsFragment extends Fragment {
                 filename = getFilename(current);
                 Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
                     binding.mainDownloadBtn.setEnabled(true);
-                    showRemoveButton(new SimpleBiblioHelper(getContext()).isFavorite(current));
+                    showRemoveButton(SimpleBiblioHelper.isFavorite(current, getContext()));
                 });
             }
         }).start();
@@ -141,7 +142,7 @@ public class EbookDetailsFragment extends Fragment {
 
         binding.mainRemoveBtn.setOnClickListener(view -> {
             SDCardHelper.findFile(root_dir, filename, true);
-            new SimpleBiblioHelper(getContext()).removeEbook(current);
+            SimpleBiblioHelper.removeEbook(current, getContext());
 
             showRemoveButton(false);
         });
@@ -194,7 +195,7 @@ public class EbookDetailsFragment extends Fragment {
                         binding.mainRemoveBtn.setVisibility(View.VISIBLE);
 
                         //todo: should open the new file?
-                        new SimpleBiblioHelper(getContext()).addEbook(current);
+                        SimpleBiblioHelper.addEbook(current, getContext());
                     }
 
                     @Override
@@ -229,7 +230,7 @@ public class EbookDetailsFragment extends Fragment {
      * Note: use runonuithread() to update UI
      */
     private void showRating() {
-        User user = new SimpleBiblioHelper(getContext()).getCurrentUser();
+        User user = SimpleBiblioHelper.getCurrentUser(getContext());
         if (user == null)
             return;
         new Thread(() -> {

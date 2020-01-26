@@ -50,7 +50,7 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
         binding.myEbooksRv.setLayoutManager(mLayoutManager);
         binding.myEbooksRv.setHasFixedSize(true);
 
-        mEbooks = new SimpleBiblioHelper(getContext()).getMyEbooks();
+        mEbooks = SimpleBiblioHelper.getMyEbooks(getContext());
         logger.d(mEbooks.toString());
 
         hideTemplates(mEbooks.isEmpty());

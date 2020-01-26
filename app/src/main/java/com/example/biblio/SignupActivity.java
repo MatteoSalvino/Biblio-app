@@ -41,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
                     runOnUiThread(() -> progressDialog.dismiss());
                     if (successful) {
                         logger.d("successful signup");
-                        new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
+                        SimpleBiblioHelper.setCurrentUser(user, getApplicationContext());
                         setResult(Activity.RESULT_OK);
                         finish();
                     } else

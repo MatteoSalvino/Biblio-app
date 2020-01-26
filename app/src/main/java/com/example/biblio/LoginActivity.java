@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_UP = 1;
     private static final int RC_GOOGLE_SIGN_IN = 2;
     private final LogHelper logger = new LogHelper(getClass());
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             String email = binding.emailField.getEditText().getText().toString().trim();
             String password = binding.passwordField.getEditText().getText().toString().trim();
             if (validateEmail(email))
-                executeLogin(new UserBuilder().setEmail(email).setPassword(password).build());
+                executeLogin(new UserBuilder().setEmail(email).setPassword(password).build(), true);
         });
 
         binding.googleLoginBtn.setOnClickListener(view -> startActivityForResult(getSignInIntent(this), RC_GOOGLE_SIGN_IN));
@@ -77,7 +76,8 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null) {
                 User user = new UserBuilder().fromGoogleAccount(account).build();
-                executeLogin(user);
+                executeLogin(user, false);
+                return;
             }
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -95,13 +95,12 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-    private void executeLogin(@NotNull User user) {
-        ProgressDialog progressDialog = ProgressDialog.show(this, getResources().getString(R.string.login_process_tv), getResources().getString(R.string.please_wait_tv), true);
-        progressDialog.setContentView(R.layout.login_dialog_view);
-
+    private void executeLogin(@NotNull User user, boolean showProgress) {
+        ProgressDialog dialog = initProgress(showProgress);
         new Thread(() -> {
             boolean successful = user.login();
-            runOnUiThread(progressDialog::dismiss);
+            if (showProgress)
+                runOnUiThread(dialog::dismiss);
             if (successful) {
                 logger.d("successful login");
                 new SimpleBiblioHelper(getApplicationContext()).setCurrentUser(user);
@@ -112,5 +111,12 @@ public class LoginActivity extends AppCompatActivity {
                 runOnUiThread(this::showErrorMessage);
             }
         }).start();
+    }
+
+    private ProgressDialog initProgress(boolean show) {
+        if (!show) return null;
+        ProgressDialog dialog = ProgressDialog.show(this, getResources().getString(R.string.login_process_tv), getResources().getString(R.string.please_wait_tv), true);
+        dialog.setContentView(R.layout.login_dialog_view);
+        return dialog;
     }
 }

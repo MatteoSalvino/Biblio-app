@@ -2,11 +2,27 @@ package com.example.biblio.api;
 
 import android.net.Uri;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import org.jetbrains.annotations.NotNull;
+
+import static com.example.biblio.api.SimpleBiblioCommons.byepassPwd;
+
 public final class UserBuilder {
     String username;
     String email;
     String password;
     Uri photo;
+    String oauth_token;
+
+    public UserBuilder fromGoogleAccount(@NotNull GoogleSignInAccount account) {
+        byepassPwd(this);
+        username = account.getDisplayName();
+        email = account.getEmail();
+        oauth_token = account.getIdToken();
+        photo = account.getPhotoUrl();
+        return this;
+    }
 
     public UserBuilder setUsername(String username) {
         this.username = username;

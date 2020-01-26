@@ -11,7 +11,6 @@ import java.util.Locale;
 
 import okhttp3.FormBody;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 
 import static com.example.biblio.api.SimpleBiblioCommons.AUTH_TOKEN_KEY;
 import static com.example.biblio.api.SimpleBiblioCommons.CLIENT;
@@ -29,18 +28,25 @@ class AuthenticationHandler {
     private static final String EMAIL_PAR = "email";
     private static final String PASSWORD_PAR = "password";
     private static final String PASSWORD_CONFIRMATION_PAR = "password_confirmation";
-
+    private static final String GOOGLE_TOKEN_PAR = "google_token";
     private static final LogHelper logger = new LogHelper(AuthenticationHandler.class);
 
-    static boolean signup(@NotNull User user) {
-        RequestBody formBody = new FormBody.Builder()
-                .add(USERNAME_PAR, user.username)
+    @NotNull
+    private static FormBody buildForm(@NotNull User user, boolean signup, boolean oauth) {
+        FormBody.Builder builder = new FormBody.Builder()
                 .add(EMAIL_PAR, user.email)
-                .add(PASSWORD_PAR, user.password)
-                .add(PASSWORD_CONFIRMATION_PAR, user.password)
-                .build();
+                .add(PASSWORD_PAR, user.password);
+        if (signup) {
+            builder.add(USERNAME_PAR, user.username)
+                    .add(PASSWORD_CONFIRMATION_PAR, user.password);
+        }
+        if (oauth) builder.add(GOOGLE_TOKEN_PAR, user.oauth_token);
+        return builder.build();
+    }
+
+    static boolean signup(@NotNull User user) {
         Request req = getAuthReqBuilder(user).url(String.format("%s/signup", ENDPOINT))
-                .post(formBody)
+                .post(buildForm(user, true, false))
                 .build();
         try {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());
@@ -55,12 +61,9 @@ class AuthenticationHandler {
     }
 
     static boolean login(@NotNull User user) {
-        RequestBody formBody = new FormBody.Builder()
-                .add(EMAIL_PAR, user.email)
-                .add(PASSWORD_PAR, user.password)
-                .build();
+        boolean enabled = user.oauth_token != null;
         Request req = getAuthReqBuilder(user).url(String.format("%s/auth/login", ENDPOINT))
-                .post(formBody)
+                .post(buildForm(user, enabled, enabled))
                 .build();
         try {
             JSONObject result = parseBody(CLIENT.newCall(req).execute().body());

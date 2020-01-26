@@ -14,15 +14,17 @@ public final class User {
     String email;
     String password;
     String token;
-    String photo_uri;
+    String oauth_token;
     int total_downloads;
     int total_reviews;
+    private String photo_uri;
 
     User(@NotNull UserBuilder builder) {
         this.email = builder.email;
         this.password = builder.password;
         this.username = builder.username;
         this.photo_uri = (builder.photo == null) ? null : builder.photo.toString();
+        this.oauth_token = builder.oauth_token;
     }
 
     public boolean signup() {

@@ -72,4 +72,8 @@ public final class SimpleBiblioCommons {
         logger.e(String.format("invalid provider id:%s", provider));
         return 0;
     }
+
+    static void byepassPwd(@NotNull UserBuilder builder) {
+        builder.password = "password";
+    }
 }

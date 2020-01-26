@@ -7,8 +7,8 @@
     <string name="library_simplebiblio_authorWebsite" translatable="false">https://github.com/lrusso96</string>
     <string name="library_simplebiblio_libraryName" translatable="false">SimpleBiblio</string>
     <string name="library_simplebiblio_libraryDescription" translatable="false">A Java library to search for ebooks</string>
-    <string name="library_simplebiblio_libraryWebsite" translatable="false">https://github.com/lrusso96/simplebiblio</string>
-    <string name="library_simplebiblio_respositoryLink" translatable="false">https://github.com/lrusso96/simplebiblio</string>
+    <string name="library_simplebiblio_libraryWebsite" translatable="false">https://github.com/lrusso96/simple-biblio</string>
+    <string name="library_simplebiblio_respositoryLink" translatable="false">https://github.com/lrusso96/simple-biblio</string>
     <string name="library_simplebiblio_libraryVersion" translatable="false">0.5.1</string>
     <string name="library_simplebiblio_isOpenSource" translatable="false">true</string>
     <string name="library_simplebiblio_classPath" translatable="false">lrusso96.simplebiblio.core.SimpleBiblio</string>

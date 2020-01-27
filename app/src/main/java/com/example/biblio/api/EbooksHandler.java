@@ -103,7 +103,8 @@ class EbooksHandler {
         try {
             int ratings = result.getInt("ratings");
             double rating_avg = result.getDouble("rating_avg");
-            return new RatingResult(ratings, rating_avg);
+            int downloads = result.getInt("downloads");
+            return new RatingResult(downloads, ratings, rating_avg);
         } catch (JSONException e) {
             throw new UnhautorizedRequestException(e.getMessage());
         }

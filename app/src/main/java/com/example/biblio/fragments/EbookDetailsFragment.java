@@ -85,8 +85,7 @@ public class EbookDetailsFragment extends Fragment {
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
         else
-            //fixme: extract string
-            binding.mainBookSummary.setText("Description not available.");
+            binding.mainBookSummary.setText(R.string.no_description);
 
         binding.mainDownloadBtn.setEnabled(false);
         binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
@@ -109,9 +108,19 @@ public class EbookDetailsFragment extends Fragment {
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted())
-                            downloadFile(downloadList.get(0).getUri().toString(), String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename));
-                        else
+                        if (report.areAllPermissionsGranted()) {
+                            String path = String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename);
+                            downloadFile(downloadList.get(0).getUri().toString(), path);
+                            User user = SimpleBiblioHelper.getCurrentUser(getContext());
+                            if (user != null) {
+                                new Thread(() -> {
+                                    RatingResult result = user.notifyDownload(current);
+                                    if (result != null) {
+                                        logger.d(result.toString());
+                                    }
+                                }).start();
+                            }
+                        } else
                             logger.d("Permissions not granted.");
                     }
 
@@ -120,6 +129,7 @@ public class EbookDetailsFragment extends Fragment {
                     }
                 };
 
+                //fixme: extract strings
                 MultiplePermissionsListener dialogMultiplePermissionsListener =
                         DialogOnAnyDeniedMultiplePermissionsListener.Builder
                                 .withContext(getContext())
@@ -136,6 +146,7 @@ public class EbookDetailsFragment extends Fragment {
                         .withListener(compositePermissionsListener).check();
             } else {
                 logger.d("SD Card not available");
+                //fixme: extract string
                 Toast.makeText(getContext(), "SD Card not found", Toast.LENGTH_LONG).show();
             }
         });

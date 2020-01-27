@@ -47,6 +47,7 @@ public class ReviewsFragment extends Fragment {
     public final LogHelper logger = new LogHelper(getClass());
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
+    private User user;
 
     @Nullable
     @Override
@@ -113,6 +114,7 @@ public class ReviewsFragment extends Fragment {
             //todo: send review to the back-end
 
 
+
             //Clean dialog's fields
             reviewBody.setText("");
             ratingBar.setRating(0);
@@ -128,7 +130,8 @@ public class ReviewsFragment extends Fragment {
         mAdapter = new ReviewsAdapter();
         binding.ebooksRv.setAdapter(mAdapter);
         //todo: replace with retrieveReviews
-        loadFakeReviews();
+        //loadFakeReviews();
+        retrieveReviews();
         return binding.getRoot();
     }
 

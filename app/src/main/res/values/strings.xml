@@ -85,4 +85,5 @@
     <string name="or_msg">OR</string>
     <string name="login_error_msg">Login was not successful</string>
     <string name="no_description">Description not available.</string>
+    <string name="review_template">review</string>
 </resources>

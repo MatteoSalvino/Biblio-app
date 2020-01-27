@@ -19,16 +19,48 @@
             android:padding="10dp"
             android:src="@drawable/baseline_arrow_back_ios_24" />
 
-        <ImageView
-            android:id="@+id/main_reviews_btn"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:padding="10dp"
-            android:src="@drawable/baseline_rate_review_24"
-            android:tint="@color/main_book_text" />
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/main_reviews_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
+                    android:src="@drawable/baseline_rate_review_24"
+                    android:tint="@color/main_book_text" />
+
+                <TextView
+                    android:id="@+id/main_book_average_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:textColor="@color/main_book_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/main_book_reviews_counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/main_book_text"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="5dp" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 
@@ -48,8 +80,8 @@
 
                 <ImageView
                     android:id="@+id/main_book_cover"
-                    android:layout_width="150dp"
-                    android:layout_height="250dp"
+                    android:layout_width="80dp"
+                    android:layout_height="120dp"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/ebook_cover_description" />
 
@@ -64,9 +96,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
-                        android:maxLines="1"
+                        android:maxLines="4"
                         android:textColor="@color/main_book_text"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
                         tools:text="@string/title_field" />
 
                     <TextView
@@ -77,73 +110,156 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="@color/main_book_text"
-                        android:textSize="25sp"
-                        tools:text="@string/author_field" />
-
-                    <TextView
-                        android:id="@+id/main_book_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/main_book_text"
                         android:textSize="20sp"
-                        tools:text="@string/year_field_placeholder" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:src="@drawable/book_open_page_variant"
-                            android:tint="@color/main_book_text" />
-
-                        <TextView
-                            android:id="@+id/main_book_pages"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="7dp"
-                            android:textColor="@color/main_book_text"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/main_download_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="40dp"
-                            android:backgroundTint="@color/add_button"
-                            android:src="@drawable/baseline_add_24" />
-
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/main_remove_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="40dp"
-                            android:backgroundTint="@color/add_button"
-                            android:src="@drawable/baseline_remove_24"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
+                        tools:text="@string/author_field" />
                 </LinearLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/main_book_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13 Jan 2015"
+                    android:textColor="@color/main_book_text" />
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/item_decorator"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:tint="@color/main_book_text"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/book_open_page_variant"
+                    android:tint="@color/main_book_text" />
+
+                <TextView
+                    android:id="@+id/main_book_pages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="450"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_book_text"/>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/item_decorator"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:tint="@color/main_book_text"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_language_24"
+                    android:tint="@color/main_book_text"/>
+
+                <TextView
+                    android:id="@+id/main_book_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lang"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_book_text"
+                    android:textAllCaps="true"/>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/item_decorator"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:tint="@color/main_book_text"/>
+
+                <TextView
+                    android:id="@+id/main_book_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_book_text"
+                    android:text="1Mb"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/item_decorator"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:tint="@color/main_book_text"/>
+
+                <TextView
+                    android:id="@+id/main_book_provider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_book_text"
+                    android:text="Feedbooks"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/main_download_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="@color/add_button"
+                    android:text="Download"
+                    android:textColor="@color/main_book_text"
+                    android:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/main_remove_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="@color/add_button"
+                    android:text="Remove"
+                    android:textColor="@color/main_book_text"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:src="@drawable/item_decorator"
+                android:tint="@color/main_book_text"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+
 
             <TextView
                 android:id="@+id/main_book_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/card_background"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:maxLines="14"
                 android:padding="10dp"
                 android:textColor="@color/text_color"

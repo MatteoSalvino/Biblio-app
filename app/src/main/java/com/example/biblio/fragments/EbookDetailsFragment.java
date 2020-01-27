@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class EbookDetailsFragment extends Fragment {
     private String filename;
     private Ebook current;
     private List<Download> downloadList;
+    private RatingResult current_stats;
 
     @Nullable
     @Override
@@ -67,6 +69,19 @@ public class EbookDetailsFragment extends Fragment {
         current = model.getEbook().getValue();
         assert current != null;
         logger.d(String.format("got ebook: %s", current.getTitle()));
+
+
+        User user = SimpleBiblioHelper.getCurrentUser(getContext());
+
+        if(user != null) {
+            new Thread(() -> {
+                current_stats = user.getEbookStats(current);
+                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                    binding.mainBookAverageRate.setText(String.valueOf(current_stats.getRating_avg()));
+                    binding.mainBookReviewsCounter.setText(String.valueOf(current_stats.getRatings()) + " " + getResources().getString(R.string.review_template));
+                });
+            }).start();
+        }
 
         binding.mainBookTitle.setText(current.getTitle());
         binding.mainBookAuthor.setText(current.getAuthor());
@@ -81,6 +96,11 @@ public class EbookDetailsFragment extends Fragment {
         binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
         int book_pages = current.getPages();
         binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
+
+        binding.mainBookLanguage.setText((current.getLanguage() == null ) ? "-" : current.getLanguage());
+        binding.mainBookSize.setText((String.valueOf(current.getFilesize()) == null) ? "-" : String.valueOf(current.getFilesize()));
+        binding.mainBookProvider.setText((current.getProviderName() == null) ? " - " : current.getProviderName());
+
 
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
@@ -111,6 +131,8 @@ public class EbookDetailsFragment extends Fragment {
                         if (report.areAllPermissionsGranted()) {
                             String path = String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename);
                             downloadFile(downloadList.get(0).getUri().toString(), path);
+
+
                             User user = SimpleBiblioHelper.getCurrentUser(getContext());
                             if (user != null) {
                                 new Thread(() -> {

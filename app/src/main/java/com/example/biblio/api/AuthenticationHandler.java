@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import okhttp3.FormBody;
 import okhttp3.Request;
@@ -89,11 +88,10 @@ class AuthenticationHandler {
     private static void update(@NotNull User user, @NotNull JSONObject result) throws TokenException {
         try {
             user.token = getToken(result);
-            user.username = result.getJSONObject(USER_KEY).getString(USERNAME_KEY);
-            user.total_downloads = result.getInt(DOWNLOADS_KEY);
-            user.total_downloads = result.getInt(REVIEWS_KEY);
-            logger.d(String.format(Locale.getDefault(), "updated total downloads:%d", user.total_downloads));
-            logger.d(String.format(Locale.getDefault(), "updated total reviews:%d", user.total_reviews));
+            JSONObject u = result.getJSONObject(USER_KEY);
+            user.username = u.getString(USERNAME_KEY);
+            user.total_downloads = u.getInt(DOWNLOADS_KEY);
+            user.total_reviews = u.getInt(REVIEWS_KEY);
         } catch (JSONException e) {
             logger.e(e.getMessage());
         }

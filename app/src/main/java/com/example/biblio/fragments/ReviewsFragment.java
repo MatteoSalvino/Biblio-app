@@ -114,7 +114,6 @@ public class ReviewsFragment extends Fragment {
             //todo: send review to the back-end
 
 
-
             //Clean dialog's fields
             reviewBody.setText("");
             ratingBar.setRating(0);

@@ -22,8 +22,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,19 +45,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="5dp"
-                    android:textStyle="bold"
+                    android:textColor="@color/main_book_text"
                     android:textSize="20dp"
-                    android:textColor="@color/main_book_text" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/main_book_reviews_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textColor="@color/main_book_text"
+                android:layout_marginRight="5dp"
                 android:paddingLeft="10dp"
-                android:layout_marginRight="5dp" />
+                android:textColor="@color/main_book_text"
+                android:textSize="12dp" />
         </LinearLayout>
 
 
@@ -118,10 +118,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/main_book_date"
@@ -133,12 +133,12 @@
                 <ImageView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/item_decorator"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="2dp"
-                    android:tint="@color/main_book_text"/>
+                    android:src="@drawable/item_decorator"
+                    android:tint="@color/main_book_text" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -150,70 +150,70 @@
                     android:id="@+id/main_book_pages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="450"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/main_book_text"/>
+                    android:text="450"
+                    android:textColor="@color/main_book_text" />
 
                 <ImageView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/item_decorator"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="2dp"
-                    android:tint="@color/main_book_text"/>
+                    android:src="@drawable/item_decorator"
+                    android:tint="@color/main_book_text" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_language_24"
-                    android:tint="@color/main_book_text"/>
+                    android:tint="@color/main_book_text" />
 
                 <TextView
                     android:id="@+id/main_book_language"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="lang"
                     android:layout_marginLeft="5dp"
-                    android:textColor="@color/main_book_text"
-                    android:textAllCaps="true"/>
+                    android:text="lang"
+                    android:textAllCaps="true"
+                    android:textColor="@color/main_book_text" />
 
                 <ImageView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/item_decorator"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="2dp"
-                    android:tint="@color/main_book_text"/>
+                    android:src="@drawable/item_decorator"
+                    android:tint="@color/main_book_text" />
 
                 <TextView
                     android:id="@+id/main_book_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/main_book_text"
                     android:text="1Mb"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/main_book_text"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/item_decorator"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="2dp"
-                    android:tint="@color/main_book_text"/>
+                    android:src="@drawable/item_decorator"
+                    android:tint="@color/main_book_text" />
 
                 <TextView
                     android:id="@+id/main_book_provider"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/main_book_text"
                     android:text="Feedbooks"
-                    android:textStyle="italic"/>
+                    android:textColor="@color/main_book_text"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <RelativeLayout
@@ -246,12 +246,12 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:src="@drawable/item_decorator"
-                android:tint="@color/main_book_text"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/item_decorator"
+                android:tint="@color/main_book_text" />
 
 
             <TextView

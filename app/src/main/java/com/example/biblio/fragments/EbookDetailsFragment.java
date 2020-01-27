@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +72,13 @@ public class EbookDetailsFragment extends Fragment {
 
         User user = SimpleBiblioHelper.getCurrentUser(getContext());
 
-        if(user != null) {
+        if (user != null) {
             new Thread(() -> {
                 current_stats = user.getEbookStats(current);
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
-                    binding.mainBookAverageRate.setText(String.valueOf(current_stats.getRating_avg()));
-                    binding.mainBookReviewsCounter.setText(String.valueOf(current_stats.getRatings()) + " " + getResources().getString(R.string.review_template));
+                if (current_stats == null) return;
+                getActivity().runOnUiThread(() -> {
+                    binding.mainBookAverageRate.setText(String.valueOf(current_stats.getRatingAvg()));
+                    binding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), getResources().getString(R.string.review_template)));
                 });
             }).start();
         }
@@ -97,8 +97,8 @@ public class EbookDetailsFragment extends Fragment {
         int book_pages = current.getPages();
         binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
 
-        binding.mainBookLanguage.setText((current.getLanguage() == null ) ? "-" : current.getLanguage());
-        binding.mainBookSize.setText((String.valueOf(current.getFilesize()) == null) ? "-" : String.valueOf(current.getFilesize()));
+        binding.mainBookLanguage.setText((current.getLanguage() == null) ? "-" : current.getLanguage());
+        binding.mainBookSize.setText((current.getFilesize() == 0) ? "-" : String.valueOf(current.getFilesize()));
         binding.mainBookProvider.setText((current.getProviderName() == null) ? " - " : current.getProviderName());
 
 
@@ -269,7 +269,7 @@ public class EbookDetailsFragment extends Fragment {
         new Thread(() -> {
             RatingResult ebookStats = user.getEbookStats(current);
             if (ebookStats != null) {
-                logger.d(String.format(Locale.getDefault(), "%d reviews with average of %.1f", ebookStats.getRatings(), ebookStats.getRating_avg()));
+                logger.d(String.format(Locale.getDefault(), "%d reviews with average of %.1f", ebookStats.getRatings(), ebookStats.getRatingAvg()));
             }
         }).start();
     }

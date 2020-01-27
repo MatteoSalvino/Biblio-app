@@ -36,6 +36,7 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloader;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.io.File;
 import java.util.List;
@@ -47,6 +48,7 @@ import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
+import static lrusso96.simplebiblio.core.Utils.bytesToReadableSize;
 
 public class EbookDetailsFragment extends Fragment {
     private final LogHelper logger = new LogHelper(getClass());
@@ -93,14 +95,15 @@ public class EbookDetailsFragment extends Fragment {
         }
 
         LocalDate book_date = current.getPublished();
-        binding.mainBookDate.setText((book_date == null) ? "No date available" : book_date.toString());
-        int book_pages = current.getPages();
-        binding.mainBookPages.setText(String.format(Locale.getDefault(), "%s", (book_pages > 0 ? book_pages : "-")));
-
-        binding.mainBookLanguage.setText((current.getLanguage() == null) ? "-" : current.getLanguage());
-        binding.mainBookSize.setText((current.getFilesize() == 0) ? "-" : String.valueOf(current.getFilesize()));
-        binding.mainBookProvider.setText((current.getProviderName() == null) ? " - " : current.getProviderName());
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        binding.mainBookDate.setText((book_date == null) ? "-" : book_date.format(formatter));
+        if (current.getPages() > 0)
+            binding.mainBookPages.setText(String.format("%d", current.getPages()));
+        if (current.getLanguage() != null)
+            binding.mainBookLanguage.setText(current.getLanguage());
+        if (current.getFilesize() > 0)
+            binding.mainBookSize.setText(bytesToReadableSize(current.getFilesize()));
+        binding.mainBookProvider.setText(String.format("by %s", current.getProviderName()));
 
         if (current.getSummary() != null)
             binding.mainBookSummary.setText(current.getSummary());
@@ -131,7 +134,6 @@ public class EbookDetailsFragment extends Fragment {
                         if (report.areAllPermissionsGranted()) {
                             String path = String.format("%s/%s/%s", Environment.getExternalStorageDirectory(), APP_ROOT_DIR, filename);
                             downloadFile(downloadList.get(0).getUri().toString(), path);
-
 
                             User user = SimpleBiblioHelper.getCurrentUser(getContext());
                             if (user != null) {

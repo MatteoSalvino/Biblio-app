@@ -32,8 +32,8 @@
     <string name="nav_recent_title">Novità</string>
     <string name="nav_popular_title">Popolari</string>
     <string name="sort_by_field">Ordina per</string>
-    <string name="remove_from_my_books_msg">Rimuovi dai Preferiti</string>
-    <string name="add_to_my_books_msg">Aggiungi ai Preferiti</string>
+    <string name="remove_from_my_books_msg">Rimuovi</string>
+    <string name="add_to_my_books_msg">Aggiungi</string>
     <string name="pages_field">Pagine:</string>
     <string name="year_field_placeholder">2008</string>
     <string name="loading_please_wait_msg">Attendere…</string>
@@ -69,4 +69,5 @@
     <string name="or_msg">O</string>
     <string name="login_error_msg">Si è verificato un errore durante in login</string>
     <string name="review_template">recensione</string>
+    <string name="no_description">Nessuna descrizione disponibile.</string>
 </resources>

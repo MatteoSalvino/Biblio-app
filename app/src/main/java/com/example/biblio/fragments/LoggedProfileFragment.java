@@ -1,6 +1,5 @@
 package com.example.biblio.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,8 +16,6 @@ import com.example.biblio.api.User;
 import com.example.biblio.databinding.LoggedProfileFragmentBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 
-import java.util.Objects;
-
 public class LoggedProfileFragment extends Fragment {
     public static final String TAG = "LoggedProfileFragment";
 
@@ -27,15 +23,13 @@ public class LoggedProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         com.example.biblio.databinding.LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         User current = SimpleBiblioHelper.getCurrentUser(getContext());
 
         //Load current user's data
         binding.loggedUsernameTv.setText(current.getUsername());
         binding.loggedEmailTv.setText(current.getEmail());
         binding.loggedDownloadTv.setText(String.valueOf(current.getTotalDownloads()));
-        binding.loggedReviewsTv.setText(String.valueOf(current.getTotalDownloads()));
-
+        binding.loggedReviewsTv.setText(String.valueOf(current.getTotalReviews()));
 
         if (current.getPhotoUri() != null)
             Glide.with(getContext()).load(current.getPhotoUri())

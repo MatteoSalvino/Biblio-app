@@ -76,10 +76,10 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
 
         MyEbooksViewHolder(View v, OnItemListener listener) {
             super(v);
-            mEbookTitle = v.findViewById(R.id.my_ebook_title);
-            mEbookAuthor = v.findViewById(R.id.my_ebook_author);
-            mEbookCover = v.findViewById(R.id.my_ebook_cover);
-            mEbookPages = v.findViewById(R.id.my_ebook_pages);
+            mEbookTitle = v.findViewById(R.id.title);
+            mEbookAuthor = v.findViewById(R.id.author);
+            mEbookCover = v.findViewById(R.id.cover);
+            mEbookPages = v.findViewById(R.id.pages);
             mReadButton = v.findViewById(R.id.read_btn);
             this.itemListener = listener;
             mReadButton.setOnClickListener(x -> this.itemListener.onReadButtonClick(getAdapterPosition()));

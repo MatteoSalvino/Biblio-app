@@ -22,7 +22,7 @@
             android:weightSum="4">
 
             <ImageView
-                android:id="@+id/book_cover"
+                android:id="@+id/cover"
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
@@ -35,7 +35,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/book_title"
+                    android:id="@+id/title"
                     style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                     tools:text="The Double" />
 
                 <TextView
-                    android:id="@+id/book_author"
+                    android:id="@+id/author"
                     style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,28 +60,22 @@
                     android:textSize="15sp"
                     tools:text="Fedor Dostoevskij" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/pages"
+                    style="@style/NirmalaStyle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/book_pages"
-                        style="@style/NirmalaStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="7dp"
-                        android:drawableStart="@drawable/book_open_page_variant"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/text_color"
-                        android:textSize="13sp"
-                        app:drawableTint="@color/text_color"
-                        tools:text="150" />
-                </LinearLayout>
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:drawableStart="@drawable/book_open_page_variant"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    app:drawableTint="@color/text_color"
+                    tools:text="150" />
 
                 <TextView
-                    android:id="@+id/book_source"
+                    android:id="@+id/source"
                     style="@style/NirmalaStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

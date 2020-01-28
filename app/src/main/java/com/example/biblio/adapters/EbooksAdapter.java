@@ -78,11 +78,11 @@ public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksView
 
         EbooksViewHolder(View v, OnItemListener listener) {
             super(v);
-            mBookTitle = v.findViewById(R.id.book_title);
-            mBookAuthor = v.findViewById(R.id.book_author);
-            mBookCover = v.findViewById(R.id.book_cover);
-            mBookPages = v.findViewById(R.id.book_pages);
-            mBookSource = v.findViewById(R.id.book_source);
+            mBookTitle = v.findViewById(R.id.title);
+            mBookAuthor = v.findViewById(R.id.author);
+            mBookCover = v.findViewById(R.id.cover);
+            mBookPages = v.findViewById(R.id.pages);
+            mBookSource = v.findViewById(R.id.source);
 
             this.itemListener = listener;
 

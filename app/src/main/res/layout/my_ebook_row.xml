@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120sp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
@@ -23,11 +23,11 @@
             android:weightSum="4">
 
             <ImageView
-                android:contentDescription="@string/ebook_cover_cd"
-                android:id="@+id/my_ebook_cover"
+                android:id="@+id/cover"
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:contentDescription="@string/ebook_cover_cd" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -36,37 +36,40 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/my_ebook_title"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    tools:text="Brothers Karamazov"
                     android:textColor="@color/text_color"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    tools:text="Brothers Karamazov" />
 
                 <TextView
-                    android:id="@+id/my_ebook_author"
+                    android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    tools:text="Fedor M. Dostoevskij"
                     android:textColor="@color/text_color"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    tools:text="Fedor M. Dostoevskij" />
 
-                    <TextView
-                        android:id="@+id/my_ebook_pages"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="7dp"
-                        android:drawable="@drawable/book_open_page_variant"
-                        android:textColor="@color/text_color"
-                        android:textSize="13sp"
-                        app:drawableTint="@color/main_book_text" />
+                <TextView
+                    android:id="@+id/pages"
+                    style="@style/NirmalaStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="7dp"
+                    android:drawableStart="@drawable/book_open_page_variant"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/text_color"
+                    android:textSize="13sp"
+                    app:drawableTint="@color/text_color"
+                    tools:text="150" />
             </LinearLayout>
 
             <RelativeLayout

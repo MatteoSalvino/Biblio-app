@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:gravity="center_horizontal"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingHorizontal="20dp">
 
     <TextView
         android:id="@+id/main_book_date"
@@ -16,15 +15,7 @@
         android:textColor="@color/main_book_text"
         tools:text="13 January 2015" />
 
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/item_decorator"
-        android:tint="@color/main_book_text" />
+    <include layout="@layout/util_vertical_divider" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -41,15 +32,7 @@
         android:textColor="@color/main_book_text"
         tools:text="450" />
 
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/item_decorator"
-        android:tint="@color/main_book_text" />
+    <include layout="@layout/util_vertical_divider" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -65,17 +48,9 @@
         android:text="@string/null_field_placeholder"
         android:textAllCaps="true"
         android:textColor="@color/main_book_text"
-        tools:text="lang" />
+        tools:text="LANG" />
 
-    <ImageView
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/item_decorator"
-        android:tint="@color/main_book_text" />
+    <include layout="@layout/util_vertical_divider" />
 
     <TextView
         android:id="@+id/main_book_size"

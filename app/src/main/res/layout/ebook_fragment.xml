@@ -113,94 +113,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <include
+                layout="@layout/ebook_details_fragment_infos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/main_book_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/main_book_text"
-                    android:text="@string/null_field_placeholder"
-                    tools:text="13 January 2015" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="2dp"
-                    android:src="@drawable/item_decorator"
-                    android:tint="@color/main_book_text" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/book_open_page_variant"
-                    android:tint="@color/main_book_text" />
-
-                <TextView
-                    android:id="@+id/main_book_pages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/main_book_text"
-                    android:text="@string/null_field_placeholder"
-                    tools:text="450" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="2dp"
-                    android:src="@drawable/item_decorator"
-                    android:tint="@color/main_book_text" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_language_24"
-                    android:tint="@color/main_book_text" />
-
-                <TextView
-                    android:id="@+id/main_book_language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/main_book_text"
-                    android:text="@string/null_field_placeholder"
-                    tools:text="lang" />
-
-                <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="2dp"
-                    android:src="@drawable/item_decorator"
-                    android:tint="@color/main_book_text" />
-
-                <TextView
-                    android:id="@+id/main_book_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/main_book_text"
-                    android:textStyle="bold"
-                    android:text="@string/null_field_placeholder"
-                    tools:text="1Mb" />
-            </LinearLayout>
+                android:layout_marginBottom="20dp" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -247,9 +165,9 @@
                 android:layout_marginEnd="10dp"
                 android:maxLines="14"
                 android:padding="10dp"
+                android:text="@string/no_description"
                 android:textColor="@color/text_color"
                 android:textSize="15sp"
-                android:text="@string/no_description"
                 tools:text="@string/desc_sample" />
 
             <ImageView

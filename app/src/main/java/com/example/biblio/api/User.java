@@ -36,7 +36,7 @@ public final class User {
     }
 
     @Nullable
-    public RatingResult rate(Ebook ebook, float rating) {
+    public RatingResult rate(Ebook ebook, int rating) {
         for (int count = 0; count < MAX_TRIES; count++) {
             try {
                 if (count == 0 || this.login())

@@ -31,8 +31,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
-import lrusso96.simplebiblio.core.SimpleBiblio;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
@@ -49,7 +46,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 public class ReviewsFragment extends Fragment {
     public static final String TAG = "ReviewsFragment";
     public final LogHelper logger = new LogHelper(getClass());
-    ReviewsFragmentBinding binding;
+    private ReviewsFragmentBinding binding;
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
@@ -57,7 +54,7 @@ public class ReviewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         binding = ReviewsFragmentBinding.inflate(inflater, container, false);
+        binding = ReviewsFragmentBinding.inflate(inflater, container, false);
 
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         mEbook = model.getEbook().getValue();
@@ -117,7 +114,7 @@ public class ReviewsFragment extends Fragment {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
 
-            user.rate(mEbook, ratingBar.getRating());
+            user.rate(mEbook, (int) ratingBar.getRating());
             //todo: add review to Firebase
 
             alertDialog.dismiss();
@@ -170,7 +167,7 @@ public class ReviewsFragment extends Fragment {
                             logger.d(document.getId() + " => " + document.getData());
                             mReviews.add(rev);
                         }
-                        if(mReviews.isEmpty()) {
+                        if (mReviews.isEmpty()) {
                             binding.reviewsIvTemplate.setVisibility(View.VISIBLE);
                             binding.reviewsTvTemplate.setVisibility(View.VISIBLE);
                         } else {

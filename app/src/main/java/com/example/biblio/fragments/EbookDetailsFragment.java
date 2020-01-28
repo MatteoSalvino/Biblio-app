@@ -84,30 +84,30 @@ public class EbookDetailsFragment extends Fragment {
                 current_stats = user.getEbookStats(current);
                 if (current_stats == null) return;
                 getActivity().runOnUiThread(() -> {
-                    appbarBinding.mainBookAverageRate.setText(String.valueOf(current_stats.getRatingAvg()));
-                    appbarBinding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
+                    appbarBinding.avgRate.setText(String.valueOf(current_stats.getRatingAvg()));
+                    appbarBinding.reviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
                 });
             }).start();
         }
 
-        headerBinding.mainBookTitle.setText(current.getTitle());
-        headerBinding.mainBookAuthor.setText(current.getAuthor());
+        headerBinding.title.setText(current.getTitle());
+        headerBinding.author.setText(current.getAuthor());
 
         if (current.getCover() == null)
-            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(headerBinding.mainBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(headerBinding.cover);
         else {
-            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(headerBinding.mainBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(headerBinding.cover);
         }
 
         LocalDate book_date = current.getPublished();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        infosBinding.mainBookDate.setText((book_date == null) ? "-" : book_date.format(formatter));
+        infosBinding.date.setText((book_date == null) ? "-" : book_date.format(formatter));
         if (current.getPages() > 0)
-            infosBinding.mainBookPages.setText(String.format("%s", current.getPages()));
+            infosBinding.pages.setText(String.format("%s", current.getPages()));
         if (current.getLanguage() != null)
-            infosBinding.mainBookLanguage.setText(current.getLanguage());
+            infosBinding.language.setText(current.getLanguage());
         if (current.getFilesize() > 0)
-            infosBinding.mainBookSize.setText(bytesToReadableSize(current.getFilesize()));
+            infosBinding.size.setText(bytesToReadableSize(current.getFilesize()));
         binding.mainBookProvider.setText(String.format("by %s", current.getProviderName()));
 
         if (current.getSummary() != null)
@@ -129,7 +129,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         }).start();
 
-        appbarBinding.mainBackBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        appbarBinding.backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
 
         binding.mainDownloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {
@@ -193,7 +193,7 @@ public class EbookDetailsFragment extends Fragment {
             showRemoveButton(present);
         }
 
-        appbarBinding.mainReviewsBtn.setOnClickListener(view -> {
+        appbarBinding.reviewsBtn.setOnClickListener(view -> {
             Fragment to_render = new ReviewsFragment();
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                     .addToBackStack(null).commit();

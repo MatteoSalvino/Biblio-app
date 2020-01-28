@@ -1,20 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="24dp"
-    android:paddingTop="20dp">
+    android:paddingHorizontal="5dp"
+    android:paddingTop="5dp">
 
     <ImageView
         android:id="@+id/main_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/baseline_arrow_back_ios_24"
+        android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/main_reviews_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/baseline_rate_review_24"
+        android:tint="@color/main_book_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_book_average_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="4.5"
+        android:textColor="@color/main_book_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/main_reviews_btn"
+        app:layout_constraintStart_toEndOf="@id/main_reviews_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_book_reviews_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_book_text"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/main_reviews_btn"
+        app:layout_constraintTop_toBottomOf="@+id/main_reviews_btn"
+        tools:text="20 reviews" />
+    <!--
     <ImageView
         android:id="@+id/main_reviews_btn"
         android:layout_width="wrap_content"
@@ -31,6 +66,7 @@
         android:textColor="@color/main_book_text"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toTopOf="@+id/main_reviews_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_reviews_btn"
@@ -44,5 +80,5 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/main_reviews_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="20 reviews" />
+        tools:text="20 reviews" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

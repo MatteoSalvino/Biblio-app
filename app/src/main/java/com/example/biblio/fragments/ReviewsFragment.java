@@ -25,11 +25,14 @@ import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.ReviewsFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
+import lrusso96.simplebiblio.core.SimpleBiblio;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
@@ -45,6 +49,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 public class ReviewsFragment extends Fragment {
     public static final String TAG = "ReviewsFragment";
     public final LogHelper logger = new LogHelper(getClass());
+    ReviewsFragmentBinding binding;
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
@@ -52,13 +57,14 @@ public class ReviewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ReviewsFragmentBinding binding = ReviewsFragmentBinding.inflate(inflater, container, false);
+         binding = ReviewsFragmentBinding.inflate(inflater, container, false);
 
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         mEbook = model.getEbook().getValue();
         assert mEbook != null;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+        user = SimpleBiblioHelper.getCurrentUser(getContext());
 
         //Logged user
         if (!sharedPreferences.contains(CURRENT_USER_KEY)) {
@@ -109,10 +115,12 @@ public class ReviewsFragment extends Fragment {
 
         postBtn.setOnClickListener(myView -> {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+
+
+            user.rate(mEbook, ratingBar.getRating());
+            //todo: add review to Firebase
+
             alertDialog.dismiss();
-
-            //todo: send review to the back-end
-
 
             //Clean dialog's fields
             reviewBody.setText("");
@@ -128,8 +136,6 @@ public class ReviewsFragment extends Fragment {
         binding.ebooksRv.setHasFixedSize(true);
         mAdapter = new ReviewsAdapter();
         binding.ebooksRv.setAdapter(mAdapter);
-        //todo: replace with retrieveReviews
-        //loadFakeReviews();
         retrieveReviews();
         return binding.getRoot();
     }
@@ -164,7 +170,14 @@ public class ReviewsFragment extends Fragment {
                             logger.d(document.getId() + " => " + document.getData());
                             mReviews.add(rev);
                         }
-                        //todo: handle empty list of reviews
+                        if(mReviews.isEmpty()) {
+                            binding.reviewsIvTemplate.setVisibility(View.VISIBLE);
+                            binding.reviewsTvTemplate.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.reviewsIvTemplate.setVisibility(View.INVISIBLE);
+                            binding.reviewsTvTemplate.setVisibility(View.INVISIBLE);
+                        }
+
                         mAdapter.setReviews(mReviews);
                         mAdapter.notifyDataSetChanged();
                     } else {

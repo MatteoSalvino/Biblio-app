@@ -42,6 +42,8 @@
     <string name="or_msg">O</string>
     <string name="login_error_msg">Si è verificato un errore durante in login</string>
     <string name="review_template">recensione</string>
+    <string name="reviews_template">recensioni</string>
+    <string name="empty_reviews_msg">Non è stata trovata alcuna recensione per questo libro !</string>
     <string name="no_description">Nessuna descrizione disponibile.</string>
 
     <!-- tv fields -->

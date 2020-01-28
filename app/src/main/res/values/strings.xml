@@ -75,6 +75,8 @@
     <string name="login_error_msg">Login was not successful</string>
     <string name="no_description">Description not available.</string>
     <string name="review_template">review</string>
+    <string name="reviews_template">reviews</string>
+    <string name="empty_reviews_msg">It has not been found any reviews for this book !</string>
     <string name="null_field_placeholder" translatable="false">-</string>
     <string name="ebook_cover_cd">Book cover</string>
 </resources>

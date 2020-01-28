@@ -28,11 +28,11 @@ class EbooksHandler {
     private static final LogHelper logger = new LogHelper(EbooksHandler.class);
 
     @NotNull
-    static RatingResult rate(User user, @NotNull Ebook ebook, int rating) throws UnhautorizedRequestException {
+    static RatingResult rate(User user, @NotNull Ebook ebook, float rating) throws UnhautorizedRequestException {
         RequestBody formBody = new FormBody.Builder()
                 .add(EBOOK_PAR, Integer.toString(ebook.getId()))
                 .add(PROVIDER_PAR, Integer.toString(getProviderId(ebook.getProviderName())))
-                .add(RATING_PAR, Integer.toString(rating))
+                .add(RATING_PAR, Float.toString(rating))
                 .build();
         Request req = getAuthReqBuilder(user)
                 .url(String.format("%s/ebooks/rate", ENDPOINT))

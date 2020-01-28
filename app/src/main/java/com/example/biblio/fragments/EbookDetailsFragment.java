@@ -85,7 +85,7 @@ public class EbookDetailsFragment extends Fragment {
                 if (current_stats == null) return;
                 getActivity().runOnUiThread(() -> {
                     appbarBinding.mainBookAverageRate.setText(String.valueOf(current_stats.getRatingAvg()));
-                    appbarBinding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), getResources().getString(R.string.review_template)));
+                    appbarBinding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
                 });
             }).start();
         }

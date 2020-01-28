@@ -31,7 +31,7 @@
             android:textColor="@color/main_book_text"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:text="@string/title_field" />
+            tools:text="Pride and prejudice" />
 
         <TextView
             android:id="@+id/main_book_author"
@@ -42,6 +42,6 @@
             android:maxLines="2"
             android:textColor="@color/main_book_text"
             android:textSize="16sp"
-            tools:text="@string/author_field" />
+            tools:text="Jane Austen" />
     </LinearLayout>
 </LinearLayout>

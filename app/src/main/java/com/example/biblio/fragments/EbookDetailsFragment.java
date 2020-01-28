@@ -12,14 +12,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
 import com.example.biblio.api.RatingResult;
 import com.example.biblio.api.User;
-import com.example.biblio.databinding.EbookFragmentBinding;
+import com.example.biblio.databinding.EbookDetailsFragmentAppbarBinding;
+import com.example.biblio.databinding.EbookDetailsFragmentBinding;
+import com.example.biblio.databinding.EbookDetailsFragmentHeaderBinding;
+import com.example.biblio.databinding.EbookDetailsFragmentInfosBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
@@ -52,7 +55,7 @@ import static lrusso96.simplebiblio.core.Utils.bytesToReadableSize;
 
 public class EbookDetailsFragment extends Fragment {
     private final LogHelper logger = new LogHelper(getClass());
-    private EbookFragmentBinding binding;
+    private EbookDetailsFragmentBinding binding;
     private File root_dir;
     private String filename;
     private Ebook current;
@@ -62,15 +65,17 @@ public class EbookDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = EbookFragmentBinding.inflate(inflater, container, false);
-        RequestOptions option = new RequestOptions().centerCrop();
+        binding = EbookDetailsFragmentBinding.inflate(inflater, container, false);
+        EbookDetailsFragmentInfosBinding infosBinding = binding.infos;
+        EbookDetailsFragmentAppbarBinding appbarBinding = binding.appbar;
+        EbookDetailsFragmentHeaderBinding headerBinding = binding.header;
+        RequestOptions option = new RequestOptions().centerInside();
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
-        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         current = model.getEbook().getValue();
         assert current != null;
         logger.d(String.format("got ebook: %s", current.getTitle()));
-
 
         User user = SimpleBiblioHelper.getCurrentUser(getContext());
 
@@ -79,30 +84,30 @@ public class EbookDetailsFragment extends Fragment {
                 current_stats = user.getEbookStats(current);
                 if (current_stats == null) return;
                 getActivity().runOnUiThread(() -> {
-                    binding.mainBookAverageRate.setText(String.valueOf(current_stats.getRatingAvg()));
-                    binding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), getResources().getString(R.string.review_template)));
+                    appbarBinding.mainBookAverageRate.setText(String.valueOf(current_stats.getRatingAvg()));
+                    appbarBinding.mainBookReviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), getResources().getString(R.string.review_template)));
                 });
             }).start();
         }
 
-        binding.mainBookTitle.setText(current.getTitle());
-        binding.mainBookAuthor.setText(current.getAuthor());
+        headerBinding.mainBookTitle.setText(current.getTitle());
+        headerBinding.mainBookAuthor.setText(current.getAuthor());
 
         if (current.getCover() == null)
-            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(binding.mainBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(R.drawable.no_image).into(headerBinding.mainBookCover);
         else {
-            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(binding.mainBookCover);
+            Glide.with(Objects.requireNonNull(getContext())).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(headerBinding.mainBookCover);
         }
 
         LocalDate book_date = current.getPublished();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        binding.mainBookDate.setText((book_date == null) ? "-" : book_date.format(formatter));
+        infosBinding.mainBookDate.setText((book_date == null) ? "-" : book_date.format(formatter));
         if (current.getPages() > 0)
-            binding.mainBookPages.setText(String.format("%d", current.getPages()));
+            infosBinding.mainBookPages.setText(String.format("%s", current.getPages()));
         if (current.getLanguage() != null)
-            binding.mainBookLanguage.setText(current.getLanguage());
+            infosBinding.mainBookLanguage.setText(current.getLanguage());
         if (current.getFilesize() > 0)
-            binding.mainBookSize.setText(bytesToReadableSize(current.getFilesize()));
+            infosBinding.mainBookSize.setText(bytesToReadableSize(current.getFilesize()));
         binding.mainBookProvider.setText(String.format("by %s", current.getProviderName()));
 
         if (current.getSummary() != null)
@@ -124,7 +129,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         }).start();
 
-        binding.mainBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        appbarBinding.mainBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
 
         binding.mainDownloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {
@@ -188,10 +193,9 @@ public class EbookDetailsFragment extends Fragment {
             showRemoveButton(present);
         }
 
-        binding.mainReviewsBtn.setOnClickListener(view -> {
+        appbarBinding.mainReviewsBtn.setOnClickListener(view -> {
             Fragment to_render = new ReviewsFragment();
-            getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                    .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                     .addToBackStack(null).commit();
         });
 

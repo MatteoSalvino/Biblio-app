@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="120sp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
@@ -22,6 +23,7 @@
             android:weightSum="4">
 
             <ImageView
+                android:contentDescription="@string/ebook_cover_cd"
                 android:id="@+id/my_ebook_cover"
                 android:layout_width="70dp"
                 android:layout_height="100dp"
@@ -41,7 +43,7 @@
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@string/title_field"
+                    tools:text="Brothers Karamazov"
                     android:textColor="@color/text_color"
                     android:textSize="20sp" />
 
@@ -51,22 +53,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="@string/author_field"
+                    tools:text="Fedor M. Dostoevskij"
                     android:textColor="@color/text_color"
                     android:textSize="15sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/book_open_page_variant"
-                        android:tint="@color/main_book_text" />
 
                     <TextView
                         android:id="@+id/my_ebook_pages"
@@ -74,38 +63,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="7dp"
+                        android:drawable="@drawable/book_open_page_variant"
                         android:textColor="@color/text_color"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-                <!--
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/mybook_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4.5"
                         android:textSize="13sp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/textcolor"/>
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/baseline_star_24"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="2dp"/>
-
-                </LinearLayout>
-                -->
-
+                        app:drawableTint="@color/main_book_text" />
             </LinearLayout>
-
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -123,7 +85,6 @@
                     android:text="@string/read_now_msg"
                     android:textAllCaps="false"
                     android:textColor="@color/main_book_text" />
-
             </RelativeLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

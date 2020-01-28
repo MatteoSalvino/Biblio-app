@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--TODO: implement this UI (this is just a stub) -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -17,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp">
 
             <TextView
                 android:id="@+id/reviewItemUsername"
@@ -27,8 +29,8 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/username_tv"
-                android:textColor="@color/main_book_text" />
+                android:textColor="@color/main_book_text"
+                tools:text="Nice Username" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/reviewItemRating"
@@ -36,7 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                tools:rating="3" />
 
             <TextView
                 android:id="@+id/reviewItemText"
@@ -47,8 +50,8 @@
                 android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/simple_review_tv"
-                android:textColor="@color/main_book_text" />
+                android:textColor="@color/main_book_text"
+                tools:text="This is a simple review!" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

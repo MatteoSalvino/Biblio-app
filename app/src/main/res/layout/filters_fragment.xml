@@ -110,7 +110,6 @@
             android:text="@string/minimum_rating"
             android:textColor="@color/main_book_text" />
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/medium_rating_btn"
             android:layout_width="wrap_content"
@@ -123,7 +122,6 @@
             android:padding="5dp"
             android:text="@string/low_rating"
             android:textColor="@color/main_book_text" />
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/medium_high_rating_btn"
@@ -161,7 +159,6 @@
         android:textColor="@color/main_book_text"
         android:textSize="15sp" />
 
-    <!--FIXME: text is not always displayed correctly (consider removing some of them) -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -195,7 +192,6 @@
             android:buttonTint="@color/main_book_text"
             android:text="@string/french_lang"
             android:textColor="@color/main_book_text" />
-
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/spanish_cb"

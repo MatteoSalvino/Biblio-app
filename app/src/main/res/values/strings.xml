@@ -61,7 +61,6 @@
     <string name="confirm_password_field">Confirm password</string>
     <string name="accept_terms_field">I accept terms and rule of this application.</string>
     <string name="signup_msg">Signup</string>
-    <string name="ebook_cover_description">ebook cover</string>
     <string name="add_review_msg">Add review</string>
     <string name="load_reviews_msg">Show reviews</string>
     <string name="feedbooks_enabled_pref" translatable="false">feedbooks_enabled</string>
@@ -71,8 +70,6 @@
     <string name="dependencies_pref">dependencies</string>
     <string name="open_source_libs">Open source libraries</string>
     <string name="external_readers_pref" translatable="false">external_readers</string>
-    <string name="username_tv">Username</string>
-    <string name="simple_review_tv">Simple review</string>
     <string name="download_tv" translatable="false">Download</string>
     <string name="reviews_tv">Reviews</string>
     <string name="insert_review_tv">Insert a review (max 100 characters)</string>
@@ -86,5 +83,6 @@
     <string name="login_error_msg">Login was not successful</string>
     <string name="no_description">Description not available.</string>
     <string name="review_template">review</string>
-    <string name="null_field_placeholder">-</string>
+    <string name="null_field_placeholder" translatable="false">-</string>
+    <string name="ebook_cover_cd">Book cover</string>
 </resources>

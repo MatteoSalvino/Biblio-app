@@ -6,7 +6,6 @@
     <string name="dependencies_pref">Dipendenze</string>
     <string name="load_reviews_msg">Mostra le recensioni</string>
     <string name="add_review_msg">Aggiungi una recensione</string>
-    <string name="ebook_cover_description">cover ebook</string>
     <string name="signup_msg">Registrati</string>
     <string name="confirm_password_field">Confemra la password</string>
     <string name="name_hint">Nome</string>
@@ -59,8 +58,6 @@
     <string name="nav_books_title">Preferiti</string>
     <string name="nav_search_title">Cerca</string>
     <string name="login_process_tv">Accesso</string>
-    <string name="username_tv">Nome utente</string>
-    <string name="simple_review_tv">Semplice recensione</string>
     <string name="reviews_tv">Recensioni</string>
     <string name="insert_review_tv">Scrivi una recensione (max 100 caratteri)</string>
     <string name="cancel_msg">Annulla</string>
@@ -70,4 +67,5 @@
     <string name="login_error_msg">Si è verificato un errore durante in login</string>
     <string name="review_template">recensione</string>
     <string name="no_description">Nessuna descrizione disponibile.</string>
+    <string name="ebook_cover_cd">Copertina</string>
 </resources>

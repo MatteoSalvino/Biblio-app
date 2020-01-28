@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             logger.d("successful login, loading LoggedProfileFragment...");
-            getFragmentManager()
+            getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, new LoggedProfileFragment(), "LoggedProfileFragment")
                     .commit();

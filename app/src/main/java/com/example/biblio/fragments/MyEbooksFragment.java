@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.BuildConfig;
@@ -100,10 +100,9 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
     @Override
     public void onItemClick(int position) {
         Fragment to_render = new EbookDetailsFragment();
-        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         model.setEbook(mEbooks.get(position));
-        getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();
     }
 }

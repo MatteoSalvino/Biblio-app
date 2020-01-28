@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblio.R;
 import com.example.biblio.databinding.FiltersFragmentBinding;
 import com.example.biblio.viewmodels.SearchViewModel;
-
-import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Provider;
 import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
@@ -28,9 +26,9 @@ public class FiltersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FiltersFragmentBinding.inflate(inflater, container, false);
 
-        SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
+        SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
 
-        binding.filtersBackBtn.setOnClickListener(x -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        binding.filtersBackBtn.setOnClickListener(x -> getActivity().getSupportFragmentManager().popBackStackImmediate());
 
         binding.lowRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.LOW));
         binding.mediumRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM));

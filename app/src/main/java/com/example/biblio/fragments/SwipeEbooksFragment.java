@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.R;
@@ -21,7 +21,6 @@ import com.example.biblio.viewmodels.SwipeEbooksViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
 
@@ -47,7 +46,7 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
         binding.swipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
 
         mEbooksListener = this;
-        SwipeEbooksViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(mSwipeModel);
+        SwipeEbooksViewModel model = new ViewModelProvider(getActivity()).get(mSwipeModel);
 
         binding.swipeContainer.setOnRefreshListener(model::refreshData);
         binding.swipeContainer.setRefreshing(true);
@@ -59,17 +58,16 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
             binding.ebooksRv.setAdapter(mAdapter);
             binding.swipeContainer.setRefreshing(false);
         };
-        model.getEbooks().observe(this, swipeObserver);
+        model.getEbooks().observe(getViewLifecycleOwner(), swipeObserver);
         return binding.getRoot();
     }
 
     @Override
     public void onItemClick(int position) {
-        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         model.setEbook(mEbooks.get(position));
         Fragment to_render = new EbookDetailsFragment();
-        getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                .getFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();
     }
 }

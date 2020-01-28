@@ -58,7 +58,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                getFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         };
 

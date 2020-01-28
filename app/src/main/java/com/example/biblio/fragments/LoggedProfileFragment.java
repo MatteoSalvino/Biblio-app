@@ -41,7 +41,7 @@ public class LoggedProfileFragment extends Fragment {
 
         binding.logoutBtn.setOnClickListener(view -> {
             SimpleBiblioHelper.removeCurrentUser(getContext());
-            getFragmentManager()
+            getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .remove(this)
                     .replace(R.id.fragment_container, new ProfileFragment(), ProfileFragment.TAG)

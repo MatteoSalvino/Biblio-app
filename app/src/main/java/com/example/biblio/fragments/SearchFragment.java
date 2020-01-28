@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +28,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import lrusso96.simplebiblio.core.Ebook;
@@ -46,8 +45,8 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SearchFragmentBinding.inflate(inflater, container, false);
 
-        SearchViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(SearchViewModel.class);
-        ebook_model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
+        ebook_model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
 
         binding.filtersBtn.setOnClickListener(view -> renderFragment(new FiltersFragment()));
         binding.recyclerView.setHasFixedSize(true);
@@ -71,7 +70,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
             EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, adapterListener, getContext());
             binding.recyclerView.setAdapter(mAdapter);
         };
-        model.getEbooks().observe(this, searchObserver);
+        model.getEbooks().observe(getViewLifecycleOwner(), searchObserver);
 
         binding.sortBtn.setOnClickListener(v -> {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -118,9 +117,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
     }
 
     private void renderFragment(Fragment to_render) {
-        Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(getActivity())
-                .getSupportFragmentManager().findFragmentById(R.id.fragment_container))
-                .getFragmentManager()).beginTransaction().replace(R.id.fragment_container, to_render)
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
                 .addToBackStack(null).commit();
     }
 }

@@ -22,6 +22,7 @@ import com.example.biblio.api.RatingResult;
 import com.example.biblio.api.Review;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
+import com.example.biblio.databinding.ReviewsFragmentAppbarBinding;
 import com.example.biblio.databinding.ReviewsFragmentBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
@@ -52,6 +53,7 @@ public class ReviewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = ReviewsFragmentBinding.inflate(inflater, container, false);
+        ReviewsFragmentAppbarBinding appbarBinding = binding.appbar;
 
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         mEbook = model.getEbook().getValue();
@@ -60,7 +62,7 @@ public class ReviewsFragment extends Fragment {
         user = SimpleBiblioHelper.getCurrentUser(getContext());
 
         int visibility = user == null ? View.INVISIBLE : View.VISIBLE;
-        binding.reviewsAddBtn.setVisibility(visibility);
+        appbarBinding.reviewsAddBtn.setVisibility(visibility);
 
         //Initialize AlertDialog to post a new review
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -120,8 +122,8 @@ public class ReviewsFragment extends Fragment {
 
         });
 
-        binding.reviewsBackBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
-        binding.reviewsAddBtn.setOnClickListener(view -> alertDialog.show());
+        appbarBinding.backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        appbarBinding.reviewsAddBtn.setOnClickListener(view -> alertDialog.show());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.ebooksRv.setLayoutManager(mLayoutManager);

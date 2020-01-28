@@ -61,6 +61,7 @@ public class ReviewsFragment extends Fragment {
 
         user = SimpleBiblioHelper.getCurrentUser(getContext());
 
+        // Show reviews button to logged-in users only
         int visibility = user == null ? View.INVISIBLE : View.VISIBLE;
         appbarBinding.reviewsAddBtn.setVisibility(visibility);
 
@@ -108,11 +109,13 @@ public class ReviewsFragment extends Fragment {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
             new Thread(() -> {
-                RatingResult result = user.rate(mEbook, (int) ratingBar.getRating());
+                int rating = (int) ratingBar.getRating();
+                RatingResult result = user.rate(mEbook, rating);
                 if (result != null) {
                     logger.d(result.toString());
                 }
-                //todo: add review to Firebase
+                Review review = new Review(user, mEbook, reviewBody.getText().toString(), rating);
+                uploadReview(review);
             }).start();
 
             alertDialog.dismiss();
@@ -134,9 +137,14 @@ public class ReviewsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void loadFakeReviews() {
+    /**
+     * This is just a debug method to (locally) generate fake reviews, without hitting the server.
+     *
+     * @param num: number of feke reviews to generate
+     */
+    private void loadFakeReviews(int num) {
         List<Review> mReviews = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < num; i++) {
             User u = new UserBuilder().setUsername(String.format(Locale.getDefault(), "User - %d", i)).build();
             mReviews.add(new Review(u, mEbook, "Very nice ebook", 5 - i));
         }
@@ -145,6 +153,19 @@ public class ReviewsFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Upload a review to Firebase. Note that an user can post at most one review per book, so only
+     * the latest review is stored: the previous, if any, is overwritten.
+     *
+     * @param review instance to upload
+     */
+    //TODO: implement method
+    private void uploadReview(Review review) {
+    }
+
+    /**
+     * Retrieve reviews from Firebase.
+     */
     private void retrieveReviews() {
         List<Review> mReviews = new ArrayList<>();
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();

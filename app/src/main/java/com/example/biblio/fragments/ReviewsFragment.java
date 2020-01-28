@@ -1,6 +1,5 @@
 package com.example.biblio.fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,11 +14,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.R;
 import com.example.biblio.adapters.ReviewsAdapter;
+import com.example.biblio.api.RatingResult;
 import com.example.biblio.api.Review;
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
@@ -35,13 +34,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Ebook;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
-import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KEY;
 
 public class ReviewsFragment extends Fragment {
     public static final String TAG = "ReviewsFragment";
@@ -60,14 +57,10 @@ public class ReviewsFragment extends Fragment {
         mEbook = model.getEbook().getValue();
         assert mEbook != null;
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         user = SimpleBiblioHelper.getCurrentUser(getContext());
 
-        //Logged user
-        if (!sharedPreferences.contains(CURRENT_USER_KEY)) {
-            binding.reviewsAddBtn.setVisibility(View.INVISIBLE);
-        } else
-            binding.reviewsAddBtn.setVisibility(View.VISIBLE);
+        int visibility = user == null ? View.INVISIBLE : View.VISIBLE;
+        binding.reviewsAddBtn.setVisibility(visibility);
 
         //Initialize AlertDialog to post a new review
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -85,7 +78,6 @@ public class ReviewsFragment extends Fragment {
         reviewBody.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -113,12 +105,15 @@ public class ReviewsFragment extends Fragment {
         postBtn.setOnClickListener(myView -> {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
 
-
-            user.rate(mEbook, (int) ratingBar.getRating());
-            //todo: add review to Firebase
+            new Thread(() -> {
+                RatingResult result = user.rate(mEbook, (int) ratingBar.getRating());
+                if (result != null) {
+                    logger.d(result.toString());
+                }
+                //todo: add review to Firebase
+            }).start();
 
             alertDialog.dismiss();
-
             //Clean dialog's fields
             reviewBody.setText("");
             ratingBar.setRating(0);

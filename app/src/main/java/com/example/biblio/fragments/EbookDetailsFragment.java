@@ -129,7 +129,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         }).start();
 
-        appbarBinding.mainBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        appbarBinding.mainBackBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
 
         binding.mainDownloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {

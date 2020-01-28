@@ -52,9 +52,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     }
 
     public static class ReviewsViewHolder extends RecyclerView.ViewHolder {
-        TextView nameView;
-        MaterialRatingBar ratingBar;
-        TextView textView;
+        final TextView nameView;
+        final MaterialRatingBar ratingBar;
+        final TextView textView;
 
         ReviewsViewHolder(View v) {
             super(v);

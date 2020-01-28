@@ -46,10 +46,10 @@ public class SearchViewModel extends AndroidViewModel {
     private final Map<String, Boolean> filteredProviders;
     private final Map<String, Boolean> filteredLanguages;
     private final LogHelper logger = new LogHelper(getClass());
+    private final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
     private List<Ebook> result;
     private List<Ebook> current;
     private MutableLiveData<List<Ebook>> ebooks;
-    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
     public SearchViewModel(Application application) {
         super(application);

@@ -8,16 +8,16 @@ import org.jetbrains.annotations.Nullable;
 import lrusso96.simplebiblio.core.Ebook;
 
 public final class User {
+    final String email;
+    final String password;
+    final String oauth_token;
     private final int MAX_TRIES = 2;
     private final LogHelper logger = new LogHelper(this.getClass());
+    private final String photo_uri;
     String username;
-    String email;
-    String password;
     String token;
-    String oauth_token;
     int total_downloads;
     int total_reviews;
-    private String photo_uri;
 
     User(@NotNull UserBuilder builder) {
         this.email = builder.email;

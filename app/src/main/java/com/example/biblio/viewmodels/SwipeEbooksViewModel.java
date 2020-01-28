@@ -33,8 +33,8 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.STANDARD_EBOOKS
 
 public abstract class SwipeEbooksViewModel extends AndroidViewModel {
     private final LogHelper logger = new LogHelper(getClass());
+    private final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
     private MutableLiveData<List<Ebook>> ebooks;
-    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplication().getApplicationContext());
 
 
     public SwipeEbooksViewModel(@NonNull Application application) {

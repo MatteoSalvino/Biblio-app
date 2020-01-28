@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -54,7 +54,7 @@ public class ReviewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ReviewsFragmentBinding binding = ReviewsFragmentBinding.inflate(inflater, container, false);
 
-        EbookDetailsViewModel model = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(EbookDetailsViewModel.class);
+        EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         mEbook = model.getEbook().getValue();
         assert mEbook != null;
 
@@ -120,7 +120,7 @@ public class ReviewsFragment extends Fragment {
 
         });
 
-        binding.reviewsBackBtn.setOnClickListener(view -> Objects.requireNonNull(getFragmentManager()).popBackStackImmediate());
+        binding.reviewsBackBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
         binding.reviewsAddBtn.setOnClickListener(view -> alertDialog.show());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());

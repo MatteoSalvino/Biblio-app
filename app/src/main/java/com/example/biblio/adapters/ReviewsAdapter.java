@@ -29,7 +29,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     /**
      * Updates the current dataset.
      * Note that you should call notifyDatasetChanged after this, in order to update the view.
-     *
      */
     public void setReviews(@NotNull List<Review> reviews) {
         this.mReviews = reviews;

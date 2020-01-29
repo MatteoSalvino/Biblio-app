@@ -79,4 +79,5 @@
     <string name="null_field_placeholder" translatable="false">-</string>
     <string name="ebook_cover_cd">Book cover</string>
     <string name="other_lang">Other</string>
+    <string name="EAN_pref" translatable="false">scanning</string>
 </resources>

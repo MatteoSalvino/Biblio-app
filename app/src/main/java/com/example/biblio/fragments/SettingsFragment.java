@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URI;
 import java.util.Objects;
 
+import static com.example.biblio.helpers.SharedPreferencesHelper.EAN_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MAX_RESULTS_KEY;
@@ -124,6 +125,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             int val_5 = val - (val % 5);
             new Handler().post(() -> libgen_max.setValue(val_5));
             editor.putInt(LIBGEN_MAX_RESULTS_KEY, val_5);
+            return true;
+        });
+
+        SwitchPreference ean_scanning = findPreference(getResources().getString(R.string.EAN_pref));
+        ean_scanning.setOnPreferenceChangeListener((preference, newValue) -> {
+            editor.putBoolean(EAN_ENABLED_KEY, (boolean) newValue);
+            editor.apply();
             return true;
         });
     }

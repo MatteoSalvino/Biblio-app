@@ -13,5 +13,5 @@ public class SharedPreferencesHelper {
     public static final String FEEDBOOKS_ENABLED_KEY = "feedbooks_enabled";
     public static final String STANDARD_EBOOKS_ENABLED_KEY = "standard_ebooks_enabled";
 
-
+    public static final String EAN_ENABLED_KEY = "ean_enabled";
 }

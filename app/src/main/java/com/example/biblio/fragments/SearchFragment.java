@@ -1,6 +1,7 @@
 package com.example.biblio.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +31,8 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import lrusso96.simplebiblio.core.Ebook;
+
+import static com.example.biblio.helpers.SharedPreferencesHelper.EAN_ENABLED_KEY;
 
 public class SearchFragment extends XFragment implements EbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
@@ -92,10 +96,11 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
             alert.show();
         });
 
-        binding.scannerBtn.setOnClickListener(view -> {
-            IntentIntegrator.forSupportFragment(this).initiateScan();
-        });
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+        binding.scannerBtn.setOnClickListener(view -> IntentIntegrator.forSupportFragment(this).initiateScan());
+        if (!sharedPreferences.getBoolean(EAN_ENABLED_KEY, true))
+            binding.scannerBtn.setVisibility(View.INVISIBLE);
         return binding.getRoot();
     }
 

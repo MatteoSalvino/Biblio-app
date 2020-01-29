@@ -9,23 +9,21 @@
         android:id="@+id/cover"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_marginHorizontal="10dp"
+        android:layout_weight="3"
         android:contentDescription="@string/ebook_cover_cd"
-        android:paddingStart="10dp"
-        android:paddingEnd="2dp"
         tools:src="@drawable/book" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
+        android:layout_weight="7"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/main_book_text"

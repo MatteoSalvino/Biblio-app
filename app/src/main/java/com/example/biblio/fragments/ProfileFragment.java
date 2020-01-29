@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.biblio.LoginActivity;
-import com.example.biblio.R;
 import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.helpers.XFragment;
 

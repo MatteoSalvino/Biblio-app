@@ -27,9 +27,13 @@ import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +49,11 @@ public class ReviewsFragment extends XFragment {
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
+    private FirebaseFirestore mFirestore;
 
     public ReviewsFragment() {
         super(ReviewsFragment.class);
+        mFirestore = FirebaseFirestore.getInstance();
     }
 
     @Nullable
@@ -107,14 +113,15 @@ public class ReviewsFragment extends XFragment {
         cancelBtn.setOnClickListener(myView -> alertDialog.dismiss());
 
         postBtn.setOnClickListener(myView -> {
-            Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+            String text = reviewBody.getText().toString();
+            Toast.makeText(getContext(), text + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
             new Thread(() -> {
                 int rating = (int) ratingBar.getRating();
                 RatingResult result = user.rate(mEbook, rating);
                 if (result != null) {
                     logger.d(result.toString());
                 }
-                Review review = new Review(user, mEbook, reviewBody.getText().toString(), rating);
+                Review review = new Review(user, mEbook, text, rating);
                 uploadReview(review);
             }).start();
 
@@ -154,24 +161,66 @@ public class ReviewsFragment extends XFragment {
     }
 
     /**
-     * Upload a review to Firebase. Note that an user can post at most one review per book, so only
+     * Upload a review to Firebase. Note that an user can post at most one review per ebook, so only
      * the latest review is stored: the previous, if any, is overwritten.
      *
      * @param review instance to upload
      */
-    //TODO: implement method
-    private void uploadReview(Review review) {
+    private void uploadReview(@NotNull Review review) {
+        CollectionReference reviews = mFirestore.collection("reviews");
+        reviews.whereEqualTo("providerId", getProviderId(mEbook.getProviderName()))
+                .whereEqualTo("ebookId", mEbook.getId())
+                .whereEqualTo("reviewer", review.getReviewer())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot snapshots = task.getResult();
+                        if (snapshots == null) {
+                            logger.d("Null snapshot");
+                            return;
+                        }
+                        boolean shouldAdd = true;
+                        for (QueryDocumentSnapshot document : snapshots) {
+                            logger.d(document.getId() + " => " + document.getData());
+                            String id = document.getId();
+                            updateReview(review, id);
+                            shouldAdd = false;
+                            break;
+                        }
+                        if (shouldAdd)
+                            reviews.add(review)
+                                    .addOnSuccessListener(documentReference -> logger.d("DocumentSnapshot written with ID: " + documentReference.getId()))
+                                    .addOnFailureListener(e -> logger.w("Error adding document", e));
+
+                        updateUI(review);
+                    } else {
+                        logger.d("Error getting documents", task.getException());
+                    }
+                });
+    }
+
+
+    /**
+     * Updates and existing review, overriding the rating value and the text.
+     *
+     * @param review the new object to insert.
+     * @param id     identifier of document (i.e. the old review) to be updated.
+     */
+    private void updateReview(@NotNull Review review, String id) {
+        DocumentReference oldReview = mFirestore.collection("reviews").document(id);
+        oldReview.update("rating", review.getRating(), "text", review.getText())
+                .addOnSuccessListener(x -> logger.d("DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> logger.w("Error updating document", e));
     }
 
     /**
-     * Retrieve reviews from Firebase.
+     * Retrieve from Firebase the reviews associated to current ebook and populates the view.
      */
     private void retrieveReviews() {
         List<Review> mReviews = new ArrayList<>();
-        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         mFirestore.collection("reviews")
-                .whereEqualTo("provider_id", getProviderId(mEbook.getProviderName()))
-                .whereEqualTo("ebook_id", mEbook.getId())
+                .whereEqualTo("providerId", getProviderId(mEbook.getProviderName()))
+                .whereEqualTo("ebookId", mEbook.getId())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -185,19 +234,42 @@ public class ReviewsFragment extends XFragment {
                             logger.d(document.getId() + " => " + document.getData());
                             mReviews.add(rev);
                         }
-                        if (mReviews.isEmpty()) {
-                            binding.reviewsIvTemplate.setVisibility(View.VISIBLE);
-                            binding.reviewsTvTemplate.setVisibility(View.VISIBLE);
-                        } else {
-                            binding.reviewsIvTemplate.setVisibility(View.INVISIBLE);
-                            binding.reviewsTvTemplate.setVisibility(View.INVISIBLE);
-                        }
-
-                        mAdapter.setReviews(mReviews);
-                        mAdapter.notifyDataSetChanged();
+                        setupUI(mReviews);
                     } else {
-                        logger.d(String.format("Error getting documents: %s", task.getException()));
+                        logger.d("Error getting documents", task.getException());
                     }
                 });
+    }
+
+    /*
+     * Hides the placeholders that are visible by default if no review is present. Call this if at
+     * least one review has been retrieved.
+     */
+    private void hidePlaceholders() {
+        binding.reviewsIvTemplate.setVisibility(View.INVISIBLE);
+        binding.reviewsTvTemplate.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Shows the reviews passed in input.
+     *
+     * @param reviews the dataset to be displayed
+     */
+    private void setupUI(@NotNull List<Review> reviews) {
+        hidePlaceholders();
+        mAdapter.setReviews(reviews);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Updates the dataset inserting a new review.
+     *
+     * @param review the new inserted review
+     *               TODO: consider refactoring
+     */
+    private void updateUI(Review review) {
+        hidePlaceholders();
+        mAdapter.addReview(review);
+        mAdapter.notifyDataSetChanged();
     }
 }

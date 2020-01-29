@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120sp"
+    android:layout_height="120dp"
     android:layout_margin="6dp"
     android:orientation="vertical">
 
@@ -31,7 +31,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:orientation="vertical">
 
                 <TextView
@@ -74,15 +74,13 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="4">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/read_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
+                    android:layout_centerInParent="true"
                     android:backgroundTint="@color/add_button"
                     android:text="@string/read_now_msg"
                     android:textAllCaps="false"

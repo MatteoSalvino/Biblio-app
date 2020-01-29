@@ -26,8 +26,32 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     public ReviewsAdapter() {
     }
 
+    /**
+     * Updates the current dataset.
+     * Note that you should call notifyDatasetChanged after this, in order to update the view.
+     *
+     */
     public void setReviews(@NotNull List<Review> reviews) {
         this.mReviews = reviews;
+    }
+
+
+    /**
+     * Add a review to current dataset. It enforces the constraint that at most 1 review is allowed
+     * per user: so, in case of conflict, overrides the old value.
+     *
+     * @param review new object to add to the collection
+     * @apiNote This method does not use Java 8 removeIf method, introduced in API 24, in order to
+     * support API 21+.
+     */
+    public void addReview(Review review) {
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(review);
+        for (Review x : mReviews) {
+            if (!x.getReviewer().equals(review.getReviewer()))
+                reviews.add(x);
+        }
+        mReviews = reviews;
     }
 
     @NotNull

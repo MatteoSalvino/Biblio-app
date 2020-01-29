@@ -10,10 +10,10 @@ import lrusso96.simplebiblio.core.Ebook;
 public final class User {
     final String email;
     final String password;
-    final String oauth_token;
+    final String oauthToken;
     private final int MAX_TRIES = 2;
     private final LogHelper logger = new LogHelper(this.getClass());
-    private final String photo_uri;
+    private final String photoUri;
     String username;
     String token;
     int total_downloads;
@@ -23,8 +23,8 @@ public final class User {
         this.email = builder.email;
         this.password = builder.password;
         this.username = builder.username;
-        this.photo_uri = (builder.photo == null) ? null : builder.photo.toString();
-        this.oauth_token = builder.oauth_token;
+        this.photoUri = (builder.photo == null) ? null : builder.photo.toString();
+        this.oauthToken = builder.oauth_token;
     }
 
     public boolean signup() {
@@ -92,6 +92,6 @@ public final class User {
     }
 
     public String getPhotoUri() {
-        return photo_uri;
+        return photoUri;
     }
 }

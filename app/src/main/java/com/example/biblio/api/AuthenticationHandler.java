@@ -39,12 +39,13 @@ class AuthenticationHandler {
             builder.add(USERNAME_PAR, user.username)
                     .add(PASSWORD_CONFIRMATION_PAR, user.password);
         }
-        if (oauth) builder.add(GOOGLE_TOKEN_PAR, user.oauth_token);
+        if (oauth) builder.add(GOOGLE_TOKEN_PAR, user.oauthToken);
         return builder.build();
     }
 
     static boolean signup(@NotNull User user) {
-        Request req = getAuthReqBuilder(user).url(String.format("%s/signup", ENDPOINT))
+        Request req = getAuthReqBuilder(user)
+                .url(String.format("%s/signup", ENDPOINT))
                 .post(buildForm(user, true, false))
                 .build();
         try {
@@ -60,7 +61,7 @@ class AuthenticationHandler {
     }
 
     static boolean login(@NotNull User user) {
-        boolean enabled = user.oauth_token != null;
+        boolean enabled = user.oauthToken != null;
         Request req = getAuthReqBuilder(user).url(String.format("%s/auth/login", ENDPOINT))
                 .post(buildForm(user, enabled, enabled))
                 .build();

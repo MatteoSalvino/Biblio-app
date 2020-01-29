@@ -66,7 +66,6 @@ class EbooksHandler {
         }
     }
 
-
     @NotNull
     static RatingResult notifyDownload(User user, @NotNull Ebook ebook) throws UnhautorizedRequestException {
         RequestBody formBody = new FormBody.Builder()

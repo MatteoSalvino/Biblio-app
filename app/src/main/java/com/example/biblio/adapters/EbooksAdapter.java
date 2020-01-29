@@ -19,18 +19,20 @@ import java.util.List;
 
 import lrusso96.simplebiblio.core.Ebook;
 
-
+/**
+ * RecyclerView adapter to manage and show ebooks.
+ */
 public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksViewHolder> {
-    private final List<Ebook> mDataset;
+    private final List<Ebook> ebooks;
     private final OnItemListener itemListener;
-    private final RequestOptions option;
-    private final Context mContext;
+    private final RequestOptions cropOptions;
+    private final Context context;
 
-    public EbooksAdapter(List<Ebook> myDataset, OnItemListener listener, Context context) {
-        this.mDataset = myDataset;
+    public EbooksAdapter(List<Ebook> ebooks, OnItemListener listener, Context context) {
+        this.ebooks = ebooks;
         this.itemListener = listener;
-        this.mContext = context;
-        option = new RequestOptions().centerCrop();
+        this.context = context;
+        cropOptions = new RequestOptions().centerCrop();
     }
 
     @NotNull
@@ -44,49 +46,46 @@ public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksView
 
     @Override
     public void onBindViewHolder(EbooksViewHolder holder, int position) {
-        Ebook elem = mDataset.get(position);
-        holder.mBookTitle.setText(elem.getTitle());
-        holder.mBookAuthor.setText(elem.getAuthor());
+        Ebook elem = ebooks.get(position);
+        holder.ebookTitle.setText(elem.getTitle());
+        holder.ebookAuthor.setText(elem.getAuthor());
         int num_pages = elem.getPages();
-        holder.mBookPages.setText(String.format("%s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
+        holder.ebookPages.setText(String.format("%s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
         if (elem.getCover() != null)
-            Glide.with(mContext).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(holder.mBookCover);
+            Glide.with(context).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(cropOptions).into(holder.ebookCover);
         else
-            Glide.with(mContext).load(R.drawable.no_image).apply(option).into(holder.mBookCover);
+            Glide.with(context).load(R.drawable.no_image).apply(cropOptions).into(holder.ebookCover);
 
-        holder.mBookSource.setText(mDataset.get(position).getSource());
+        holder.ebookSource.setText(ebooks.get(position).getSource());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return ebooks.size();
     }
-
 
     public interface OnItemListener {
         void onItemClick(int position);
     }
 
     public static class EbooksViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TextView mBookTitle;
-        final TextView mBookAuthor;
-        final ImageView mBookCover;
-        final TextView mBookPages;
-        final TextView mBookSource;
+        final TextView ebookTitle;
+        final TextView ebookAuthor;
+        final ImageView ebookCover;
+        final TextView ebookPages;
+        final TextView ebookSource;
         final OnItemListener itemListener;
 
-
-        EbooksViewHolder(View v, OnItemListener listener) {
-            super(v);
-            mBookTitle = v.findViewById(R.id.title);
-            mBookAuthor = v.findViewById(R.id.author);
-            mBookCover = v.findViewById(R.id.cover);
-            mBookPages = v.findViewById(R.id.pages);
-            mBookSource = v.findViewById(R.id.source);
+        EbooksViewHolder(View view, OnItemListener listener) {
+            super(view);
+            ebookTitle = view.findViewById(R.id.title);
+            ebookAuthor = view.findViewById(R.id.author);
+            ebookCover = view.findViewById(R.id.cover);
+            ebookPages = view.findViewById(R.id.pages);
+            ebookSource = view.findViewById(R.id.source);
 
             this.itemListener = listener;
-
-            v.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
 
         @Override

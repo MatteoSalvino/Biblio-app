@@ -70,4 +70,8 @@
     <string name="italian_lang">Italiano</string>
     <string name="ebook_cover_cd">Copertina</string>
     <string name="other_lang">Altro</string>
+    <string name="storage_permission_title">Permessi per accedere alla memoria</string>
+    <string name="storage_permission_msg">Per scaricare i file è necessario fornire i permessi di lettura e scrittura</string>
+    <string name="no_sd_card_msg">Card SD non trovata</string>
+    <string name="login_error_title">Errore</string>
 </resources>

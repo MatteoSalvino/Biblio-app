@@ -35,7 +35,6 @@ public class ProfileFragment extends XFragment {
             startActivityForResult(i, RC_SIGN_IN);
         });
 
-        //todo: add to bar!
         binding.settingsBtn.setOnClickListener(view -> moveTo(new SettingsFragment(), SettingsFragment.TAG));
         return binding.getRoot();
     }

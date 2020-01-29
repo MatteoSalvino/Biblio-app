@@ -21,7 +21,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * RecyclerView adapter for a list of Reviews.
  */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder> {
-    private List<Review> mReviews = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
     public ReviewsAdapter() {
     }
@@ -31,7 +31,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
      * Note that you should call notifyDatasetChanged after this, in order to update the view.
      */
     public void setReviews(@NotNull List<Review> reviews) {
-        this.mReviews = reviews;
+        this.reviews = reviews;
     }
 
 
@@ -44,13 +44,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
      * support API 21+.
      */
     public void addReview(Review review) {
-        List<Review> reviews = new ArrayList<>();
+        List<Review> newReviews = new ArrayList<>();
         reviews.add(review);
-        for (Review x : mReviews) {
-            if (!x.getReviewer().equals(review.getReviewer()))
-                reviews.add(x);
+        for (Review rev : reviews) {
+            if (!rev.getReviewer().equals(review.getReviewer()))
+                newReviews.add(rev);
         }
-        mReviews = reviews;
+        this.reviews = newReviews;
     }
 
     @NotNull
@@ -63,27 +63,27 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
 
     @Override
     public void onBindViewHolder(ReviewsViewHolder holder, int position) {
-        Review review = mReviews.get(position);
-        holder.nameView.setText(review.getReviewer());
-        holder.textView.setText(review.getText());
-        holder.ratingBar.setRating((float) review.getRating());
+        Review review = reviews.get(position);
+        holder.username.setText(review.getReviewer());
+        holder.text.setText(review.getText());
+        holder.rating.setRating((float) review.getRating());
     }
 
     @Override
     public int getItemCount() {
-        return mReviews.size();
+        return reviews.size();
     }
 
     public static class ReviewsViewHolder extends RecyclerView.ViewHolder {
-        final TextView nameView;
-        final MaterialRatingBar ratingBar;
-        final TextView textView;
+        final TextView username;
+        final MaterialRatingBar rating;
+        final TextView text;
 
-        ReviewsViewHolder(View v) {
-            super(v);
-            nameView = itemView.findViewById(R.id.reviewItemUsername);
-            ratingBar = itemView.findViewById(R.id.reviewItemRating);
-            textView = itemView.findViewById(R.id.reviewItemText);
+        ReviewsViewHolder(View view) {
+            super(view);
+            username = itemView.findViewById(R.id.reviewItemUsername);
+            rating = itemView.findViewById(R.id.reviewItemRating);
+            text = itemView.findViewById(R.id.reviewItemText);
         }
     }
 }

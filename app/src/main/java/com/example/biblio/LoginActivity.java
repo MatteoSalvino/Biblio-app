@@ -63,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showErrorMessage() {
         AlertDialog dialog = new AlertDialog.Builder(this)
-                //todo: extract string
-                .setTitle("Error")
+                .setTitle(R.string.login_error_title)
                 .setMessage(R.string.login_error_msg)
                 .setIcon(R.drawable.baseline_error_outline_24)
                 .create();

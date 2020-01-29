@@ -13,13 +13,13 @@ public final class UserBuilder {
     String email;
     String password;
     Uri photo;
-    String oauth_token;
+    String oauthToken;
 
     public UserBuilder fromGoogleAccount(@NotNull GoogleSignInAccount account) {
         byepassPwd(this);
         username = account.getDisplayName();
         email = account.getEmail();
-        oauth_token = account.getIdToken();
+        oauthToken = account.getIdToken();
         photo = account.getPhotoUrl();
         return this;
     }

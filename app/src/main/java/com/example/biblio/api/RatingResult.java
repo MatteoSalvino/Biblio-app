@@ -3,12 +3,12 @@ package com.example.biblio.api;
 public class RatingResult {
     private final int downloads;
     private final int ratings;
-    private final double rating_avg;
+    private final double ratingAvg;
 
-    RatingResult(int downloads, int ratings, double rating_avg) {
+    RatingResult(int downloads, int ratings, double ratingAvg) {
         this.downloads = downloads;
         this.ratings = ratings;
-        this.rating_avg = rating_avg;
+        this.ratingAvg = ratingAvg;
     }
 
     public int getRatings() {
@@ -16,7 +16,7 @@ public class RatingResult {
     }
 
     public double getRatingAvg() {
-        return rating_avg;
+        return ratingAvg;
     }
 
     public int getDownloads() {
@@ -28,7 +28,7 @@ public class RatingResult {
         return "RatingResult{" +
                 "downloads=" + downloads +
                 ", ratings=" + ratings +
-                ", rating_avg=" + rating_avg +
+                ", rating_avg=" + ratingAvg +
                 '}';
     }
 }

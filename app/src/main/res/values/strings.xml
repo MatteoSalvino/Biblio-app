@@ -80,4 +80,8 @@
     <string name="ebook_cover_cd">Book cover</string>
     <string name="other_lang">Other</string>
     <string name="EAN_pref" translatable="false">scanning</string>
+    <string name="storage_permission_title">Read/Write external local storage permission</string>
+    <string name="storage_permission_msg">Both read and write permission are needed to store and retrieve downloaded files.</string>
+    <string name="no_sd_card_msg">SD Card not found</string>
+    <string name="login_error_title">Error</string>
 </resources>

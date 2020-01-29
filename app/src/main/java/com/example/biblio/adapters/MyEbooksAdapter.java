@@ -21,14 +21,15 @@ import java.util.List;
 import lrusso96.simplebiblio.core.Ebook;
 
 public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEbooksViewHolder> {
-    private final List<Ebook> mDataset;
+    private final List<Ebook> ebooks;
     private final OnItemListener itemListener;
-    private final Context mContext;
+    private final Context context;
+    private RequestOptions cropOptions = new RequestOptions().centerCrop();
 
-    public MyEbooksAdapter(List<Ebook> myDataset, OnItemListener listener, Context context) {
-        this.mDataset = myDataset;
+    public MyEbooksAdapter(List<Ebook> ebooks, OnItemListener listener, Context context) {
+        this.ebooks = ebooks;
         this.itemListener = listener;
-        this.mContext = context;
+        this.context = context;
     }
 
     @NotNull
@@ -42,23 +43,21 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
 
     @Override
     public void onBindViewHolder(MyEbooksViewHolder holder, int position) {
-        Ebook elem = mDataset.get(position);
-        holder.mEbookTitle.setText(elem.getTitle());
-        holder.mEbookAuthor.setText(elem.getAuthor());
+        Ebook elem = ebooks.get(position);
+        holder.ebookTitle.setText(elem.getTitle());
+        holder.ebookAuthor.setText(elem.getAuthor());
         int num_pages = elem.getPages();
-        holder.mEbookPages.setText(String.format("%s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
-        RequestOptions centerCrop = new RequestOptions().centerCrop();
+        holder.ebookPages.setText(String.format("%s", (num_pages == 0) ? "-" : String.valueOf(num_pages)));
         if (elem.getCover() != null)
-            Glide.with(mContext).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(centerCrop).into(holder.mEbookCover);
+            Glide.with(context).load(elem.getCover().toString()).placeholder(R.drawable.no_image).apply(cropOptions).into(holder.ebookCover);
         else
-            Glide.with(mContext).load(R.drawable.no_image).apply(centerCrop).into(holder.mEbookCover);
+            Glide.with(context).load(R.drawable.no_image).apply(cropOptions).into(holder.ebookCover);
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return ebooks.size();
     }
-
 
     public interface OnItemListener {
         void onItemClick(int position);
@@ -67,23 +66,23 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
     }
 
     public static class MyEbooksViewHolder extends RecyclerView.ViewHolder {
-        final TextView mEbookTitle;
-        final TextView mEbookAuthor;
-        final ImageView mEbookCover;
-        final TextView mEbookPages;
-        final MaterialButton mReadButton;
+        final TextView ebookTitle;
+        final TextView ebookAuthor;
+        final ImageView ebookCover;
+        final TextView ebookPages;
+        final MaterialButton readButton;
         final OnItemListener itemListener;
 
-        MyEbooksViewHolder(View v, OnItemListener listener) {
-            super(v);
-            mEbookTitle = v.findViewById(R.id.title);
-            mEbookAuthor = v.findViewById(R.id.author);
-            mEbookCover = v.findViewById(R.id.cover);
-            mEbookPages = v.findViewById(R.id.pages);
-            mReadButton = v.findViewById(R.id.read_btn);
+        MyEbooksViewHolder(View view, OnItemListener listener) {
+            super(view);
+            ebookTitle = view.findViewById(R.id.title);
+            ebookAuthor = view.findViewById(R.id.author);
+            ebookCover = view.findViewById(R.id.cover);
+            ebookPages = view.findViewById(R.id.pages);
+            readButton = view.findViewById(R.id.read_btn);
             this.itemListener = listener;
-            mReadButton.setOnClickListener(x -> this.itemListener.onReadButtonClick(getAdapterPosition()));
-            v.setOnClickListener(x -> itemListener.onItemClick((getAdapterPosition())));
+            readButton.setOnClickListener(x -> this.itemListener.onReadButtonClick(getAdapterPosition()));
+            view.setOnClickListener(x -> itemListener.onItemClick((getAdapterPosition())));
         }
     }
 }

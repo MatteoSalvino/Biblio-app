@@ -164,12 +164,11 @@ public class EbookDetailsFragment extends XFragment {
                     }
                 };
 
-                //fixme: extract strings
                 MultiplePermissionsListener dialogMultiplePermissionsListener =
                         DialogOnAnyDeniedMultiplePermissionsListener.Builder
                                 .withContext(getContext())
-                                .withTitle("Read/Write external local storage permission")
-                                .withMessage("Both read and write permission are needed to store and retrieve downloaded files.")
+                                .withTitle(R.string.storage_permission_title)
+                                .withMessage(R.string.storage_permission_msg)
                                 .withButtonText(android.R.string.ok)
                                 .withIcon(getContext().getDrawable(R.drawable.baseline_error_outline_24))
                                 .build();
@@ -180,9 +179,9 @@ public class EbookDetailsFragment extends XFragment {
                         .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .withListener(compositePermissionsListener).check();
             } else {
-                logger.d("SD Card not available");
-                //fixme: extract string
-                Toast.makeText(getContext(), "SD Card not found", Toast.LENGTH_LONG).show();
+                String errorMsg = getResources().getString(R.string.no_sd_card_msg);
+                logger.d(errorMsg);
+                Toast.makeText(getContext(), errorMsg, Toast.LENGTH_LONG).show();
             }
         });
 

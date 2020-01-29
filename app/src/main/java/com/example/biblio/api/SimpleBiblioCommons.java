@@ -55,6 +55,7 @@ public final class SimpleBiblioCommons {
         try {
             return body.getString(MESSAGE_KEY);
         } catch (JSONException e) {
+            logger.w("error while extracting message", e);
             return "";
         }
     }

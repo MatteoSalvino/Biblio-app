@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120sp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_margin="6dp"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
@@ -17,10 +16,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120sp"
+            android:layout_height="120dp"
             android:descendantFocusability="blocksDescendants"
             android:orientation="horizontal"
-            android:weightSum="4">
+            android:weightSum="10">
 
             <ImageView
                 android:id="@+id/cover"
@@ -32,7 +31,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="7"
                 android:orientation="vertical">
 
                 <TextView
@@ -69,13 +68,13 @@
                     android:textColor="@color/text_color"
                     android:textSize="13sp"
                     app:drawableTint="@color/text_color"
-                    tools:text="150" />
+                    tools:text="860" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="3">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/read_btn"

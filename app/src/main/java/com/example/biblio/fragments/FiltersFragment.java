@@ -7,19 +7,25 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblio.R;
 import com.example.biblio.databinding.FiltersFragmentBinding;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.SearchViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import lrusso96.simplebiblio.core.Provider;
 import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 
-public class FiltersFragment extends Fragment {
+public class FiltersFragment extends XFragment {
     private FiltersFragmentBinding binding;
+
+    public FiltersFragment() {
+        super(FiltersFragment.class);
+    }
 
     @Nullable
     @Override
@@ -28,7 +34,7 @@ public class FiltersFragment extends Fragment {
 
         SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
 
-        binding.filtersBackBtn.setOnClickListener(x -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        binding.filtersBackBtn.setOnClickListener(x -> popBackStackImmediate());
 
         binding.lowRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.LOW));
         binding.mediumRatingBtn.setOnClickListener(x -> updateButtonBackgroundColors(RATING.MEDIUM));
@@ -67,7 +73,7 @@ public class FiltersFragment extends Fragment {
      *
      * @param rating the minimum value to be accepted
      */
-    private void updateButtonBackgroundColors(RATING rating) {
+    private void updateButtonBackgroundColors(@NotNull RATING rating) {
         int enabled = getResources().getColor(R.color.add_button);
         int disabled = getResources().getColor(R.color.disabled_button);
         int val = rating.getValue();

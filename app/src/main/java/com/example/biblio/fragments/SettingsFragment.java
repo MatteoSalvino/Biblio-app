@@ -36,7 +36,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private final LogHelper logger = new LogHelper(getClass());
     private SharedPreferences.Editor editor;
 
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);

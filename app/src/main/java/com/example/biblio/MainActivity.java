@@ -16,49 +16,42 @@ import com.example.biblio.fragments.ProfileFragment;
 import com.example.biblio.fragments.RecentFragment;
 import com.example.biblio.fragments.SearchFragment;
 import com.example.biblio.helpers.SimpleBiblioHelper;
+import com.example.biblio.helpers.XFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.FIRST_START_KEY;
 
 public class MainActivity extends AppCompatActivity {
-    //todo: design a suitable menu to put more than 5 items!
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
-                Fragment selectedFragment = null;
-                String TAG = "";
+                XFragment selectedFragment = null;
                 switch (item.getItemId()) {
                     case R.id.nav_search:
                         selectedFragment = new SearchFragment();
-                        TAG = SearchFragment.TAG;
                         break;
                     case R.id.nav_popular:
                         selectedFragment = new PopularFragment();
-                        TAG = PopularFragment.TAG;
                         break;
                     case R.id.nav_recent:
                         selectedFragment = new RecentFragment();
-                        TAG = RecentFragment.TAG;
                         break;
                     case R.id.nav_books:
                         selectedFragment = new MyEbooksFragment();
-                        TAG = MyEbooksFragment.TAG;
                         break;
                     case R.id.nav_profile:
                         if (SimpleBiblioHelper.getCurrentUser(getApplicationContext()) != null) {
                             selectedFragment = new LoggedProfileFragment();
-                            TAG = LoggedProfileFragment.TAG;
                         } else {
                             selectedFragment = new ProfileFragment();
-                            TAG = ProfileFragment.TAG;
                         }
                         break;
                 }
                 if (selectedFragment != null) {
-                    Fragment previous_fragment = getSupportFragmentManager().findFragmentByTag(TAG);
+                    Fragment previous_fragment = getSupportFragmentManager().findFragmentByTag(selectedFragment.TAG);
                     if (previous_fragment != null && previous_fragment.isVisible()) {
                         return false;
                     } else {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, TAG).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment, selectedFragment.TAG).commit();
                         return true;
                     }
                 }
@@ -74,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean isFirstStart = sharedPrefs.getBoolean(FIRST_START_KEY, true);
+        SearchFragment searchFragment = new SearchFragment();
         if (isFirstStart) {
             Intent i = new Intent(MainActivity.this, Introduction.class);
             runOnUiThread(() -> startActivity(i));
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), SearchFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment, searchFragment.TAG).commit();
         } else if (savedInstanceState == null)
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), SearchFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, searchFragment, searchFragment.TAG).commit();
     }
 }

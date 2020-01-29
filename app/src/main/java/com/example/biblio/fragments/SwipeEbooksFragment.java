@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
-import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SwipeEbooksViewModel;
 
@@ -24,15 +22,15 @@ import java.util.List;
 
 import lrusso96.simplebiblio.core.Ebook;
 
-public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnItemListener {
-    private final LogHelper logger = new LogHelper(getClass());
+public class SwipeEbooksFragment extends XFragment implements EbooksAdapter.OnItemListener {
     private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
     private EbooksAdapter.OnItemListener mEbooksListener;
     private ArrayList<Ebook> mEbooks;
     private SwipeEbooksRvFragmentBinding binding;
 
-    SwipeEbooksFragment(Class<? extends SwipeEbooksViewModel> clazz) {
-        mSwipeModel = clazz;
+    SwipeEbooksFragment(Class clazz, Class<? extends SwipeEbooksViewModel> model) {
+        super(clazz);
+        mSwipeModel = model;
     }
 
     @Nullable
@@ -66,8 +64,6 @@ public class SwipeEbooksFragment extends Fragment implements EbooksAdapter.OnIte
     public void onItemClick(int position) {
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         model.setEbook(mEbooks.get(position));
-        Fragment to_render = new EbookDetailsFragment();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                .addToBackStack(null).commit();
+        moveTo(new EbookDetailsFragment());
     }
 }

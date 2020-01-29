@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,8 +23,8 @@ import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
 import com.example.biblio.databinding.ReviewsFragmentAppbarBinding;
 import com.example.biblio.databinding.ReviewsFragmentBinding;
-import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,13 +40,15 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
 
-public class ReviewsFragment extends Fragment {
-    public static final String TAG = "ReviewsFragment";
-    public final LogHelper logger = new LogHelper(getClass());
+public class ReviewsFragment extends XFragment {
     private ReviewsFragmentBinding binding;
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
+
+    public ReviewsFragment() {
+        super(ReviewsFragment.class);
+    }
 
     @Nullable
     @Override
@@ -107,7 +108,6 @@ public class ReviewsFragment extends Fragment {
 
         postBtn.setOnClickListener(myView -> {
             Toast.makeText(getContext(), reviewBody.getText().toString() + " " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
-
             new Thread(() -> {
                 int rating = (int) ratingBar.getRating();
                 RatingResult result = user.rate(mEbook, rating);
@@ -125,7 +125,7 @@ public class ReviewsFragment extends Fragment {
 
         });
 
-        appbarBinding.backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        appbarBinding.backBtn.setOnClickListener(view -> popBackStackImmediate());
         appbarBinding.reviewsAddBtn.setOnClickListener(view -> alertDialog.show());
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());

@@ -11,16 +11,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.BuildConfig;
-import com.example.biblio.R;
 import com.example.biblio.adapters.MyEbooksAdapter;
 import com.example.biblio.databinding.MyEbooksFragmentBinding;
-import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 
 import org.apache.commons.io.FilenameUtils;
@@ -34,12 +32,13 @@ import lrusso96.simplebiblio.core.Ebook;
 
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
 
-//todo: handle duplicates!
-public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItemListener {
-    public static final String TAG = "MyEBooksFragment";
-    public final LogHelper logger = new LogHelper(getClass());
+public class MyEbooksFragment extends XFragment implements MyEbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
     private MyEbooksFragmentBinding binding;
+
+    public MyEbooksFragment() {
+        super(MyEbooksFragment.class);
+    }
 
     @Nullable
     @Override
@@ -99,10 +98,8 @@ public class MyEbooksFragment extends Fragment implements MyEbooksAdapter.OnItem
 
     @Override
     public void onItemClick(int position) {
-        Fragment to_render = new EbookDetailsFragment();
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
         model.setEbook(mEbooks.get(position));
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                .addToBackStack(null).commit();
+        moveTo(new EbookDetailsFragment());
     }
 }

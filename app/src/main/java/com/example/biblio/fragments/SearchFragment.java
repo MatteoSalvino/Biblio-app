@@ -9,16 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.biblio.R;
 import com.example.biblio.adapters.EbooksAdapter;
 import com.example.biblio.databinding.SearchFragmentBinding;
-import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SearchViewModel;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -32,13 +30,15 @@ import java.util.concurrent.TimeUnit;
 
 import lrusso96.simplebiblio.core.Ebook;
 
-public class SearchFragment extends Fragment implements EbooksAdapter.OnItemListener {
-    public static final String TAG = "SearchFragment";
-    private final LogHelper logger = new LogHelper(getClass());
+public class SearchFragment extends XFragment implements EbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
     private SearchFragmentBinding binding;
     private EbookDetailsViewModel ebook_model;
+
+    public SearchFragment() {
+        super(SearchFragment.class);
+    }
 
     @Nullable
     @Override
@@ -48,7 +48,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
         SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
         ebook_model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
 
-        binding.filtersBtn.setOnClickListener(view -> renderFragment(new FiltersFragment()));
+        binding.filtersBtn.setOnClickListener(view -> moveTo(new FiltersFragment()));
         binding.recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(mLayoutManager);
@@ -111,13 +111,7 @@ public class SearchFragment extends Fragment implements EbooksAdapter.OnItemList
 
     @Override
     public void onItemClick(int position) {
-        Fragment to_render = new EbookDetailsFragment();
         ebook_model.setEbook(mEbooks.get(position));
-        renderFragment(to_render);
-    }
-
-    private void renderFragment(Fragment to_render) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                .addToBackStack(null).commit();
+        moveTo(new EbookDetailsFragment());
     }
 }

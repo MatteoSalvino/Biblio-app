@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -15,14 +14,18 @@ import com.example.biblio.R;
 import com.example.biblio.api.User;
 import com.example.biblio.databinding.LoggedProfileFragmentBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
+import com.example.biblio.helpers.XFragment;
 
-public class LoggedProfileFragment extends Fragment {
-    public static final String TAG = "LoggedProfileFragment";
+public class LoggedProfileFragment extends XFragment {
+
+    public LoggedProfileFragment() {
+        super(LoggedProfileFragment.class);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        com.example.biblio.databinding.LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
+        LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
         User current = SimpleBiblioHelper.getCurrentUser(getContext());
 
         //Load current user's data
@@ -41,19 +44,10 @@ public class LoggedProfileFragment extends Fragment {
 
         binding.logoutBtn.setOnClickListener(view -> {
             SimpleBiblioHelper.removeCurrentUser(getContext());
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(this)
-                    .replace(R.id.fragment_container, new ProfileFragment(), ProfileFragment.TAG)
-                    .commit();
+            replaceWith(new ProfileFragment());
         });
 
-        binding.loggedSettingsBtn.setOnClickListener(view -> {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new SettingsFragment(), SettingsFragment.TAG)
-                    .addToBackStack(SettingsFragment.TAG).commit();
-        });
+        binding.loggedSettingsBtn.setOnClickListener(view -> moveTo(new SettingsFragment(), SettingsFragment.TAG));
 
         return binding.getRoot();
     }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -23,9 +22,9 @@ import com.example.biblio.databinding.EbookDetailsFragmentAppbarBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentHeaderBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentInfosBinding;
-import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SDCardHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
+import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -53,14 +52,17 @@ import static com.example.biblio.helpers.SDCardHelper.APP_ROOT_DIR;
 import static com.example.biblio.helpers.SDCardHelper.getFilename;
 import static lrusso96.simplebiblio.core.Utils.bytesToReadableSize;
 
-public class EbookDetailsFragment extends Fragment {
-    private final LogHelper logger = new LogHelper(getClass());
+public class EbookDetailsFragment extends XFragment {
     private EbookDetailsFragmentBinding binding;
     private File root_dir;
     private String filename;
     private Ebook current;
     private List<Download> downloadList;
     private RatingResult current_stats;
+
+    public EbookDetailsFragment() {
+        super(EbookDetailsFragment.class);
+    }
 
     @Nullable
     @Override
@@ -129,7 +131,7 @@ public class EbookDetailsFragment extends Fragment {
             }
         }).start();
 
-        appbarBinding.backBtn.setOnClickListener(view -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        appbarBinding.backBtn.setOnClickListener(view -> popBackStackImmediate());
 
         binding.mainDownloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {
@@ -193,11 +195,7 @@ public class EbookDetailsFragment extends Fragment {
             showRemoveButton(present);
         }
 
-        appbarBinding.reviewsBtn.setOnClickListener(view -> {
-            Fragment to_render = new ReviewsFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, to_render)
-                    .addToBackStack(null).commit();
-        });
+        appbarBinding.reviewsBtn.setOnClickListener(view -> moveTo(new ReviewsFragment()));
 
         return binding.getRoot();
     }

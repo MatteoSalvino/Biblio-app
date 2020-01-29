@@ -185,21 +185,21 @@
             android:textColor="@color/main_book_text" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/french_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="@color/main_book_text"
-            android:text="@string/french_lang"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/spanish_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="@color/main_book_text"
             android:text="@string/spanish_lang"
+            android:textColor="@color/main_book_text" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/other_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="@color/main_book_text"
+            android:text="@string/other_lang"
             android:textColor="@color/main_book_text" />
     </LinearLayout>
 </LinearLayout>

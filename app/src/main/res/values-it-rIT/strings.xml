@@ -66,8 +66,8 @@
     <!-- other fields -->
     <string name="german_lang">Tedesco</string>
     <string name="spanish_lang">Spagnolo</string>
-    <string name="french_lang">Francese</string>
     <string name="english_lang">Inglese</string>
     <string name="italian_lang">Italiano</string>
     <string name="ebook_cover_cd">Copertina</string>
+    <string name="other_lang">Altro</string>
 </resources>

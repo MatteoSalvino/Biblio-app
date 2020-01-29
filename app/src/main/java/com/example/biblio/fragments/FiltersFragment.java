@@ -51,8 +51,8 @@ public class FiltersFragment extends XFragment {
         binding.englishCb.setOnCheckedChangeListener((button, isChecked) -> model.showEnglish(isChecked));
         binding.italianCb.setChecked(model.isLanguageVisible("italian"));
         binding.italianCb.setOnCheckedChangeListener((button, isChecked) -> model.showItalian(isChecked));
-        binding.frenchCb.setChecked(model.isLanguageVisible("french"));
-        binding.frenchCb.setOnCheckedChangeListener((button, isChecked) -> model.showFrench(isChecked));
+        binding.otherCb.setChecked(model.isLanguageVisible("other"));
+        binding.otherCb.setOnCheckedChangeListener((button, isChecked) -> model.showOther(isChecked));
         binding.spanishCb.setChecked(model.isLanguageVisible("spanish"));
         binding.spanishCb.setOnCheckedChangeListener((button, isChecked) -> model.showSpanish(isChecked));
 
@@ -62,7 +62,7 @@ public class FiltersFragment extends XFragment {
             updateButtonBackgroundColors(RATING.LOW);
             binding.italianCb.setChecked(true);
             binding.englishCb.setChecked(true);
-            binding.frenchCb.setChecked(true);
+            binding.otherCb.setChecked(true);
             binding.spanishCb.setChecked(true);
         });
         return binding.getRoot();

@@ -21,7 +21,6 @@
     <string name="language_field">Language</string>
     <string name="italian_lang">Italian</string>
     <string name="english_lang">English</string>
-    <string name="french_lang">French</string>
     <string name="spanish_lang">Spanish</string>
     <string name="german_lang">German</string>
     <string name="show_results_msg">Show Results</string>
@@ -79,4 +78,5 @@
     <string name="empty_reviews_msg">It has not been found any reviews for this book !</string>
     <string name="null_field_placeholder" translatable="false">-</string>
     <string name="ebook_cover_cd">Book cover</string>
+    <string name="other_lang">Other</string>
 </resources>

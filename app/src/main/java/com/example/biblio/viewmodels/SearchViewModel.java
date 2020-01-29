@@ -50,6 +50,7 @@ public class SearchViewModel extends AndroidViewModel {
     private List<Ebook> result;
     private List<Ebook> current;
     private MutableLiveData<List<Ebook>> ebooks;
+    private boolean otherLanguage = true;
 
     public SearchViewModel(Application application) {
         super(application);
@@ -66,8 +67,6 @@ public class SearchViewModel extends AndroidViewModel {
         filteredLanguages.put("en", true);
         filteredLanguages.put("spanish", true);
         filteredLanguages.put("es", true);
-        filteredLanguages.put("french", true);
-        filteredLanguages.put("fr", true);
     }
 
     public LiveData<List<Ebook>> getEbooks() {
@@ -164,11 +163,11 @@ public class SearchViewModel extends AndroidViewModel {
 
     public boolean isLanguageVisible(@Nullable String language) {
         if (language == null)
-            return false;
+            return otherLanguage;
         language = language.toLowerCase();
         Boolean filtered = filteredLanguages.get(language);
         if (filtered == null)
-            filtered = false;
+            filtered = otherLanguage;
         return filtered;
     }
 
@@ -197,9 +196,8 @@ public class SearchViewModel extends AndroidViewModel {
         applyFilters();
     }
 
-    public void showFrench(boolean enabled) {
-        filteredLanguages.put("french", enabled);
-        filteredLanguages.put("fr", enabled);
+    public void showOther(boolean enabled) {
+        otherLanguage = enabled;
         applyFilters();
     }
 

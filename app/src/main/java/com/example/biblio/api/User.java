@@ -24,7 +24,7 @@ public final class User {
         this.password = builder.password;
         this.username = builder.username;
         this.photoUri = (builder.photo == null) ? null : builder.photo.toString();
-        this.oauthToken = builder.oauth_token;
+        this.oauthToken = builder.oauthToken;
     }
 
     public boolean signup() {

@@ -99,14 +99,15 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
         return binding.getRoot();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        //ToDo call search function with the scanned code as input
-        binding.searchBar.getSearchEditText().setText(intentResult.getContents());
+        String code = intentResult.getContents();
+        if (code != null) {
+            binding.searchBar.setText(code);
+            binding.searchBar.enableSearch();
+        }
     }
 
     @Override

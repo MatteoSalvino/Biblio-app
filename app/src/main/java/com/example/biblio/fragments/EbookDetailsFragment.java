@@ -1,6 +1,7 @@
 package com.example.biblio.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Environment;
@@ -84,8 +85,9 @@ public class EbookDetailsFragment extends XFragment {
         if (user != null) {
             new Thread(() -> {
                 current_stats = user.getEbookStats(current);
-                if (current_stats == null) return;
-                getActivity().runOnUiThread(() -> {
+                Activity activity = getActivity();
+                if (current_stats == null || activity == null) return;
+                activity.runOnUiThread(() -> {
                     appbarBinding.avgRate.setText(String.valueOf(current_stats.getRatingAvg()));
                     appbarBinding.reviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
                 });
@@ -102,7 +104,7 @@ public class EbookDetailsFragment extends XFragment {
         }
 
         LocalDate book_date = current.getPublished();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LL - yyyy");
         infosBinding.date.setText((book_date == null) ? "-" : book_date.format(formatter));
         if (current.getPages() > 0)
             infosBinding.pages.setText(String.format("%s", current.getPages()));
@@ -124,7 +126,9 @@ public class EbookDetailsFragment extends XFragment {
             downloadList = current.getDownloads();
             if (!downloadList.isEmpty()) {
                 filename = getFilename(current);
-                Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                Activity activity = getActivity();
+                if (activity == null) return;
+                activity.runOnUiThread(() -> {
                     binding.mainDownloadBtn.setEnabled(true);
                     showRemoveButton(SimpleBiblioHelper.isFavorite(current, getContext()));
                 });

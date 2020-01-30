@@ -99,8 +99,8 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         binding.scannerBtn.setOnClickListener(view -> IntentIntegrator.forSupportFragment(this).initiateScan());
-        if (!sharedPreferences.getBoolean(EAN_ENABLED_KEY, true))
-            binding.scannerBtn.setVisibility(View.INVISIBLE);
+        if (sharedPreferences.getBoolean(EAN_ENABLED_KEY, false))
+            binding.scannerBtn.setVisibility(View.VISIBLE);
         return binding.getRoot();
     }
 

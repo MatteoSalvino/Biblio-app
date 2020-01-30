@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
-import com.example.biblio.databinding.SignupActivityBinding;
+import com.example.biblio.databinding.ActivitySignupBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 
@@ -17,13 +17,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public class SignupActivity extends AppCompatActivity {
     private final LogHelper logger = new LogHelper(getClass());
-    private SignupActivityBinding binding;
+    private ActivitySignupBinding binding;
     private String username, email, password, passwordConfirmation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = SignupActivityBinding.inflate(getLayoutInflater());
+        binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.signupBtn.setOnClickListener(view -> {

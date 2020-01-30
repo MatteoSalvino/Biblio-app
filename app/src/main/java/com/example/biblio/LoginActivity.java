@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.biblio.api.User;
 import com.example.biblio.api.UserBuilder;
-import com.example.biblio.databinding.LoginActivityBinding;
+import com.example.biblio.databinding.ActivityLoginBinding;
 import com.example.biblio.helpers.LogHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LoginActivityBinding binding = LoginActivityBinding.inflate(getLayoutInflater());
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.loginBtn.setOnClickListener(view -> {

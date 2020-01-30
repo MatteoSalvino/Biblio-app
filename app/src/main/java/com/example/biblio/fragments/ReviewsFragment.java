@@ -49,7 +49,7 @@ public class ReviewsFragment extends XFragment {
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
-    private FirebaseFirestore mFirestore;
+    private final FirebaseFirestore mFirestore;
 
     public ReviewsFragment() {
         super(ReviewsFragment.class);

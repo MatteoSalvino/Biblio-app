@@ -1,5 +1,7 @@
 package com.example.biblio.api;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RatingResult {
     private final int downloads;
     private final int ratings;
@@ -23,6 +25,7 @@ public class RatingResult {
         return downloads;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "RatingResult{" +

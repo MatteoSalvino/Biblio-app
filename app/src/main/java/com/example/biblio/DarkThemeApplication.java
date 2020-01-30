@@ -12,9 +12,8 @@ public class DarkThemeApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        boolean themePref = sharedPreferences.getBoolean("theme", false);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean themePref = preferences.getBoolean(getResources().getString(R.string.theme_pref), false);
 
         ThemeHelper.applyTheme(themePref);
     }

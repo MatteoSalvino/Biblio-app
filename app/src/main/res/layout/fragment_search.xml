@@ -62,14 +62,14 @@
                     app:iconTint="@color/nav_background" />
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/scanner_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/barcode_scan"
-                    android:tint="@color/nav_background" />
+                    android:tint="@color/nav_background"
+                    android:visibility="invisible" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/sort_btn"

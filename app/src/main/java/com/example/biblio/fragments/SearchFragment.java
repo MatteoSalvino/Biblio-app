@@ -36,7 +36,6 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.EAN_ENABLED_KEY
 
 public class SearchFragment extends XFragment implements EbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
-    private EbooksAdapter.OnItemListener adapterListener;
     private FragmentSearchBinding binding;
     private EbookDetailsViewModel ebook_model;
 
@@ -56,7 +55,6 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
         binding.recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(mLayoutManager);
-        adapterListener = this;
 
         RxTextView.textChanges(binding.searchBar.getSearchEditText())
                 .debounce(750, TimeUnit.MILLISECONDS)
@@ -71,7 +69,7 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
 
         final Observer<List<Ebook>> searchObserver = ebooks -> {
             mEbooks = (ArrayList<Ebook>) ebooks;
-            EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, adapterListener, getContext());
+            EbooksAdapter mAdapter = new EbooksAdapter(mEbooks, this, getContext());
             binding.recyclerView.setAdapter(mAdapter);
         };
         model.getEbooks().observe(getViewLifecycleOwner(), searchObserver);

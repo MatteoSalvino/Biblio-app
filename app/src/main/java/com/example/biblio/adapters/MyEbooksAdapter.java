@@ -24,7 +24,7 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
     private final List<Ebook> ebooks;
     private final OnItemListener itemListener;
     private final Context context;
-    private RequestOptions cropOptions = new RequestOptions().centerCrop();
+    private final RequestOptions cropOptions = new RequestOptions().centerCrop();
 
     public MyEbooksAdapter(List<Ebook> ebooks, OnItemListener listener, Context context) {
         this.ebooks = ebooks;

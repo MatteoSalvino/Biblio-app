@@ -6,6 +6,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.biblio.R;
 
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * A very simple extension of androidx Fragment, providing a default logger and implementing some
+ * common patterns (e.g. fragment transactions).
+ *
+ * @see LogHelper
+ */
 public class XFragment extends Fragment {
     public final String TAG;
     protected final LogHelper logger;
@@ -15,34 +23,30 @@ public class XFragment extends Fragment {
         this.TAG = clazz.getSimpleName();
     }
 
-    protected FragmentManager getXFragmentManager() {
-        return getActivity().getSupportFragmentManager();
-    }
-
     protected void popBackStackImmediate() {
         getXFragmentManager().popBackStackImmediate();
     }
 
-    protected void moveTo(Fragment fragment, String tag) {
-        startTransaction(fragment, tag, true);
-    }
-
     protected void moveTo(XFragment fragment) {
-        startTransaction(fragment, fragment.TAG, true);
+        startTransaction(fragment, true);
     }
 
     protected void replaceWith(XFragment fragment) {
-        startTransaction(fragment, fragment.TAG, false);
+        startTransaction(fragment, false);
     }
 
-    private void startTransaction(Fragment fragment, String tag, boolean addToBackStack) {
+    private void startTransaction(XFragment fragment, boolean addToBackStack) {
         int CONTAINER_ID = R.id.fragment_container;
         FragmentTransaction transaction = getXFragmentManager()
                 .beginTransaction()
-                .replace(CONTAINER_ID, fragment, tag);
+                .replace(CONTAINER_ID, fragment, fragment.TAG);
         if (addToBackStack)
             transaction = transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    @NotNull
+    private FragmentManager getXFragmentManager() {
+        return getActivity().getSupportFragmentManager();
+    }
 }

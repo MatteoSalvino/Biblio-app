@@ -5,11 +5,28 @@ import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Simple wrapper of logging methods: it overrides the TAG value of Util.Log with the current class
+ * name.
+ *
+ * <pre>
+ * {@code
+ * public class MyActivity extends AppCompatActivity {
+ *     private final LogHelper logger = new LogHelper(getClass());
+ *     ...
+ *
+ *     logger.d("This is a debug line.");
+ * }
+ *
+ * => D/MyActivity: This is a debug line.
+ * }
+ * </pre>
+ */
 public class LogHelper {
     private final String tag;
 
     public LogHelper(@NotNull Class clazz) {
-        tag = clazz.getName();
+        tag = clazz.getSimpleName();
     }
 
     public void d(@Nullable String msg) {

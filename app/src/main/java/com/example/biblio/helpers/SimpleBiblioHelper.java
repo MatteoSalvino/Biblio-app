@@ -19,6 +19,10 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.CURRENT_USER_KE
 import static com.example.biblio.helpers.SharedPreferencesHelper.LAST_SEARCH_TS_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.MY_EBOOKS_KEY;
 
+/**
+ * This class provides some utilities to store and retrieve data associated with the current user
+ * within the app.
+ */
 public class SimpleBiblioHelper {
 
     public static User getCurrentUser(Context context) {

@@ -30,8 +30,9 @@ public class SDCardHelper {
     }
 
     /**
-     * @param ebook (assume at least one available download)
-     * @return the filename
+     * @param ebook instance
+     * @return its filename
+     * @implNote Assume at least one available download
      */
     @NotNull
     public static String getFilename(@NotNull Ebook ebook) {

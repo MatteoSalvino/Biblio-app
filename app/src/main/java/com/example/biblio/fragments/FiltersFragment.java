@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.biblio.R;
-import com.example.biblio.databinding.FiltersFragmentBinding;
+import com.example.biblio.databinding.FragmentFiltersBinding;
 import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.SearchViewModel;
 
@@ -21,7 +21,7 @@ import lrusso96.simplebiblio.core.providers.feedbooks.Feedbooks;
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesis;
 
 public class FiltersFragment extends XFragment {
-    private FiltersFragmentBinding binding;
+    private FragmentFiltersBinding binding;
 
     public FiltersFragment() {
         super(FiltersFragment.class);
@@ -30,7 +30,7 @@ public class FiltersFragment extends XFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FiltersFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
         SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
 

@@ -45,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
         ProgressDialog progressDialog = ProgressDialog.show(this, "", "", true);
-        progressDialog.setContentView(R.layout.login_dialog_view);
+        progressDialog.setContentView(R.layout.progress_login);
         new Thread(() -> {
             User user = new UserBuilder()
                     .setEmail(email)

@@ -36,7 +36,7 @@ public class MyEbooksAdapter extends RecyclerView.Adapter<MyEbooksAdapter.MyEboo
     @Override
     public MyEbooksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_ebook_row, parent, false);
+                .inflate(R.layout.item_my_ebook, parent, false);
 
         return new MyEbooksViewHolder(v, itemListener);
     }

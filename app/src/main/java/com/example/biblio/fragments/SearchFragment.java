@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.biblio.adapters.EbooksAdapter;
-import com.example.biblio.databinding.SearchFragmentBinding;
+import com.example.biblio.databinding.FragmentSearchBinding;
 import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SearchViewModel;
@@ -37,7 +37,7 @@ import static com.example.biblio.helpers.SharedPreferencesHelper.EAN_ENABLED_KEY
 public class SearchFragment extends XFragment implements EbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
     private EbooksAdapter.OnItemListener adapterListener;
-    private SearchFragmentBinding binding;
+    private FragmentSearchBinding binding;
     private EbookDetailsViewModel ebook_model;
 
     public SearchFragment() {
@@ -47,7 +47,7 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SearchFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
 
         SearchViewModel model = new ViewModelProvider(getActivity()).get(SearchViewModel.class);
         ebook_model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);

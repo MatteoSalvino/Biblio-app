@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.biblio.LoginActivity;
 import com.example.biblio.SettingsActivity;
-import com.example.biblio.databinding.ProfileFragmentBinding;
+import com.example.biblio.databinding.FragmentProfileBinding;
 import com.example.biblio.helpers.XFragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -19,7 +19,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends XFragment {
     private static final int RC_SIGN_IN = 1;
-    private ProfileFragmentBinding binding;
+    private FragmentProfileBinding binding;
 
     public ProfileFragment() {
         super(ProfileFragment.class);
@@ -28,7 +28,7 @@ public class ProfileFragment extends XFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = ProfileFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         setUpButtons();
 
         binding.emailLoginBtn.setOnClickListener(view -> {

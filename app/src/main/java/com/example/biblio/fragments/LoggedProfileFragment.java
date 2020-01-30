@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
 import com.example.biblio.api.User;
-import com.example.biblio.databinding.LoggedProfileFragmentBinding;
+import com.example.biblio.databinding.FragmentLoggedProfileBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.helpers.XFragment;
 
@@ -25,7 +25,7 @@ public class LoggedProfileFragment extends XFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LoggedProfileFragmentBinding binding = LoggedProfileFragmentBinding.inflate(inflater, container, false);
+        FragmentLoggedProfileBinding binding = FragmentLoggedProfileBinding.inflate(inflater, container, false);
         User current = SimpleBiblioHelper.getCurrentUser(getContext());
 
         //Load current user's data

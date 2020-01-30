@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog initProgress(boolean show) {
         if (!show) return null;
         ProgressDialog dialog = ProgressDialog.show(this, getResources().getString(R.string.login_process_tv), getResources().getString(R.string.please_wait_tv), true);
-        dialog.setContentView(R.layout.login_dialog_view);
+        dialog.setContentView(R.layout.progress_login);
         return dialog;
     }
 }

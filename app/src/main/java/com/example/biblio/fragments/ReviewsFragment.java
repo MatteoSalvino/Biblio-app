@@ -75,7 +75,7 @@ public class ReviewsFragment extends XFragment {
         //Initialize AlertDialog to post a new review
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View dialogView = inflater.inflate(R.layout.review_dialog, null);
+        View dialogView = inflater.inflate(R.layout.progress_review, null);
         builder.setView(dialogView);
 
         EditText reviewBody = dialogView.findViewById(R.id.review_body);

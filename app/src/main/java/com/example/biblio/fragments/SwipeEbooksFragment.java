@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.adapters.EbooksAdapter;
-import com.example.biblio.databinding.SwipeEbooksRvFragmentBinding;
+import com.example.biblio.databinding.FragmentSwipeEbooksBinding;
 import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
 import com.example.biblio.viewmodels.SwipeEbooksViewModel;
@@ -26,7 +26,6 @@ public class SwipeEbooksFragment extends XFragment implements EbooksAdapter.OnIt
     private final Class<? extends SwipeEbooksViewModel> mSwipeModel;
     private EbooksAdapter.OnItemListener mEbooksListener;
     private ArrayList<Ebook> mEbooks;
-    private SwipeEbooksRvFragmentBinding binding;
 
     SwipeEbooksFragment(Class clazz, Class<? extends SwipeEbooksViewModel> model) {
         super(clazz);
@@ -36,7 +35,7 @@ public class SwipeEbooksFragment extends XFragment implements EbooksAdapter.OnIt
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = SwipeEbooksRvFragmentBinding.inflate(inflater, container, false);
+        FragmentSwipeEbooksBinding binding = FragmentSwipeEbooksBinding.inflate(inflater, container, false);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.ebooksRv.setLayoutManager(mLayoutManager);

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.biblio.BuildConfig;
 import com.example.biblio.adapters.MyEbooksAdapter;
-import com.example.biblio.databinding.MyEbooksFragmentBinding;
+import com.example.biblio.databinding.FragmentMyEbooksBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.helpers.XFragment;
 import com.example.biblio.viewmodels.EbookDetailsViewModel;
@@ -34,7 +34,7 @@ import static com.example.biblio.helpers.SDCardHelper.getFilename;
 
 public class MyEbooksFragment extends XFragment implements MyEbooksAdapter.OnItemListener {
     private ArrayList<Ebook> mEbooks;
-    private MyEbooksFragmentBinding binding;
+    private FragmentMyEbooksBinding binding;
 
     public MyEbooksFragment() {
         super(MyEbooksFragment.class);
@@ -43,7 +43,7 @@ public class MyEbooksFragment extends XFragment implements MyEbooksAdapter.OnIte
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = MyEbooksFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentMyEbooksBinding.inflate(inflater, container, false);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.myEbooksRv.setLayoutManager(mLayoutManager);

@@ -38,6 +38,9 @@
         <activity
             android:name=".SignupActivity"
             android:screenOrientation="user" />
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="user" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

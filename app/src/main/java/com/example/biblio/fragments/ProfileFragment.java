@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.biblio.LoginActivity;
+import com.example.biblio.SettingsActivity;
 import com.example.biblio.databinding.ProfileFragmentBinding;
 import com.example.biblio.helpers.XFragment;
 
@@ -35,7 +36,7 @@ public class ProfileFragment extends XFragment {
             startActivityForResult(i, RC_SIGN_IN);
         });
 
-        binding.settingsBtn.setOnClickListener(view -> moveTo(new SettingsFragment(), SettingsFragment.TAG));
+        binding.settingsBtn.setOnClickListener(view -> startActivity(new Intent(getActivity(), SettingsActivity.class)));
         return binding.getRoot();
     }
 

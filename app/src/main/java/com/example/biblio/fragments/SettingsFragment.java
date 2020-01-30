@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -43,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
-        SwitchPreference themePreference = findPreference("theme");
+        SwitchPreference themePreference = findPreference(getResources().getString(R.string.theme_pref));
         if (themePreference != null) {
             themePreference.setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean themeOption = (boolean) newValue;
@@ -52,15 +51,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             });
         }
-
-        //Back pressed callback
-        //SettingsFragment current = this;
-        OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        };
 
         Preference github = findPreference(getResources().getString(R.string.source_code_pref));
         if (github != null) {

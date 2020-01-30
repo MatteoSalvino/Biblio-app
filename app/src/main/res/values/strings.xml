@@ -85,4 +85,5 @@
     <string name="no_sd_card_msg">SD Card not found</string>
     <string name="login_error_title">Error</string>
     <string name="back_pressed_msg">Click BACK again to exit</string>
+    <string name="theme_pref">theme</string>
 </resources>

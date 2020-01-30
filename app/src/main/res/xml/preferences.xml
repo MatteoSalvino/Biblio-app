@@ -5,7 +5,7 @@
         <SwitchPreference
             app:defaultValue="false"
             app:icon="@drawable/theme_light_dark"
-            app:key="theme"
+            app:key="@string/theme_pref"
             app:title="Night mode" />
         <SwitchPreference
             app:defaultValue="true"

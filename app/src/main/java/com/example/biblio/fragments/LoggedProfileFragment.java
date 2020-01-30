@@ -1,5 +1,6 @@
 package com.example.biblio.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.biblio.R;
+import com.example.biblio.SettingsActivity;
 import com.example.biblio.api.User;
 import com.example.biblio.databinding.FragmentLoggedProfileBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
@@ -47,7 +49,7 @@ public class LoggedProfileFragment extends XFragment {
             replaceWith(new ProfileFragment());
         });
 
-        binding.loggedSettingsBtn.setOnClickListener(view -> moveTo(new SettingsFragment(), SettingsFragment.TAG));
+        binding.loggedSettingsBtn.setOnClickListener(view -> startActivity(new Intent(getActivity(), SettingsActivity.class)));
 
         return binding.getRoot();
     }

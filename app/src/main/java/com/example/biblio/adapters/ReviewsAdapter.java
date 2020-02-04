@@ -45,7 +45,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
      */
     public void addReview(Review review) {
         List<Review> newReviews = new ArrayList<>();
-        reviews.add(review);
+        newReviews.add(review);
         for (Review rev : reviews) {
             if (!rev.getReviewer().equals(review.getReviewer()))
                 newReviews.add(rev);

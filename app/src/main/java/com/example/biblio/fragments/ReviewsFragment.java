@@ -256,6 +256,7 @@ public class ReviewsFragment extends XFragment {
      * @param reviews the dataset to be displayed
      */
     private void setupUI(@NotNull List<Review> reviews) {
+        if (reviews.isEmpty()) return;
         hidePlaceholders();
         mAdapter.setReviews(reviews);
         mAdapter.notifyDataSetChanged();

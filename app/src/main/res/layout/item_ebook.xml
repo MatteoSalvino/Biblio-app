@@ -43,7 +43,7 @@
                     android:layout_marginStart="10dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/saffron"
+                    android:textColor="@color/login_btn"
                     android:textSize="20sp"
                     tools:text="The Double" />
 

@@ -80,7 +80,6 @@ public class ReviewsFragment extends XFragment {
 
         EditText reviewBody = dialogView.findViewById(R.id.review_body);
         MaterialRatingBar ratingBar = dialogView.findViewById(R.id.review_rating);
-        MaterialButton cancelBtn = dialogView.findViewById(R.id.review_cancel_btn);
         MaterialButton postBtn = dialogView.findViewById(R.id.review_post_btn);
         postBtn.setEnabled(false);
         AlertDialog alertDialog = builder.create();
@@ -109,8 +108,6 @@ public class ReviewsFragment extends XFragment {
             else
                 postBtn.setEnabled(false);
         });
-
-        cancelBtn.setOnClickListener(myView -> alertDialog.dismiss());
 
         postBtn.setOnClickListener(myView -> {
             String text = reviewBody.getText().toString();

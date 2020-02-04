@@ -32,17 +32,6 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/review_cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/remove_button"
-            android:text="@string/cancel_msg"
-            android:textAllCaps="false"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/review_post_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

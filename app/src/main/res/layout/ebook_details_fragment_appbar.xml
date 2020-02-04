@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="24dp"
@@ -14,36 +13,4 @@
         android:src="@drawable/baseline_arrow_back_ios_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/reviews_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_rate_review_24"
-        android:tint="@color/main_book_text"
-        app:layout_constraintBottom_toTopOf="@+id/reviews_counter"
-        app:layout_constraintStart_toStartOf="@+id/reviews_counter" />
-
-    <TextView
-        android:id="@+id/avg_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/main_book_text"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/reviews_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@id/reviews_btn"
-        tools:text="4.5" />
-
-    <TextView
-        android:id="@+id/reviews_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/main_book_text"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/reviews_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="20 reviews" />
 </androidx.constraintlayout.widget.ConstraintLayout>

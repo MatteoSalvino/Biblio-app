@@ -23,6 +23,7 @@ import com.example.biblio.databinding.EbookDetailsFragmentAppbarBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentHeaderBinding;
 import com.example.biblio.databinding.EbookDetailsFragmentInfosBinding;
+import com.example.biblio.databinding.EbookDetailsFragmentReviewsBinding;
 import com.example.biblio.helpers.SDCardHelper;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.helpers.XFragment;
@@ -72,6 +73,7 @@ public class EbookDetailsFragment extends XFragment {
         EbookDetailsFragmentInfosBinding infosBinding = binding.infos;
         EbookDetailsFragmentAppbarBinding appbarBinding = binding.appbar;
         EbookDetailsFragmentHeaderBinding headerBinding = binding.header;
+        EbookDetailsFragmentReviewsBinding reviewsBinding = binding.reviews;
         RequestOptions option = new RequestOptions().centerInside();
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
@@ -88,8 +90,8 @@ public class EbookDetailsFragment extends XFragment {
                 Activity activity = getActivity();
                 if (current_stats == null || activity == null) return;
                 activity.runOnUiThread(() -> {
-                    appbarBinding.avgRate.setText(String.valueOf(current_stats.getRatingAvg()));
-                    appbarBinding.reviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
+                    reviewsBinding.avgRate.setRating((float) (current_stats.getRatingAvg()));
+                    reviewsBinding.reviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
                 });
             }).start();
         }
@@ -130,6 +132,7 @@ public class EbookDetailsFragment extends XFragment {
                 if (activity == null) return;
                 activity.runOnUiThread(() -> {
                     binding.mainDownloadBtn.setEnabled(true);
+                    binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
                     showRemoveButton(SimpleBiblioHelper.isFavorite(current, getContext()));
                 });
             }
@@ -198,7 +201,7 @@ public class EbookDetailsFragment extends XFragment {
             showRemoveButton(present);
         }
 
-        appbarBinding.reviewsBtn.setOnClickListener(view -> moveTo(new ReviewsFragment()));
+        reviewsBinding.reviewsCounter.setOnClickListener(view -> moveTo(new ReviewsFragment()));
 
         return binding.getRoot();
     }

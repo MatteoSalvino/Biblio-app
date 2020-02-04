@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="100"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="49"
+        android:gravity="end">
+
+        <RatingBar
+            android:id="@+id/avg_rate"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:max="5" />
+    </LinearLayout>
+
+    <include layout="@layout/vertical_divider" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="49">
+
+        <TextView
+            android:id="@+id/reviews_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_rate_review_24"
+            android:drawablePadding="12dp"
+            android:gravity="center_horizontal"
+            android:text="@string/null_field_placeholder"
+            android:textColor="@color/main_book_text"
+            tools:drawableTint="@color/main_book_text"
+            tools:text="20 reviews" />
+    </LinearLayout>
+
+
+</LinearLayout>

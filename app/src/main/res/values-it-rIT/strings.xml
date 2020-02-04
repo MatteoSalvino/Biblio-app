@@ -75,4 +75,6 @@
     <string name="no_sd_card_msg">Card SD non trovata</string>
     <string name="login_error_title">Errore</string>
     <string name="back_pressed_msg">Clicca di nuovo per uscire</string>
+    <string name="description_msg">Trama</string>
+    <string name="infos_msg">Dettagli</string>
 </resources>

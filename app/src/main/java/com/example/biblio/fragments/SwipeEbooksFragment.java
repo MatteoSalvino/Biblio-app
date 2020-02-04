@@ -40,7 +40,7 @@ public class SwipeEbooksFragment extends XFragment implements EbooksAdapter.OnIt
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.ebooksRv.setLayoutManager(mLayoutManager);
         binding.ebooksRv.setHasFixedSize(true);
-        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_orange_light);
+        //binding.swipeContainer.setColorSchemeResources(android.R.color.);
 
         mEbooksListener = this;
         SwipeEbooksViewModel model = new ViewModelProvider(getActivity()).get(mSwipeModel);

@@ -45,11 +45,11 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import static com.example.biblio.api.SimpleBiblioCommons.getProviderId;
 
 public class ReviewsFragment extends XFragment {
+    private final FirebaseFirestore mFirestore;
     private ReviewsFragmentBinding binding;
     private ReviewsAdapter mAdapter;
     private Ebook mEbook;
     private User user;
-    private final FirebaseFirestore mFirestore;
 
     public ReviewsFragment() {
         super(ReviewsFragment.class);

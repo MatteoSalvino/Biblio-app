@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,11 +15,10 @@
         android:contentDescription="@string/ebook_cover_cd"
         tools:src="@drawable/book" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_weight="7">
 
         <TextView
             android:id="@+id/title"
@@ -29,6 +29,8 @@
             android:textColor="@color/main_book_text"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Pride and prejudice" />
 
         <TextView
@@ -40,6 +42,39 @@
             android:maxLines="2"
             android:textColor="@color/main_book_text"
             android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
             tools:text="Jane Austen" />
-    </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/download_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/add_button"
+            android:text="@string/add_to_my_books_msg"
+            android:textColor="@color/main_book_text"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/author" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/add_button"
+            android:text="@string/remove_from_my_books_msg"
+            android:textColor="@color/main_book_text"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/author" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

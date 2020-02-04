@@ -73,6 +73,8 @@
     <string name="or_msg">OR</string>
     <string name="login_error_msg">Login was not successful</string>
     <string name="no_description">Description not available.</string>
+    <string name="download_template" translatable="false">download</string>
+    <string name="downloads_template" translatable="false">downloads</string>
     <string name="review_template">review</string>
     <string name="reviews_template">reviews</string>
     <string name="empty_reviews_msg">It has not been found any reviews for this book !</string>

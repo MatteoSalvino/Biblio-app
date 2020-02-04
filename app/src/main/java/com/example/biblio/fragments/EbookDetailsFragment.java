@@ -44,7 +44,6 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import lrusso96.simplebiblio.core.Download;
@@ -55,7 +54,8 @@ import static com.example.biblio.helpers.SDCardHelper.getFilename;
 import static lrusso96.simplebiblio.core.Utils.bytesToReadableSize;
 
 public class EbookDetailsFragment extends XFragment {
-    private EbookDetailsFragmentBinding binding;
+    private EbookDetailsFragmentHeaderBinding headerBinding;
+    private EbookDetailsFragmentReviewsBinding reviewsBinding;
     private File root_dir;
     private String filename;
     private Ebook current;
@@ -69,11 +69,11 @@ public class EbookDetailsFragment extends XFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = EbookDetailsFragmentBinding.inflate(inflater, container, false);
+        com.example.biblio.databinding.EbookDetailsFragmentBinding binding = EbookDetailsFragmentBinding.inflate(inflater, container, false);
         EbookDetailsFragmentInfosBinding infosBinding = binding.infos;
         EbookDetailsFragmentAppbarBinding appbarBinding = binding.appbar;
-        EbookDetailsFragmentHeaderBinding headerBinding = binding.header;
-        EbookDetailsFragmentReviewsBinding reviewsBinding = binding.reviews;
+        headerBinding = binding.header;
+        reviewsBinding = binding.reviews;
         RequestOptions option = new RequestOptions().centerInside();
         root_dir = new File(String.format("%s/%s/", Environment.getExternalStorageDirectory(), APP_ROOT_DIR));
 
@@ -90,8 +90,9 @@ public class EbookDetailsFragment extends XFragment {
                 Activity activity = getActivity();
                 if (current_stats == null || activity == null) return;
                 activity.runOnUiThread(() -> {
+                    setDownloadCounter(current_stats.getDownloads());
+                    setReviewsCounter(current_stats.getRatings());
                     reviewsBinding.avgRate.setRating((float) (current_stats.getRatingAvg()));
-                    reviewsBinding.reviewsCounter.setText(String.format(Locale.getDefault(), "%d %s", current_stats.getRatings(), (current_stats.getRatings() == 1) ? getResources().getString(R.string.review_template) : getResources().getString(R.string.reviews_template)));
                 });
             }).start();
         }
@@ -121,8 +122,8 @@ public class EbookDetailsFragment extends XFragment {
         else
             binding.mainBookSummary.setText(R.string.no_description);
 
-        binding.mainDownloadBtn.setEnabled(false);
-        binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
+        headerBinding.downloadBtn.setEnabled(false);
+        headerBinding.downloadBtn.setBackgroundColor(getResources().getColor(R.color.disabled_button));
 
         new Thread(() -> {
             downloadList = current.getDownloads();
@@ -131,8 +132,8 @@ public class EbookDetailsFragment extends XFragment {
                 Activity activity = getActivity();
                 if (activity == null) return;
                 activity.runOnUiThread(() -> {
-                    binding.mainDownloadBtn.setEnabled(true);
-                    binding.mainDownloadBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
+                    headerBinding.downloadBtn.setEnabled(true);
+                    headerBinding.downloadBtn.setBackgroundColor(getResources().getColor(R.color.add_button));
                     showRemoveButton(SimpleBiblioHelper.isFavorite(current, getContext()));
                 });
             }
@@ -140,7 +141,7 @@ public class EbookDetailsFragment extends XFragment {
 
         appbarBinding.backBtn.setOnClickListener(view -> popBackStackImmediate());
 
-        binding.mainDownloadBtn.setOnClickListener(view -> {
+        headerBinding.downloadBtn.setOnClickListener(view -> {
             if (SDCardHelper.isSDCardPresent()) {
                 MultiplePermissionsListener multiplePermissionListener = new MultiplePermissionsListener() {
                     @Override
@@ -188,7 +189,7 @@ public class EbookDetailsFragment extends XFragment {
             }
         });
 
-        binding.mainRemoveBtn.setOnClickListener(view -> {
+        headerBinding.removeBtn.setOnClickListener(view -> {
             SDCardHelper.findFile(root_dir, filename, true);
             SimpleBiblioHelper.removeEbook(current, getContext());
 
@@ -234,8 +235,8 @@ public class EbookDetailsFragment extends XFragment {
                     @Override
                     protected void completed(BaseDownloadTask task) {
                         progressDialog.dismiss();
-                        binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
-                        binding.mainRemoveBtn.setVisibility(View.VISIBLE);
+                        headerBinding.downloadBtn.setVisibility(View.INVISIBLE);
+                        headerBinding.removeBtn.setVisibility(View.VISIBLE);
 
                         //todo: should open the new file?
                         SimpleBiblioHelper.addEbook(current, getContext());
@@ -261,26 +262,25 @@ public class EbookDetailsFragment extends XFragment {
 
     private void showRemoveButton(boolean bool) {
         if (bool) {
-            binding.mainDownloadBtn.setVisibility(View.INVISIBLE);
-            binding.mainRemoveBtn.setVisibility(View.VISIBLE);
+            headerBinding.downloadBtn.setVisibility(View.INVISIBLE);
+            headerBinding.removeBtn.setVisibility(View.VISIBLE);
         } else {
-            binding.mainDownloadBtn.setVisibility(View.VISIBLE);
-            binding.mainRemoveBtn.setVisibility(View.INVISIBLE);
+            headerBinding.downloadBtn.setVisibility(View.VISIBLE);
+            headerBinding.removeBtn.setVisibility(View.INVISIBLE);
         }
     }
 
-    /* This shows how to retrieve ebook stats!
-     * Note: use runonuithread() to update UI
-     */
-    private void showRating() {
-        User user = SimpleBiblioHelper.getCurrentUser(getContext());
-        if (user == null)
-            return;
-        new Thread(() -> {
-            RatingResult ebookStats = user.getEbookStats(current);
-            if (ebookStats != null) {
-                logger.d(String.format(Locale.getDefault(), "%d reviews with average of %.1f", ebookStats.getRatings(), ebookStats.getRatingAvg()));
-            }
-        }).start();
+    private void setDownloadCounter(int downloads) {
+        String tv = getResources().getString(R.string.downloads_template);
+        if (downloads == 1)
+            tv = getResources().getString(R.string.download_template);
+        reviewsBinding.downoadsCounter.setText(String.format("%s %s", downloads, tv));
+    }
+
+    private void setReviewsCounter(int reviews) {
+        String tv = getResources().getString(R.string.reviews_template);
+        if (reviews == 1)
+            tv = getResources().getString(R.string.review_template);
+        reviewsBinding.reviewsCounter.setText(String.format("%s %s", reviews, tv));
     }
 }

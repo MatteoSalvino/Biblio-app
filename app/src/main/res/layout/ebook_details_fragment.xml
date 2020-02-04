@@ -36,33 +36,6 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="16dp" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/main_download_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="@color/add_button"
-                    android:text="@string/add_to_my_books_msg"
-                    android:textColor="@color/main_book_text"
-                    android:visibility="visible" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/main_remove_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:backgroundTint="@color/add_button"
-                    android:text="@string/remove_from_my_books_msg"
-                    android:textColor="@color/main_book_text"
-                    android:visibility="invisible" />
-            </RelativeLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +76,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView"
                     app:layout_constraintTop_toTopOf="@id/textView" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -159,9 +131,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toTopOf="@id/textView2" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <include
                 android:id="@+id/infos"

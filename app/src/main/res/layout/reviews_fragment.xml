@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:text="@string/empty_reviews_msg"
         android:textColor="@color/main_book_text"
-        android:visibility="invisible"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reviews_iv_template" />

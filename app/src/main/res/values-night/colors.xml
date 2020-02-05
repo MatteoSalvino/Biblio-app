@@ -20,6 +20,7 @@
     <color name="dialog_text_color">#000000</color>
 
 
+
     <!-- (i) login colors -->
     <color name="login_bg">@color/app_background</color>
     <color name="login_box">@color/primary</color>

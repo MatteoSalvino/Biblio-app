@@ -56,7 +56,7 @@ public class EbooksAdapter extends RecyclerView.Adapter<EbooksAdapter.EbooksView
         else
             Glide.with(context).load(R.drawable.no_image).apply(cropOptions).into(holder.ebookCover);
 
-        holder.ebookSource.setText(ebooks.get(position).getSource());
+        holder.ebookSource.setText(ebooks.get(position).getProviderName());
     }
 
     @Override

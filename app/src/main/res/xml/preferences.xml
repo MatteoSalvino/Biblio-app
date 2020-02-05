@@ -12,12 +12,14 @@
             app:enabled="false"
             app:key="reader"
             app:summary="Enable in-app reader"
+            app:icon="@drawable/open_in_app"
             app:title="Internal reader" />
         <SwitchPreference
             app:defaultValue="false"
             app:enabled="true"
             app:key="@string/EAN_pref"
             app:summary="Enable ISBN scanning"
+            app:icon="@drawable/barcode_scan"
             app:title="EAN" />
         <Preference
             app:icon="@drawable/baseline_chrome_reader_mode_24"
@@ -52,13 +54,15 @@
         <SwitchPreference
             app:defaultValue="false"
             app:key="@string/override_libgen_pref"
-            app:title="Override Libgen mirror" />
+            app:title="Override Libgen mirror"
+            app:icon="@drawable/pencil_outline" />
         <EditTextPreference
             app:defaultValue="http://libgen.is"
             app:enabled="false"
             app:key="@string/libgen_mirror_pref"
             app:summary="Insert the mirror you prefer"
-            app:title="Current Libgen mirror" />
+            app:title="Current Libgen mirror"
+            app:icon="@drawable/link_variant" />
         <DropDownPreference
             app:enabled="false"
             app:summary="Libgen allows to specify the sorting field"
@@ -69,6 +73,7 @@
             app:key="@string/libgen_max_pref"
             app:min="10"
             app:showSeekBarValue="true"
+            app:icon="@drawable/counter"
             app:title="Max results for Libgen" />
     </PreferenceCategory>
 

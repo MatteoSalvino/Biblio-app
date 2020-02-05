@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/cover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="140dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="36dp"
         android:contentDescription="@string/ebook_cover_cd"
@@ -54,6 +54,7 @@
             android:layout_centerInParent="true"
             android:backgroundTint="@color/add_button"
             android:text="@string/add_to_my_books_msg"
+            android:textAllCaps="false"
             android:textColor="@color/main_book_text"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +68,7 @@
             android:layout_centerInParent="true"
             android:backgroundTint="@color/add_button"
             android:text="@string/remove_from_my_books_msg"
+            android:textAllCaps="false"
             android:textColor="@color/main_book_text"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"

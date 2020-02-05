@@ -1,5 +1,7 @@
 package com.example.biblio.fragments;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -137,14 +139,16 @@ public class ReviewsFragment extends XFragment {
         binding.ebooksRv.setHasFixedSize(true);
         mAdapter = new ReviewsAdapter();
         binding.ebooksRv.setAdapter(mAdapter);
+
         retrieveReviews();
+
         return binding.getRoot();
     }
 
     /**
      * This is just a debug method to (locally) generate fake reviews, without hitting the server.
      *
-     * @param num: number of feke reviews to generate
+     * @param num: number of fake reviews to generate
      */
     private void loadFakeReviews(int num) {
         List<Review> mReviews = new ArrayList<>();
@@ -253,10 +257,14 @@ public class ReviewsFragment extends XFragment {
      * @param reviews the dataset to be displayed
      */
     private void setupUI(@NotNull List<Review> reviews) {
-        if (reviews.isEmpty()) return;
-        hidePlaceholders();
-        mAdapter.setReviews(reviews);
-        mAdapter.notifyDataSetChanged();
+        if (reviews.isEmpty()) {
+            binding.reviewsIvTemplate.setVisibility(View.VISIBLE);
+            binding.reviewsTvTemplate.setVisibility(View.VISIBLE);
+        } else {
+            hidePlaceholders();
+            mAdapter.setReviews(reviews);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     /**

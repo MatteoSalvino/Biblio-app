@@ -101,7 +101,7 @@ public class EbookDetailsFragment extends XFragment {
         headerBinding.author.setText(current.getAuthor());
 
         if (current.getCover() != null)
-            Glide.with(getContext()).load(current.getCover().toString()).placeholder(R.drawable.no_image).apply(option).into(headerBinding.cover);
+            Glide.with(getContext()).load(current.getCover().toString()).apply(option).into(headerBinding.cover);
 
         LocalDate book_date = current.getPublished();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LL - yyyy");
@@ -152,6 +152,7 @@ public class EbookDetailsFragment extends XFragment {
                                 new Thread(() -> {
                                     RatingResult result = user.notifyDownload(current);
                                     if (result != null) {
+                                        SimpleBiblioHelper.setCurrentUser(user, getContext());
                                         logger.d(result.toString());
                                     }
                                 }).start();

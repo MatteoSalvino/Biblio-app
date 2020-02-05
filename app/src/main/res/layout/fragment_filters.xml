@@ -9,6 +9,7 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -27,7 +28,7 @@
             android:layout_weight="2"
             android:text="@string/filters_option"
             android:textColor="@color/main_book_text"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filters_reset_btn"
@@ -50,10 +51,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="16dp"
         android:text="@string/provider_field"
         android:textColor="@color/main_book_text"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,81 +87,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/rating_field"
-        android:textColor="@color/main_book_text"
-        android:textSize="15sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/low_rating_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/add_button"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="5dp"
-            android:text="@string/minimum_rating"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/medium_rating_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/add_button"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="5dp"
-            android:text="@string/low_rating"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/medium_high_rating_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/add_button"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="5dp"
-            android:text="@string/medium_rating"
-            android:textColor="@color/main_book_text" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/high_rating_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/add_button"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:padding="5dp"
-            android:text="@string/high_rating"
-            android:textColor="@color/main_book_text" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="16dp"
         android:text="@string/language_field"
         android:textColor="@color/main_book_text"
         android:textSize="15sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="horizontal">

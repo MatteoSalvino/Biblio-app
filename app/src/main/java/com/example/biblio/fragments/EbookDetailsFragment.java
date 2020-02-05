@@ -152,6 +152,7 @@ public class EbookDetailsFragment extends XFragment {
                                 new Thread(() -> {
                                     RatingResult result = user.notifyDownload(current);
                                     if (result != null) {
+                                        SimpleBiblioHelper.setCurrentUser(user, getContext());
                                         logger.d(result.toString());
                                     }
                                 }).start();

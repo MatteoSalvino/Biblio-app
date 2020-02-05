@@ -1,7 +1,5 @@
 package com.example.biblio.fragments;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -118,6 +116,7 @@ public class ReviewsFragment extends XFragment {
                 int rating = (int) ratingBar.getRating();
                 RatingResult result = user.rate(mEbook, rating);
                 if (result != null) {
+                    SimpleBiblioHelper.setCurrentUser(user, getContext());
                     logger.d(result.toString());
                 }
                 Review review = new Review(user, mEbook, text, rating);

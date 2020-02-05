@@ -39,7 +39,7 @@ public final class User {
     public RatingResult rate(Ebook ebook, int rating) {
         for (int count = 0; count < MAX_TRIES; count++) {
             try {
-                if (count == 0 || this.login())
+                if (this.login())
                     return EbooksHandler.rate(this, ebook, rating);
             } catch (UnhautorizedRequestException e) {
                 logger.e(e.getMessage());
@@ -52,7 +52,7 @@ public final class User {
     public RatingResult getEbookStats(Ebook ebook) {
         for (int count = 0; count < MAX_TRIES; count++) {
             try {
-                if (count == 0 || this.login())
+                if (this.login())
                     return EbooksHandler.stats(this, ebook);
             } catch (UnhautorizedRequestException e) {
                 logger.e(e.getMessage());
@@ -61,13 +61,12 @@ public final class User {
         return null;
     }
 
-
     @Nullable
     public RatingResult notifyDownload(Ebook ebook) {
         for (int count = 0; count < MAX_TRIES; count++) {
             try {
-                if (count > 0) this.login();
-                return EbooksHandler.notifyDownload(this, ebook);
+                if (this.login())
+                    return EbooksHandler.notifyDownload(this, ebook);
             } catch (UnhautorizedRequestException e) {
                 logger.e(e.getMessage());
             }

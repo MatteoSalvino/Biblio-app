@@ -7,11 +7,12 @@ import androidx.preference.PreferenceManager;
 
 import com.example.biblio.api.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import lrusso96.simplebiblio.core.Ebook;
 
@@ -69,11 +70,16 @@ public class SimpleBiblioHelper {
         return getMyEbooks(context).contains(ebook);
     }
 
-    @NotNull
-    public static String getLastSearchTS(Context context) {
-        String default_ts = "-,-";
-        String[] timestamp = getSP(context).getString(LAST_SEARCH_TS_KEY, default_ts).split(",");
-        return String.format("%s %s", timestamp[0], timestamp[1]);
+    public static Date getLastSearchTS(Context context) {
+        Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
+        return gson.fromJson(getSP(context).getString(LAST_SEARCH_TS_KEY, null), Date.class);
+    }
+
+    public static void setLastSearchTS(Context context) {
+        String ts = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create().toJson(new Date());
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.putString(LAST_SEARCH_TS_KEY, ts);
+        editor.apply();
     }
 
     private static SharedPreferences getSP(Context context) {

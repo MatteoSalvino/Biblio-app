@@ -9,14 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
 
 import com.example.biblio.helpers.LogHelper;
+import com.example.biblio.helpers.SimpleBiblioHelper;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +34,6 @@ import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder;
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks;
 
 import static com.example.biblio.helpers.SharedPreferencesHelper.FEEDBOOKS_ENABLED_KEY;
-import static com.example.biblio.helpers.SharedPreferencesHelper.LAST_SEARCH_TS_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_ENABLED_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MAX_RESULTS_KEY;
 import static com.example.biblio.helpers.SharedPreferencesHelper.LIBGEN_MIRROR_KEY;
@@ -141,10 +139,7 @@ public class SearchViewModel extends AndroidViewModel {
             SimpleBiblio sb = buildBiblio();
             List<Ebook> ret = sb.searchAll(query);
 
-            String timestamp = new SimpleDateFormat("dd-MM-yyyy,HH:mm").format(new Date());
-            logger.d(timestamp);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(LAST_SEARCH_TS_KEY, timestamp).apply();
+            SimpleBiblioHelper.setLastSearchTS(getApplication().getApplicationContext());
 
             logger.d(String.format(Locale.getDefault(), "ret has size: %d", ret.size()));
             if (ret.size() > 0) {

@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.google.firebase:firebase-firestore:21.3.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
     api 'com.artifex.mupdf:viewer:1.16.1'
     implementation 'commons-io:commons-io:2.6'

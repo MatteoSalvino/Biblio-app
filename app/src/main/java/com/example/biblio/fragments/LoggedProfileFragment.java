@@ -18,6 +18,11 @@ import com.example.biblio.databinding.FragmentLoggedProfileBinding;
 import com.example.biblio.helpers.SimpleBiblioHelper;
 import com.example.biblio.helpers.XFragment;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.Date;
+import java.util.Locale;
+
 public class LoggedProfileFragment extends XFragment {
 
     public LoggedProfileFragment() {
@@ -42,7 +47,10 @@ public class LoggedProfileFragment extends XFragment {
                     .apply(new RequestOptions().centerInside().circleCrop())
                     .into(binding.loggedPhoto);
 
-        binding.loggedLastSearchTv.setText(SimpleBiblioHelper.getLastSearchTS(getContext()));
+        PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+        Date lastSearch = SimpleBiblioHelper.getLastSearchTS(getContext());
+        if (lastSearch != null)
+            binding.loggedLastSearchTv.setText(prettyTime.format(lastSearch));
 
         binding.logoutBtn.setOnClickListener(view -> {
             SimpleBiblioHelper.removeCurrentUser(getContext());

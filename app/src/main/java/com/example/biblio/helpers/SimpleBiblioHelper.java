@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,12 +73,11 @@ public class SimpleBiblioHelper {
     }
 
     public static Date getLastSearchTS(Context context) {
-        Gson gson = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
-        return gson.fromJson(getSP(context).getString(LAST_SEARCH_TS_KEY, null), Date.class);
+        return dateGson().fromJson(getSP(context).getString(LAST_SEARCH_TS_KEY, null), Date.class);
     }
 
     public static void setLastSearchTS(Context context) {
-        String ts = new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create().toJson(new Date());
+        String ts = dateGson().toJson(new Date());
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(LAST_SEARCH_TS_KEY, ts);
         editor.apply();
@@ -88,6 +89,11 @@ public class SimpleBiblioHelper {
 
     private static SharedPreferences.Editor getEditor(Context context) {
         return getSP(context).edit();
+    }
+
+    @NotNull
+    private static Gson dateGson() {
+        return new GsonBuilder().setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
     }
 
 }

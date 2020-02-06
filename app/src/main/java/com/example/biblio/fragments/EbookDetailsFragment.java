@@ -102,6 +102,9 @@ public class EbookDetailsFragment extends XFragment {
 
         if (current.getCover() != null)
             Glide.with(getContext()).load(current.getCover().toString()).apply(option).into(headerBinding.cover);
+        else {
+            headerBinding.cover.setVisibility(View.GONE);
+        }
 
         LocalDate book_date = current.getPublished();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LL - yyyy");

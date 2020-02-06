@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,13 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
         <ImageView
             android:id="@+id/logged_settings_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:layout_toLeftOf="@id/logout_btn"
+            android:layout_toStartOf="@id/logout_btn"
             android:padding="10dp"
             android:src="@drawable/settings_outline"
             android:tint="@color/main_book_text" />
@@ -58,7 +58,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:textColor="@color/main_book_text"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:text="Mark" />
 
             <TextView
                 android:id="@+id/logged_email_tv"
@@ -67,20 +68,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:textColor="@color/main_book_text"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/logged_last_search_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:textColor="@color/main_book_text"
-                android:textSize="15sp" />
-
+                android:textSize="15sp"
+                tools:text="mark@email.com" />
         </LinearLayout>
     </LinearLayout>
-
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -94,8 +85,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/last_search_tv"
+                    android:textColor="@color/main_book_text"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/logged_last_search_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/main_book_text"
+                    android:textSize="13sp"
+                    android:text="@string/null_field_placeholder" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -119,10 +138,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="5"
                     android:textColor="@color/main_book_text"
                     android:textSize="13sp"
-                    android:textStyle="bold" />
+                    tools:text="5" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,11 +165,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="2"
                     android:textColor="@color/main_book_text"
                     android:textSize="13sp"
-                    android:textStyle="bold" />
-
+                    tools:text="2" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

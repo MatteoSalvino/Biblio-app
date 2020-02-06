@@ -77,4 +77,5 @@
     <string name="back_pressed_msg">Clicca di nuovo per uscire</string>
     <string name="description_msg">Trama</string>
     <string name="infos_msg">Dettagli</string>
+    <string name="last_search_tv">Ultima ricerca</string>
 </resources>

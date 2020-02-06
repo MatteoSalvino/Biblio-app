@@ -90,4 +90,5 @@
     <string name="theme_pref" translatable="false">theme</string>
     <string name="description_msg">Description</string>
     <string name="infos_msg">Details</string>
+    <string name="last_search_tv">Last search</string>
 </resources>

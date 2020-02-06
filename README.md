@@ -1,5 +1,5 @@
 # Biblio-app
-<img width="200" src="icon.jpg">
+<img width="300" src="app/src/main/icon_launcher-playstore.png">
 
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
 [![Backend](https://img.shields.io/badge/Backend-Rails%206-brightgreen.svg)](https://github.com/lrusso96/simple-biblio-be)

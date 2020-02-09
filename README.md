@@ -20,6 +20,21 @@ and uses [Simple Biblio](https://github.com/lrusso96/simple-biblio) library to s
 - Review downloaded ebooks
 - Account stats
 
+## Screenshots
+
+## Libraries used (partial)
+
+* [Android KTX](https://developer.android.com/kotlin/ktx): write more
+  concise, idiomatic Kotlin code
+  
+* [Glide](https://bumptech.github.io/glide/): image loading
+
+* [View Binding](https://developer.android.com/topic/libraries/view-binding):
+  bind data to UI elements
+  
+* [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel):
+  store UI-related data that isn't destroyed on app rotations
+
 ## Authors
 
 - [Luigi Russo](https://github.com/lrusso96)

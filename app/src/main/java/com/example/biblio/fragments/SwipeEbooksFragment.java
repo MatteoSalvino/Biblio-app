@@ -62,7 +62,7 @@ public class SwipeEbooksFragment extends XFragment implements EbooksAdapter.OnIt
     @Override
     public void onItemClick(int position) {
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
-        model.setEbook(mEbooks.get(position));
+        model.updateEbook(mEbooks.get(position));
         moveTo(new EbookDetailsFragment());
     }
 }

@@ -99,7 +99,7 @@ public class MyEbooksFragment extends XFragment implements MyEbooksAdapter.OnIte
     @Override
     public void onItemClick(int position) {
         EbookDetailsViewModel model = new ViewModelProvider(getActivity()).get(EbookDetailsViewModel.class);
-        model.setEbook(mEbooks.get(position));
+        model.updateEbook(mEbooks.get(position));
         moveTo(new EbookDetailsFragment());
     }
 }

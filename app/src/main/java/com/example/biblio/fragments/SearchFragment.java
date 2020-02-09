@@ -115,7 +115,7 @@ public class SearchFragment extends XFragment implements EbooksAdapter.OnItemLis
 
     @Override
     public void onItemClick(int position) {
-        ebook_model.setEbook(mEbooks.get(position));
+        ebook_model.updateEbook(mEbooks.get(position));
         moveTo(new EbookDetailsFragment());
     }
 }

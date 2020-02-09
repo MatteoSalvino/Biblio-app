@@ -10,16 +10,13 @@ import com.example.biblio.helpers.LogHelper
 import com.example.biblio.helpers.SharedPreferencesHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import lrusso96.simplebiblio.core.Ebook
 import lrusso96.simplebiblio.core.SimpleBiblio
 import lrusso96.simplebiblio.core.SimpleBiblioBuilder
 import lrusso96.simplebiblio.core.providers.feedbooks.FeedbooksBuilder
 import lrusso96.simplebiblio.core.providers.libgen.LibraryGenesisBuilder
 import lrusso96.simplebiblio.core.providers.standardebooks.StandardEbooks
-import org.apache.commons.lang3.StringUtils
 import java.net.URI
-import java.util.*
 
 abstract class SwipeEbooksViewModel(application: Application) : AndroidViewModel(application) {
     private val logger = LogHelper(javaClass)
@@ -41,7 +38,7 @@ abstract class SwipeEbooksViewModel(application: Application) : AndroidViewModel
             val libgen_builder = LibraryGenesisBuilder(fixme)
             if (sharedPreferences.getBoolean(SharedPreferencesHelper.LIBGEN_OVERRIDE_KEY, false)) {
                 val mirror = sharedPreferences.getString(SharedPreferencesHelper.LIBGEN_MIRROR_KEY, "")
-                if (!StringUtils.isEmpty(mirror)) libgen_builder.setMirror(URI.create(mirror))
+                if (!mirror.isNullOrBlank()) libgen_builder.setMirror(URI.create(mirror))
             }
             libgen_builder.setMaxResultsNumber(sharedPreferences.getInt(SharedPreferencesHelper.LIBGEN_MAX_RESULTS_KEY, 10))
             builder.addProvider(libgen_builder.build())

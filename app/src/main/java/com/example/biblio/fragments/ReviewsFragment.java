@@ -117,7 +117,7 @@ public class ReviewsFragment extends XFragment {
                 RatingResult result = user.rate(mEbook, rating);
                 if (result != null) {
                     SimpleBiblioHelper.setCurrentUser(user, getContext());
-                    logger.d(result.toString());
+                    getLogger().d(result.toString());
                 }
                 Review review = new Review(user, mEbook, text, rating);
                 uploadReview(review);
@@ -155,7 +155,7 @@ public class ReviewsFragment extends XFragment {
             User u = new UserBuilder().setUsername(String.format(Locale.getDefault(), "User - %d", i)).build();
             mReviews.add(new Review(u, mEbook, "Very nice ebook", 5 - i));
         }
-        logger.d("adding fake reviews to populate the view");
+        getLogger().d("adding fake reviews to populate the view");
         mAdapter.setReviews(mReviews);
         mAdapter.notifyDataSetChanged();
     }
@@ -176,12 +176,12 @@ public class ReviewsFragment extends XFragment {
                     if (task.isSuccessful()) {
                         QuerySnapshot snapshots = task.getResult();
                         if (snapshots == null) {
-                            logger.d("Null snapshot");
+                            getLogger().d("Null snapshot");
                             return;
                         }
                         boolean shouldAdd = true;
                         for (QueryDocumentSnapshot document : snapshots) {
-                            logger.d(document.getId() + " => " + document.getData());
+                            getLogger().d(document.getId() + " => " + document.getData());
                             String id = document.getId();
                             updateReview(review, id);
                             shouldAdd = false;
@@ -189,12 +189,12 @@ public class ReviewsFragment extends XFragment {
                         }
                         if (shouldAdd)
                             reviews.add(review)
-                                    .addOnSuccessListener(documentReference -> logger.d("DocumentSnapshot written with ID: " + documentReference.getId()))
-                                    .addOnFailureListener(e -> logger.w("Error adding document", e));
+                                    .addOnSuccessListener(documentReference -> getLogger().d("DocumentSnapshot written with ID: " + documentReference.getId()))
+                                    .addOnFailureListener(e -> getLogger().w("Error adding document", e));
 
                         updateUI(review);
                     } else {
-                        logger.d("Error getting documents", task.getException());
+                        getLogger().d("Error getting documents", task.getException());
                     }
                 });
     }
@@ -209,8 +209,8 @@ public class ReviewsFragment extends XFragment {
     private void updateReview(@NotNull Review review, String id) {
         DocumentReference oldReview = mFirestore.collection("reviews").document(id);
         oldReview.update("rating", review.getRating(), "text", review.getText())
-                .addOnSuccessListener(x -> logger.d("DocumentSnapshot successfully updated!"))
-                .addOnFailureListener(e -> logger.w("Error updating document", e));
+                .addOnSuccessListener(x -> getLogger().d("DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> getLogger().w("Error updating document", e));
     }
 
     /**
@@ -226,17 +226,17 @@ public class ReviewsFragment extends XFragment {
                     if (task.isSuccessful()) {
                         QuerySnapshot snapshots = task.getResult();
                         if (snapshots == null) {
-                            logger.d("Null snapshot");
+                            getLogger().d("Null snapshot");
                             return;
                         }
                         for (QueryDocumentSnapshot document : snapshots) {
                             Review rev = document.toObject(Review.class);
-                            logger.d(document.getId() + " => " + document.getData());
+                            getLogger().d(document.getId() + " => " + document.getData());
                             mReviews.add(rev);
                         }
                         setupUI(mReviews);
                     } else {
-                        logger.d("Error getting documents", task.getException());
+                        getLogger().d("Error getting documents", task.getException());
                     }
                 });
     }

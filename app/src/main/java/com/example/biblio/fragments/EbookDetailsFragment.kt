@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.biblio.R
-import com.example.biblio.api.RatingResult
+import com.example.biblio.api.User
 import com.example.biblio.databinding.EbookDetailsFragmentBinding
 import com.example.biblio.databinding.EbookDetailsFragmentHeaderBinding
 import com.example.biblio.databinding.EbookDetailsFragmentReviewsBinding
@@ -38,74 +38,57 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadListener
 import com.liulishuo.filedownloader.FileDownloader
-import lrusso96.simplebiblio.core.Download
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import lrusso96.simplebiblio.core.Ebook
 import lrusso96.simplebiblio.core.Utils
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.File
-import java.util.*
 
 class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
+    private lateinit var ebook: Ebook
     private lateinit var headerBinding: EbookDetailsFragmentHeaderBinding
     private lateinit var reviewsBinding: EbookDetailsFragmentReviewsBinding
     private lateinit var rootDir: File
     private var filename: String? = null
-    private lateinit var current: Ebook
-    private lateinit var downloadList: List<Download>
-    private var currentStats: RatingResult? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         val binding = EbookDetailsFragmentBinding.inflate(inflater, container, false)
         val infosBinding = binding.infos
         val appbarBinding = binding.appbar
         headerBinding = binding.header
         reviewsBinding = binding.reviews
-        val option = RequestOptions().centerInside()
-        rootDir = File("${context?.getExternalFilesDir(null)?.absolutePath}/$APP_ROOT_DIR")
+        rootDir = File("${xContext.getExternalFilesDir(null)?.absolutePath}/$APP_ROOT_DIR")
         val model = ViewModelProvider(activity!!).get(EbookDetailsViewModel::class.java)
-        current = model.ebook.value!!
-        logger.d("got ebook whose title is: ${current.title}")
+        ebook = model.ebook.value!!
+        logger.d("got ebook whose title is: ${ebook.title}")
 
-        val user = getCurrentUser(context!!)
-        if (user != null) {
-            Thread(Runnable {
-                currentStats = user.getEbookStats(current)
-                activity?.runOnUiThread {
-                    setDownloadCounter(currentStats?.downloads ?: 0)
-                    setReviewsCounter(currentStats?.ratings ?: 0)
-                    reviewsBinding.avgRate.rating = currentStats?.ratingAvg?.toFloat() ?: 0.0F
-                }
-            }).start()
-        }
-        headerBinding.title.text = current.title
-        headerBinding.author.text = current.author
-        if (current.cover != null) Glide.with(context!!).load(current.cover.toString()).apply(option).into(headerBinding.cover) else {
-            headerBinding.cover.visibility = View.GONE
-        }
-        val bookDate = current.published
+        val user = getCurrentUser(xContext)
+        if (user != null)
+            uiScope.launch { retrieveStats(user) }
+        headerBinding.title.text = ebook.title
+        headerBinding.author.text = ebook.author
+        if (ebook.cover != null)
+            Glide.with(xContext).load(ebook.cover.toString()).apply(RequestOptions().centerInside()).into(headerBinding.cover)
+        else headerBinding.cover.visibility = View.GONE
+
+        val bookDate = ebook.published
         val formatter = DateTimeFormatter.ofPattern("LL - yyyy")
         infosBinding.date.text = if (bookDate == null) "-" else bookDate.format(formatter)
-        if (current.pages > 0) infosBinding.pages.text = "${current.pages}"
-        if (current.language != null) infosBinding.language.text = current.language
-        if (current.filesize > 0) infosBinding.size.text = Utils.bytesToReadableSize(current.filesize)
-        binding.mainBookProvider.text = "by ${current.providerName}"
-        if (current.summary != null)
-            binding.mainBookSummary.text = current.summary
+        if (ebook.pages > 0) infosBinding.pages.text = "${ebook.pages}"
+        if (ebook.language != null) infosBinding.language.text = ebook.language
+        if (ebook.filesize > 0) infosBinding.size.text = Utils.bytesToReadableSize(ebook.filesize)
+        binding.mainBookProvider.text = "by ${ebook.providerName}"
+        if (ebook.summary != null)
+            binding.mainBookSummary.text = ebook.summary
         else
             binding.mainBookSummary.setText(R.string.no_description)
         headerBinding.downloadBtn.isEnabled = false
-        headerBinding.downloadBtn.setBackgroundColor(ContextCompat.getColor(context!!, R.color.disabled_button))
-        Thread(Runnable {
-            downloadList = current.downloads
-            if (downloadList.isNotEmpty()) {
-                filename = getFilename(current)
-                activity?.runOnUiThread {
-                    headerBinding.downloadBtn.isEnabled = true
-                    headerBinding.downloadBtn.setBackgroundColor(ContextCompat.getColor(context!!, R.color.add_button))
-                    showRemoveButton(isFavorite(current, context!!))
-                }
-            }
-        }).start()
+        headerBinding.downloadBtn.setBackgroundColor(ContextCompat.getColor(xContext, R.color.disabled_button))
+
+        uiScope.launch { retrieveDownloads() }
 
         appbarBinding.backBtn.setOnClickListener { popBackStackImmediate() }
         headerBinding.downloadBtn.setOnClickListener {
@@ -113,12 +96,12 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
                 val multiplePermissionListener: MultiplePermissionsListener = object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                         if (report.areAllPermissionsGranted()) {
-                            val path = "${context!!.getExternalFilesDir(null)?.absolutePath}/$APP_ROOT_DIR/$filename"
-                            downloadFile(downloadList[0].uri.toString(), path)
+                            val path = "${xContext.getExternalFilesDir(null)?.absolutePath}/$APP_ROOT_DIR/$filename"
+                            downloadFile(ebook.downloads[0].uri.toString(), path)
                             Thread(Runnable {
-                                val result = user?.notifyDownload(current)
+                                val result = user?.notifyDownload(ebook)
                                 if (result != null) {
-                                    setCurrentUser(user, context!!)
+                                    setCurrentUser(user, xContext)
                                     logger.d(result.toString())
                                 }
                             }).start()
@@ -128,11 +111,11 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
                     override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest>, token: PermissionToken) {}
                 }
                 val dialogMultiplePermissionsListener: MultiplePermissionsListener = DialogOnAnyDeniedMultiplePermissionsListener.Builder
-                        .withContext(context)
+                        .withContext(xContext)
                         .withTitle(R.string.storage_permission_title)
                         .withMessage(R.string.storage_permission_msg)
                         .withButtonText(android.R.string.ok)
-                        .withIcon(context!!.getDrawable(R.drawable.baseline_error_outline_24))
+                        .withIcon(xContext.getDrawable(R.drawable.baseline_error_outline_24))
                         .build()
                 val compositePermissionsListener: MultiplePermissionsListener = CompositeMultiplePermissionsListener(dialogMultiplePermissionsListener, multiplePermissionListener)
                 Dexter.withActivity(activity)
@@ -141,7 +124,7 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
             } else {
                 val errorMsg = resources.getString(R.string.no_sd_card_msg)
                 logger.d(errorMsg)
-                Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show()
+                Toast.makeText(xContext, errorMsg, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -149,7 +132,7 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
             val fn = filename
             if (fn != null)
                 removeFile(rootDir, fn)
-            removeEbook(current, context!!)
+            removeEbook(ebook, xContext)
             showRemoveButton(false)
         }
 
@@ -163,6 +146,23 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
         return binding.root
     }
 
+    private suspend fun retrieveDownloads() {
+        val downloads = withContext(Dispatchers.IO) { ebook.downloads }
+        if (downloads.isNotEmpty()) {
+            filename = getFilename(ebook)
+            headerBinding.downloadBtn.isEnabled = true
+            headerBinding.downloadBtn.setBackgroundColor(ContextCompat.getColor(xContext, R.color.add_button))
+            showRemoveButton(isFavorite(ebook, xContext))
+        }
+    }
+
+    private suspend fun retrieveStats(user: User) {
+        val currentStats = withContext(Dispatchers.IO) { user.getEbookStats(ebook) }
+        setDownloadCounter(currentStats?.downloads ?: 0)
+        setReviewsCounter(currentStats?.ratings ?: 0)
+        reviewsBinding.avgRate.rating = currentStats?.ratingAvg?.toFloat() ?: 0.0F
+    }
+
     private fun downloadFile(uri: String, path: String) {
         logger.d(String.format("download uri: %s", uri))
         val progressDialog = ProgressDialog(activity)
@@ -171,7 +171,7 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
         progressDialog.setCancelable(false)
         progressDialog.show()
-        FileDownloader.setup(Objects.requireNonNull(context))
+        FileDownloader.setup(xContext)
         FileDownloader.getImpl().create(uri)
                 .setPath(path)
                 .setCallbackProgressTimes(300)
@@ -190,7 +190,7 @@ class EbookDetailsFragment : XFragment(EbookDetailsFragment::class.java) {
                         headerBinding.downloadBtn.visibility = View.INVISIBLE
                         headerBinding.removeBtn.visibility = View.VISIBLE
                         //todo: should open the new file?
-                        addEbook(current, context!!)
+                        addEbook(ebook, xContext)
                     }
 
                     override fun paused(task: BaseDownloadTask, soFarBytes: Int, totalBytes: Int) {

@@ -15,7 +15,7 @@ import java.util.*
  * RecyclerView adapter for a list of Reviews.
  */
 class ReviewsAdapter : RecyclerView.Adapter<ReviewsViewHolder>() {
-    var reviews: MutableList<Review> = ArrayList()
+    var reviews: List<Review> = ArrayList()
 
     /**
      * Add a review to current dataset. It enforces the constraint that at most 1 review is allowed
@@ -24,9 +24,10 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsViewHolder>() {
      * @param review new object to add to the collection
      */
     fun addReview(review: Review) {
-        reviews = reviews.filter { it.reviewer != review.reviewer }
+        val reviews = reviews.filter { it.reviewer != review.reviewer }
                 .toMutableList()
         reviews.add(review)
+        this.reviews = reviews
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewsViewHolder {
@@ -46,14 +47,8 @@ class ReviewsAdapter : RecyclerView.Adapter<ReviewsViewHolder>() {
 
 
     class ReviewsViewHolder internal constructor(view: View?) : RecyclerView.ViewHolder(view!!) {
-        val username: TextView
-        val rating: MaterialRatingBar
-        val text: TextView
-
-        init {
-            username = itemView.findViewById(R.id.reviewItemUsername)
-            rating = itemView.findViewById(R.id.reviewItemRating)
-            text = itemView.findViewById(R.id.reviewItemText)
-        }
+        val username: TextView = itemView.findViewById(R.id.reviewItemUsername)
+        val rating: MaterialRatingBar = itemView.findViewById(R.id.reviewItemRating)
+        val text: TextView = itemView.findViewById(R.id.reviewItemText)
     }
 }

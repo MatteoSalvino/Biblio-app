@@ -26,15 +26,15 @@ class MyEbooksFragment : XFragment(MyEbooksFragment::class.java), MyEbooksAdapte
     private lateinit var binding: FragmentMyEbooksBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentMyEbooksBinding.inflate(inflater, container, false)
-        val mLayoutManager = LinearLayoutManager(context)
+        val mLayoutManager = LinearLayoutManager(xContext)
         binding.myEbooksRv.layoutManager = mLayoutManager
         binding.myEbooksRv.setHasFixedSize(true)
-        mEbooks = getMyEbooks(context!!)
+        mEbooks = getMyEbooks(xContext)
         logger.d(mEbooks.toString())
         hideTemplates(mEbooks.isEmpty())
-        val mMyEbooksListener: MyEbooksAdapter.OnItemListener = this
-        val mAdapter = MyEbooksAdapter(mEbooks, mMyEbooksListener, context!!)
+        val mAdapter = MyEbooksAdapter(mEbooks, this, xContext)
         binding.myEbooksRv.adapter = mAdapter
         return binding.root
     }
@@ -45,10 +45,10 @@ class MyEbooksFragment : XFragment(MyEbooksFragment::class.java), MyEbooksAdapte
      * @param filename name of the file, already downloaded, with extension (e.g. file.txt)
      */
     private fun openFile(filename: String) {
-        val path = File("${context?.getExternalFilesDir(null)?.absolutePath}/${SDCardHelper.APP_ROOT_DIR}/$filename")
+        val path = File("${xContext.getExternalFilesDir(null)?.absolutePath}/${SDCardHelper.APP_ROOT_DIR}/$filename")
         logger.d("open file: $path")
         val intent = Intent(Intent.ACTION_VIEW)
-        val uri = FileProvider.getUriForFile(context!!,
+        val uri = FileProvider.getUriForFile(xContext,
                 BuildConfig.APPLICATION_ID + ".provider",
                 path)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)

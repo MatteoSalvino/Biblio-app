@@ -20,8 +20,9 @@ open class SwipeEbooksFragment internal constructor(clazz: Class<*>?, private va
     private lateinit var mEbooks: ArrayList<Ebook>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentSwipeEbooksBinding.inflate(inflater, container, false)
-        val mLayoutManager = LinearLayoutManager(context)
+        val mLayoutManager = LinearLayoutManager(xContext)
         binding.ebooksRv.layoutManager = mLayoutManager
         binding.ebooksRv.setHasFixedSize(true)
         //binding.swipeContainer.setColorSchemeResources(android.R.color.);
@@ -33,7 +34,7 @@ open class SwipeEbooksFragment internal constructor(clazz: Class<*>?, private va
             binding.swipeContainer.isRefreshing = true
             logger.d("swiping")
             mEbooks = ebooks as ArrayList<Ebook>
-            val mAdapter = EbooksAdapter(mEbooks, mEbooksListener, context!!)
+            val mAdapter = EbooksAdapter(mEbooks, mEbooksListener, xContext)
             binding.ebooksRv.adapter = mAdapter
             binding.swipeContainer.isRefreshing = false
         }

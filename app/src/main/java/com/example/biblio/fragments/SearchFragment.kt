@@ -29,12 +29,13 @@ class SearchFragment : XFragment(SearchFragment::class.java), EbooksAdapter.OnIt
     private lateinit var ebookModel: EbookDetailsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         val binding = FragmentSearchBinding.inflate(inflater, container, false)
         val model = ViewModelProvider(activity!!).get(SearchViewModel::class.java)
         ebookModel = ViewModelProvider(activity!!).get(EbookDetailsViewModel::class.java)
         binding.filtersBtn.setOnClickListener { moveTo(FiltersFragment()) }
         binding.recyclerView.setHasFixedSize(true)
-        val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
+        val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(xContext)
         binding.recyclerView.layoutManager = mLayoutManager
         RxTextView.textChanges(binding.searchBar.searchEditText)
                 .debounce(750, TimeUnit.MILLISECONDS)
@@ -46,12 +47,12 @@ class SearchFragment : XFragment(SearchFragment::class.java), EbooksAdapter.OnIt
                 }
         val searchObserver = Observer<List<Ebook>> { ebooks: List<Ebook> ->
             this.ebooks = ebooks
-            val mAdapter = EbooksAdapter(ebooks, this, context!!)
+            val mAdapter = EbooksAdapter(ebooks, this, xContext)
             binding.recyclerView.adapter = mAdapter
         }
         model.ebooks.observe(viewLifecycleOwner, searchObserver)
         binding.sortBtn.setOnClickListener {
-            val alertDialog = AlertDialog.Builder(context!!)
+            val alertDialog = AlertDialog.Builder(xContext)
             alertDialog.setTitle("Set custom sorting")
             val items = arrayOf("Title", "Year")
             alertDialog.setSingleChoiceItems(items, -1) { dialog: DialogInterface, which: Int ->
@@ -65,7 +66,7 @@ class SearchFragment : XFragment(SearchFragment::class.java), EbooksAdapter.OnIt
             alert.setCanceledOnTouchOutside(true)
             alert.show()
         }
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(xContext)
         binding.scannerBtn.setOnClickListener { IntentIntegrator.forSupportFragment(this).initiateScan() }
         if (sharedPreferences.getBoolean(EAN_ENABLED_KEY, false)) binding.scannerBtn.visibility = View.VISIBLE
         return binding.root
